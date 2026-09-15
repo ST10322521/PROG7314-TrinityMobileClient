@@ -6,11 +6,15 @@
 
 Current suggested work spread according to AI:
 
-# Project Responsibilities
+# Part 2 Prototype — Team Responsibilities
 
----
+# Member 1 — Android UI & Navigation
 
-# Member 1 — Android UI & Application Structure
+> **Member 1 is responsible ONLY for creating the navigable Android application interface.**
+
+> Member 1 does not implement authentication, REST API communication, database functionality, settings logic, business logic, ViewModels, repositories, or custom-feature functionality.
+
+> The purpose of Member 1's work is to provide a complete, intuitive, navigable application shell that Members 2–4 can connect their functionality to.
 
 ## Development
 
@@ -18,10 +22,12 @@ Current suggested work spread according to AI:
 - [ ] Configure Kotlin/Android project
 - [ ] Configure package structure
 - [ ] Configure app theme
-- [ ] Configure colours/fonts/styles
+- [ ] Configure colours
+- [ ] Configure fonts
+- [ ] Configure styles
 - [ ] Create reusable UI components
-- [ ] Create common loading components
-- [ ] Create common error components
+- [ ] Create common loading UI components
+- [ ] Create common error UI components
 - [ ] Implement navigation architecture
 - [ ] Create navigation routes
 - [ ] Implement Home/Dashboard screen
@@ -29,46 +35,94 @@ Current suggested work spread according to AI:
 - [ ] Implement Registration screen UI
 - [ ] Implement Settings screen UI
 - [ ] Implement custom-feature screen UI
-- [ ] Implement loading states
-- [ ] Implement empty states
-- [ ] Implement UI error states
-- [ ] Implement input validation
-- [ ] Implement invalid-input messages
-- [ ] Implement ViewModels/state management
-- [ ] Implement mock repositories/data
-- [ ] Connect UI to application state
-- [ ] Add lifecycle/state logging
+- [ ] Create required forms and input fields
+- [ ] Create buttons and user controls
+- [ ] Create screen layouts
+- [ ] Create loading-state UI
+- [ ] Create empty-state UI
+- [ ] Create error-state UI
+- [ ] Create success-state UI
+- [ ] Implement forward navigation
+- [ ] Implement back navigation
+- [ ] Ensure every required screen can be reached
+- [ ] Ensure every required screen can return appropriately
+- [ ] Add basic UI-level input feedback where appropriate
+- [ ] Add comments to UI/navigation code
+- [ ] Add technical references where external UI/code patterns are used
 
-## Testing
+## Navigation Scope
 
-> Member 1 tests everything they build.
+- [ ] Application launches successfully
+- [ ] Login screen can be opened
+- [ ] Registration screen can be opened
+- [ ] Home/Dashboard can be opened
+- [ ] Settings screen can be opened
+- [ ] Custom-feature screens can be opened
+- [ ] Navigation between screens works
+- [ ] Back navigation works
+- [ ] Appropriate navigation routes exist
+- [ ] Navigation does not crash
+- [ ] Placeholder UI exists where functionality will later be implemented by another member
 
-- [ ] Test navigation to every screen
+## UI Testing
+
+> Member 1 tests only the UI and navigation they created.
+
+- [ ] Test application launches
+- [ ] Test navigation to Login
+- [ ] Test navigation to Registration
+- [ ] Test navigation to Home/Dashboard
+- [ ] Test navigation to Settings
+- [ ] Test navigation to custom-feature screens
+- [ ] Test forward navigation
 - [ ] Test back navigation
-- [ ] Test UI input validation
-- [ ] Test required fields
-- [ ] Test invalid inputs
-- [ ] Test loading states
-- [ ] Test error states
-- [ ] Test empty states
-- [ ] Test ViewModel state changes
-- [ ] Test screen state restoration where applicable
-- [ ] Test UI with mock data
-- [ ] Test application doesn't crash during invalid UI interactions
-- [ ] Test navigation when user is authenticated
-- [ ] Test navigation when user is unauthenticated
+- [ ] Test navigation routes
+- [ ] Test required UI elements exist
+- [ ] Test basic UI input fields
+- [ ] Test basic UI validation/display behaviour
+- [ ] Test loading UI
+- [ ] Test empty-state UI
+- [ ] Test error-state UI
+- [ ] Test success-state UI
+- [ ] Test invalid UI interactions do not crash the application
+- [ ] Run all UI/navigation tests locally
+- [ ] Fix failures in their own UI/navigation code
+- [ ] Verify tests pass through GitHub Actions
+
+## Explicitly NOT Member 1's Responsibility
+
+- [ ] SSO implementation
+- [ ] Authentication implementation
+- [ ] Registration logic
+- [ ] Session management
+- [ ] Logout logic
+- [ ] User identification
+- [ ] Settings/preferences logic
+- [ ] Application ViewModels
+- [ ] Repositories
+- [ ] REST API communication
+- [ ] API clients
+- [ ] Database functionality
+- [ ] Backend functionality
+- [ ] Business logic
+- [ ] Custom-feature functionality
+- [ ] Connecting application functionality to the API
+- [ ] Authentication tests
+- [ ] API tests
+- [ ] Database tests
+- [ ] Custom-feature tests
 
 ## Deliverable
 
-**Working Android front-end + tests proving the front-end works.**
+**A complete, visually functional and navigable Android application shell containing all required screens and navigation routes, with UI/navigation tests proving that the application can be navigated successfully.**
 
 ---
 
 # Member 2 — Authentication & Settings
 
-## Development
+## Authentication Development
 
-- [ ] Select/configure SSO provider
+- [ ] Select SSO provider
 - [ ] Configure authentication service
 - [ ] Configure Android authentication integration
 - [ ] Implement authentication client
@@ -85,6 +139,13 @@ Current suggested work spread according to AI:
 - [ ] Implement session expiry handling
 - [ ] Implement logout
 - [ ] Implement user identification
+- [ ] Connect authentication functionality to Member 1's UI
+- [ ] Add authentication/state logging using Android `Log`
+- [ ] Add clear comments to authentication code
+- [ ] Add technical references where external code/patterns are used
+
+## Settings Development
+
 - [ ] Define user preference model
 - [ ] Implement preference retrieval
 - [ ] Implement preference modification
@@ -92,12 +153,14 @@ Current suggested work spread according to AI:
 - [ ] Associate preferences with authenticated user
 - [ ] Restore preferences after login
 - [ ] Handle preference errors
-- [ ] Add authentication/state logging
+- [ ] Connect settings functionality to Member 1's Settings UI
+- [ ] Add preference state logging
 
-## Testing
+## Unit Testing
 
-> Member 2 tests everything they build.
+> Member 2 writes and maintains all tests for the authentication and settings functionality they develop.
 
+- [ ] Set up authentication/settings testing
 - [ ] Test successful registration
 - [ ] Test invalid registration
 - [ ] Test duplicate registration
@@ -116,17 +179,20 @@ Current suggested work spread according to AI:
 - [ ] Test preference persistence
 - [ ] Test user-specific preferences
 - [ ] Test invalid preference values
-- [ ] Test authentication failure doesn't crash the application
+- [ ] Test authentication failures do not crash application logic
+- [ ] Run tests locally
+- [ ] Fix failures in their own code/tests
+- [ ] Verify tests pass through GitHub Actions
 
 ## Deliverable
 
-**Working authentication/settings functionality + tests proving authentication and preferences work.**
+**Working authentication and settings functionality connected to Member 1's UI + tests proving the functionality works.**
 
 ---
 
 # Member 3 — REST API & Database
 
-## Database
+## Database Development
 
 - [ ] Select database technology
 - [ ] Create cloud database
@@ -136,21 +202,27 @@ Current suggested work spread according to AI:
 - [ ] Define user-data ownership
 - [ ] Configure database security
 - [ ] Create development/test data
+- [ ] Add database logging where appropriate
+- [ ] Add clear comments to backend code
+- [ ] Add technical references where external code/patterns are used
 
-## REST API
+## REST API Development
 
 - [ ] Select backend framework
 - [ ] Create backend project
 - [ ] Configure backend environment
 - [ ] Configure database connection
 - [ ] Create API structure
+- [ ] Define request structures
+- [ ] Define response structures
 - [ ] Create GET endpoints
 - [ ] Create POST endpoints
 - [ ] Create PUT/PATCH endpoints
 - [ ] Create DELETE endpoints
 - [ ] Create custom-feature endpoints where required
+- [ ] Implement endpoints required by the Android application
 
-## Validation
+## API Validation
 
 - [ ] Validate request bodies
 - [ ] Validate required fields
@@ -162,7 +234,7 @@ Current suggested work spread according to AI:
 - [ ] Return correct HTTP status codes
 - [ ] Return consistent API errors
 
-## Security
+## API Security
 
 - [ ] Validate authenticated API requests
 - [ ] Associate requests with users
@@ -172,17 +244,30 @@ Current suggested work spread according to AI:
 
 ## Deployment
 
-- [ ] Deploy API
+- [ ] Deploy API to cloud hosting
 - [ ] Configure production environment variables
 - [ ] Connect production database
 - [ ] Verify production API
 - [ ] Document API endpoints
 - [ ] Add backend logging
 
-## Testing
+## Frontend/API Integration
 
-> Member 3 tests everything they build.
+> Member 3 is responsible for the backend side of the frontend/backend connection.
 
+- [ ] Define API contract with frontend developers
+- [ ] Define endpoint requirements
+- [ ] Define request formats
+- [ ] Define response formats
+- [ ] Define error formats
+- [ ] Ensure API is accessible by Android application
+- [ ] Ensure API authentication works with the Android application
+- [ ] Ensure API responses contain required data
+- [ ] Support Member 2/4 integration requirements
+
+## Unit/Backend Testing
+
+- [ ] Set up backend testing structure
 - [ ] Test GET endpoints
 - [ ] Test POST endpoints
 - [ ] Test PUT/PATCH endpoints
@@ -201,75 +286,92 @@ Current suggested work spread according to AI:
 - [ ] Test HTTP status codes
 - [ ] Test API → database communication
 - [ ] Test database → API responses
-- [ ] Test deployed production API
+- [ ] Test deployed production API where practical
 - [ ] Test backend error handling
-- [ ] Test API doesn't crash on malformed requests
+- [ ] Test malformed requests
+- [ ] Run tests locally
+- [ ] Fix failures in their own code/tests
+- [ ] Verify tests pass through GitHub Actions
 
 ## Deliverable
 
-**Working cloud REST API/database + tests proving the backend works.**
+**Working cloud REST API/database + backend tests proving the backend works and API contract required by the Android application is available.**
 
 ---
 
 # Member 4 — Custom Features
 
-> Member 4 owns the custom functionality from Part 1, along with all tests for those features.
+> Member 4 owns the custom user-defined functionality selected from the Part 1 design.
 
-> The exact development jobs depend on the application's Part 1 design.
+> Each custom feature should be tracked as its own GitHub Issue.
 
 ---
 
-## Custom Feature #1
+# Custom Feature #1
 
-### Development
+## Development
 
 - [ ] Define Feature #1 requirements
 - [ ] Create Feature #1 data model
 - [ ] Implement Feature #1 business logic
-- [ ] Implement Feature #1 UI
+- [ ] Implement Feature #1 UI functionality using Member 1's UI shell
 - [ ] Implement Feature #1 validation
-- [ ] Connect Feature #1 to API
-- [ ] Connect Feature #1 to database
+- [ ] Implement Feature #1 frontend API communication
+- [ ] Connect Feature #1 to required REST API endpoints
+- [ ] Connect Feature #1 to required database functionality through the API
 - [ ] Implement Feature #1 error handling
 - [ ] Add Feature #1 logging
+- [ ] Add comments to Feature #1 code
+- [ ] Add technical references where external code/patterns are used
 
-### Testing
+## Unit Testing
 
 - [ ] Test Feature #1 normal operation
 - [ ] Test Feature #1 invalid input
 - [ ] Test Feature #1 empty input
-- [ ] Test Feature #1 API communication
+- [ ] Test Feature #1 business logic
+- [ ] Test Feature #1 API communication logic
 - [ ] Test Feature #1 data persistence
 - [ ] Test Feature #1 data retrieval
 - [ ] Test Feature #1 error handling
 - [ ] Test Feature #1 edge cases
+- [ ] Run tests locally
+- [ ] Fix failures in their own code/tests
+- [ ] Verify tests pass through GitHub Actions
 
 ---
 
-## Custom Feature #2
+# Custom Feature #2
 
-### Development
+## Development
 
 - [ ] Define Feature #2 requirements
 - [ ] Create Feature #2 data model
 - [ ] Implement Feature #2 business logic
-- [ ] Implement Feature #2 UI
+- [ ] Implement Feature #2 UI functionality using Member 1's UI shell
 - [ ] Implement Feature #2 validation
-- [ ] Connect Feature #2 to API
-- [ ] Connect Feature #2 to database
+- [ ] Implement Feature #2 frontend API communication
+- [ ] Connect Feature #2 to required REST API endpoints
+- [ ] Connect Feature #2 to required database functionality through the API
 - [ ] Implement Feature #2 error handling
 - [ ] Add Feature #2 logging
+- [ ] Add comments to Feature #2 code
+- [ ] Add technical references where external code/patterns are used
 
-### Testing
+## Unit Testing
 
 - [ ] Test Feature #2 normal operation
 - [ ] Test Feature #2 invalid input
 - [ ] Test Feature #2 empty input
-- [ ] Test Feature #2 API communication
+- [ ] Test Feature #2 business logic
+- [ ] Test Feature #2 API communication logic
 - [ ] Test Feature #2 data persistence
 - [ ] Test Feature #2 data retrieval
 - [ ] Test Feature #2 error handling
 - [ ] Test Feature #2 edge cases
+- [ ] Run tests locally
+- [ ] Fix failures in their own code/tests
+- [ ] Verify tests pass through GitHub Actions
 
 > Repeat this structure for every custom feature specified in the Part 1 design.
 
@@ -281,15 +383,15 @@ Current suggested work spread according to AI:
 
 # Member 5 — Team Lead
 
-> The Team Lead does not own application feature development or automated test creation.
+> **Member 5 does not develop application features and does not write application unit tests.**
 
-> Their role is:
+> Member 5's responsibility is:
 >
-> **Set up → Coordinate → Integrate → Verify → Submit**
+> **Set Up → Coordinate → Integrate → Compile → Verify → Submit**
 
 ---
 
-## GitHub Setup
+# Team Lead — GitHub Setup
 
 - [ ] Create GitHub repository
 - [ ] Add team members
@@ -301,135 +403,81 @@ Current suggested work spread according to AI:
 - [ ] Create GitHub Issues
 - [ ] Create GitHub Project board
 - [ ] Create milestones
-- [ ] Assign jobs to members
+- [ ] Assign responsibilities
+- [ ] Establish pull request workflow
+- [ ] Ensure members commit regularly
+- [ ] Ensure members push work regularly
 
 ---
 
-## Project Setup
+# Team Lead — Initial Project Setup
+
+> The Team Lead creates the starting environment so Members 1–4 can work independently.
 
 - [ ] Create/initialise Android project
-- [ ] Configure Gradle
+- [ ] Configure initial Gradle project
 - [ ] Configure `.gitignore`
-- [ ] Create initial project structure
+- [ ] Create initial package/project structure
+- [ ] Push initial project to GitHub
 - [ ] Verify clean project builds
-- [ ] Push initial project
-- [ ] Make sure all members can clone/build the project
+- [ ] Verify all members can clone repository
+- [ ] Verify all members can build project
+- [ ] Establish development branches
+- [ ] Ensure project supports unit testing
+- [ ] Ensure project is ready for development
+
+> **After initial setup, application development belongs to Members 1–4.**
 
 ---
 
-## GitHub Actions
+# Team Lead — GitHub Actions / CI
 
-> The Team Lead sets up the automation but does not write the tests.
+> **The Team Lead sets up and configures GitHub Actions. They do not write the tests that GitHub Actions executes.**
 
-- [ ] Create GitHub Actions workflow
+## Workflow Setup
+
+- [ ] Create `.github/workflows/` directory
+- [ ] Create GitHub Actions workflow file
 - [ ] Configure JDK
 - [ ] Configure Gradle
-- [ ] Configure Android build
-- [ ] Configure test execution
-- [ ] Configure workflow on push
-- [ ] Configure workflow on pull request
-- [ ] Verify CI works
-- [ ] Fix CI configuration problems
+- [ ] Configure Android build environment
+- [ ] Configure application compilation
+- [ ] Configure unit-test execution
+- [ ] Configure workflow to run on every push
+- [ ] Configure workflow to run on pull requests
+- [ ] Configure appropriate build/test commands
+- [ ] Commit workflow configuration
+- [ ] Push workflow configuration
+- [ ] Verify GitHub Actions starts correctly
+- [ ] Verify application build runs
+- [ ] Verify unit tests run
+- [ ] Verify failed tests cause workflow failure
+- [ ] Verify successful tests produce a passing workflow
+- [ ] Maintain CI configuration throughout development
 
-### Tests executed by GitHub Actions
+## Team Lead Does NOT Write
 
-- Member 1 tests
-- Member 2 tests
-- Member 3 tests
-- Member 4 tests
+- [ ] Member 1 UI tests
+- [ ] Member 2 authentication/settings tests
+- [ ] Member 3 API/database tests
+- [ ] Member 4 custom-feature tests
 
----
+## If a Test Fails
 
-# Team Lead — Integration
+```text
+GitHub Actions
+      ↓
+Test fails
+      ↓
+Team Lead identifies responsible component
+      ↓
+Relevant member investigates
+      ↓
+Relevant member fixes their code/test
+      ↓
+Member pushes fix
+      ↓
+GitHub Actions runs again
+      ↓
+Team Lead verifies result
 
-- [ ] Review Member 1 work
-- [ ] Review Member 2 work
-- [ ] Review Member 3 work
-- [ ] Review Member 4 work
-- [ ] Merge branches
-- [ ] Resolve merge conflicts
-- [ ] Verify dependencies
-- [ ] Verify API configuration
-- [ ] Verify authentication configuration
-- [ ] Verify production configuration
-- [ ] Verify final `main` branch builds
-- [ ] Ensure all developer tests pass
-
----
-
-# Team Lead — Final System Testing
-
-> This is not test development.
->
-> The other members prove that their individual components work.
->
-> The Team Lead proves that the entire application works together.
-
-## Full Application Test
-
-- [ ] Install application on physical device
-- [ ] Launch application
-- [ ] Register user
-- [ ] Complete SSO authentication
-- [ ] Log in
-- [ ] Navigate through application
-- [ ] Change settings
-- [ ] Save settings
-- [ ] Restart application
-- [ ] Verify settings persisted
-- [ ] Use custom feature #1
-- [ ] Use custom feature #2
-- [ ] Create data
-- [ ] Verify data reaches API
-- [ ] Verify data reaches database
-- [ ] Modify data
-- [ ] Verify database modification
-- [ ] Retrieve modified data
-- [ ] Verify modified data appears in application
-- [ ] Log out
-- [ ] Verify authenticated areas are protected
-- [ ] Test major error scenarios
-- [ ] Verify application doesn't crash
-
----
-
-# Team Lead — README & Submission
-
-- [ ] Create README structure
-- [ ] Add project overview
-- [ ] Add project purpose
-- [ ] Add feature list
-- [ ] Add technology stack
-- [ ] Add architecture diagram
-- [ ] Add setup instructions
-- [ ] Add authentication information
-- [ ] Add API information supplied by Member 3
-- [ ] Add database information supplied by Member 3
-- [ ] Add testing information from Members 1–4
-- [ ] Add screenshots
-- [ ] Add GitHub Actions information
-- [ ] Add demonstration video
-- [ ] Add AI Sub-Report
-- [ ] Check README formatting
-- [ ] Check all links
-
----
-
-# Team Lead — Demonstration & Submission
-
-- [ ] Create demonstration checklist
-- [ ] Prepare physical device
-- [ ] Prepare test account
-- [ ] Prepare demonstration data
-- [ ] Record authentication demonstration
-- [ ] Record settings demonstration
-- [ ] Record REST API demonstration
-- [ ] Record database verification
-- [ ] Record custom feature demonstration
-- [ ] Upload demonstration video
-- [ ] Add video to README
-- [ ] Verify GitHub repository accessibility
-- [ ] Verify final CI run passes
-- [ ] Verify final build
-- [ ] Verify physical device version
-- [ ] Complete submission
