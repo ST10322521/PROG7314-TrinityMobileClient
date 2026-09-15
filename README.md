@@ -1,20 +1,20 @@
 # NB!!!!
+
 1. Please create a branch for each feature being worked on!!
 2. Please make your branch name accurate to the feature being worked on
-3. Please make sure your branch can merge without conflicts or test fails before accepting the pull rewuest
+3. Please make sure your branch can merge without conflicts or test fails before accepting the pull request
 
-
-Current suggested work spread according to AI:
+---
 
 # Part 2 Prototype — Team Responsibilities
 
-# Member 1 — Android UI & Navigation
+# Simon — Android UI & Navigation
 
-> **Member 1 is responsible ONLY for creating the navigable Android application interface.**
+> **Simon is responsible ONLY for creating the navigable Android application interface.**
 
-> Member 1 does not implement authentication, REST API communication, database functionality, settings logic, business logic, ViewModels, repositories, or custom-feature functionality.
+> Simon does not implement authentication, REST API communication, database functionality, settings logic, business logic, ViewModels, repositories, or custom-feature functionality.
 
-> The purpose of Member 1's work is to provide a complete, intuitive, navigable application shell that Members 2–4 can connect their functionality to.
+> The purpose of Simon's work is to provide a complete, intuitive, navigable application shell that Lyle, James, and Sky can connect their functionality to.
 
 ## Development
 
@@ -66,7 +66,7 @@ Current suggested work spread according to AI:
 
 ## UI Testing
 
-> Member 1 tests only the UI and navigation they created.
+> Simon tests only the UI and navigation he created.
 
 - [ ] Test application launches
 - [ ] Test navigation to Login
@@ -89,7 +89,7 @@ Current suggested work spread according to AI:
 - [ ] Fix failures in their own UI/navigation code
 - [ ] Verify tests pass through GitHub Actions
 
-## Explicitly NOT Member 1's Responsibility
+## Explicitly NOT Simon's Responsibility
 
 - [ ] SSO implementation
 - [ ] Authentication implementation
@@ -118,7 +118,7 @@ Current suggested work spread according to AI:
 
 ---
 
-# Member 2 — Authentication & Settings
+# Lyle — Authentication & Settings
 
 ## Authentication Development
 
@@ -139,7 +139,7 @@ Current suggested work spread according to AI:
 - [ ] Implement session expiry handling
 - [ ] Implement logout
 - [ ] Implement user identification
-- [ ] Connect authentication functionality to Member 1's UI
+- [ ] Connect authentication functionality to Simon's UI
 - [ ] Add authentication/state logging using Android `Log`
 - [ ] Add clear comments to authentication code
 - [ ] Add technical references where external code/patterns are used
@@ -153,12 +153,12 @@ Current suggested work spread according to AI:
 - [ ] Associate preferences with authenticated user
 - [ ] Restore preferences after login
 - [ ] Handle preference errors
-- [ ] Connect settings functionality to Member 1's Settings UI
+- [ ] Connect settings functionality to Simon's Settings UI
 - [ ] Add preference state logging
 
 ## Unit Testing
 
-> Member 2 writes and maintains all tests for the authentication and settings functionality they develop.
+> Lyle writes and maintains all tests for the authentication and settings functionality he develops.
 
 - [ ] Set up authentication/settings testing
 - [ ] Test successful registration
@@ -186,11 +186,11 @@ Current suggested work spread according to AI:
 
 ## Deliverable
 
-**Working authentication and settings functionality connected to Member 1's UI + tests proving the functionality works.**
+**Working authentication and settings functionality connected to Simon's UI + tests proving the functionality works.**
 
 ---
 
-# Member 3 — REST API & Database
+# James — REST API & Database
 
 ## Database Development
 
@@ -253,7 +253,7 @@ Current suggested work spread according to AI:
 
 ## Frontend/API Integration
 
-> Member 3 is responsible for the backend side of the frontend/backend connection.
+> James is responsible for the backend side of the frontend/backend connection.
 
 - [ ] Define API contract with frontend developers
 - [ ] Define endpoint requirements
@@ -263,7 +263,7 @@ Current suggested work spread according to AI:
 - [ ] Ensure API is accessible by Android application
 - [ ] Ensure API authentication works with the Android application
 - [ ] Ensure API responses contain required data
-- [ ] Support Member 2/4 integration requirements
+- [ ] Support Lyle/Sky integration requirements
 
 ## Unit/Backend Testing
 
@@ -299,9 +299,9 @@ Current suggested work spread according to AI:
 
 ---
 
-# Member 4 — Custom Features
+# Sky — Custom Features
 
-> Member 4 owns the custom user-defined functionality selected from the Part 1 design.
+> **Sky owns the custom user-defined functionality selected from the Part 1 design.**
 
 > Each custom feature should be tracked as its own GitHub Issue.
 
@@ -314,7 +314,7 @@ Current suggested work spread according to AI:
 - [ ] Define Feature #1 requirements
 - [ ] Create Feature #1 data model
 - [ ] Implement Feature #1 business logic
-- [ ] Implement Feature #1 UI functionality using Member 1's UI shell
+- [ ] Implement Feature #1 UI functionality using Simon's UI shell
 - [ ] Implement Feature #1 validation
 - [ ] Implement Feature #1 frontend API communication
 - [ ] Connect Feature #1 to required REST API endpoints
@@ -348,7 +348,7 @@ Current suggested work spread according to AI:
 - [ ] Define Feature #2 requirements
 - [ ] Create Feature #2 data model
 - [ ] Implement Feature #2 business logic
-- [ ] Implement Feature #2 UI functionality using Member 1's UI shell
+- [ ] Implement Feature #2 UI functionality using Simon's UI shell
 - [ ] Implement Feature #2 validation
 - [ ] Implement Feature #2 frontend API communication
 - [ ] Connect Feature #2 to required REST API endpoints
@@ -412,7 +412,7 @@ Current suggested work spread according to AI:
 
 # Team Lead — Initial Project Setup
 
-> The Team Lead creates the starting environment so Members 1–4 can work independently.
+> The Team Lead creates the starting environment so Simon, Lyle, James, and Sky can work independently.
 
 - [ ] Create/initialise Android project
 - [ ] Configure initial Gradle project
@@ -426,7 +426,7 @@ Current suggested work spread according to AI:
 - [ ] Ensure project supports unit testing
 - [ ] Ensure project is ready for development
 
-> **After initial setup, application development belongs to Members 1–4.**
+> **After initial setup, application development belongs to Simon, Lyle, James, and Sky.**
 
 ---
 
@@ -457,27 +457,7 @@ Current suggested work spread according to AI:
 
 ## Team Lead Does NOT Write
 
-- [ ] Member 1 UI tests
-- [ ] Member 2 authentication/settings tests
-- [ ] Member 3 API/database tests
-- [ ] Member 4 custom-feature tests
-
-## If a Test Fails
-
-```text
-GitHub Actions
-      ↓
-Test fails
-      ↓
-Team Lead identifies responsible component
-      ↓
-Relevant member investigates
-      ↓
-Relevant member fixes their code/test
-      ↓
-Member pushes fix
-      ↓
-GitHub Actions runs again
-      ↓
-Team Lead verifies result
-
+- [ ] Simon's UI tests
+- [ ] Lyle's authentication/settings tests
+- [ ] James's API/database tests
+- [ ] Sky's custom-feature tests
