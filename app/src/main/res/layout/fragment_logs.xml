@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?><androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_root">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Logs" android:textColor="@color/text_primary"
+            android:textSize="24sp" android:textStyle="bold" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="View and analyse all system and user activity logs" android:textColor="@color/text_secondary"
+            android:textSize="13sp" android:layout_marginTop="2dp" />
+
+        <!-- 2x2 stat grid -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginTop="16dp">
+            <LinearLayout style="@style/TrinityCard" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="Total Logs" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0" android:textColor="@color/text_primary" android:textSize="22sp"
+                    android:textStyle="bold" android:layout_marginTop="4dp" />
+            </LinearLayout>
+            <LinearLayout style="@style/TrinityCard" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical"
+                android:layout_marginStart="10dp">
+                <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="Informational" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0" android:textColor="@color/status_blue" android:textSize="22sp"
+                    android:textStyle="bold" android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginTop="10dp">
+            <LinearLayout style="@style/TrinityCard" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="Warnings" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0" android:textColor="@color/status_yellow" android:textSize="22sp"
+                    android:textStyle="bold" android:layout_marginTop="4dp" />
+            </LinearLayout>
+            <LinearLayout style="@style/TrinityCard" android:layout_width="0dp"
+                android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical"
+                android:layout_marginStart="10dp">
+                <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" android:text="Critical" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:text="0" android:textColor="@color/status_purple" android:textSize="22sp"
+                    android:textStyle="bold" android:layout_marginTop="4dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Filter + Source -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginTop="14dp">
+            <TextView android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
+                android:background="@drawable/bg_input" android:gravity="center_vertical"
+                android:paddingStart="14dp" android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="10dp" android:text="Filter logs…"
+                android:textColor="@color/text_muted" android:textSize="14sp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="46dp" android:layout_marginStart="10dp"
+                android:background="@drawable/bg_input" android:gravity="center"
+                android:paddingHorizontal="16dp" android:drawableStart="@drawable/ic_filter"
+                android:drawablePadding="8dp" android:text="Source"
+                android:textColor="@color/text_secondary" android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Level tabs -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:layout_marginTop="14dp">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:paddingBottom="8dp" android:background="@drawable/bg_tab_selected"
+                android:text="All" android:textColor="@color/brand_orange" android:textSize="14sp" android:textStyle="bold" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginStart="18dp" android:paddingBottom="8dp"
+                android:text="Critical" android:textColor="@color/text_secondary" android:textSize="14sp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginStart="18dp" android:paddingBottom="8dp"
+                android:text="Error" android:textColor="@color/text_secondary" android:textSize="14sp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginStart="18dp" android:paddingBottom="8dp"
+                android:text="Warning" android:textColor="@color/text_secondary" android:textSize="14sp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginStart="18dp" android:paddingBottom="8dp"
+                android:text="Info" android:textColor="@color/text_secondary" android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Log entries / empty state -->
+        <LinearLayout style="@style/TrinityCard"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:gravity="center_horizontal"
+            android:layout_marginTop="12dp" android:paddingVertical="44dp">
+            <ImageView android:layout_width="40dp" android:layout_height="40dp"
+                android:src="@drawable/ic_logs" android:tint="@color/text_muted" android:alpha="0.6" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="14dp" android:text="No logs yet"
+                android:textColor="@color/text_secondary" android:textSize="15sp" android:textStyle="bold" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="4dp" android:gravity="center"
+                android:text="System and user activity will appear here"
+                android:textColor="@color/text_muted" android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Quick actions -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Quick Actions" android:textColor="@color/text_primary"
+            android:textSize="16sp" android:textStyle="bold" android:layout_marginTop="18dp" />
+
+        <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_search_logs" style="@style/PrimaryButton"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:gravity="center_vertical"
+            android:drawableStart="@drawable/ic_search" android:drawablePadding="12dp"
+            android:paddingStart="20dp" android:text="Search Logs" />
+        <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_create_alert" style="@style/PrimaryButton"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:gravity="center_vertical"
+            android:drawableStart="@drawable/ic_bell" android:drawablePadding="12dp"
+            android:paddingStart="20dp" android:text="Create Log Alert" />
+        <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_export_logs" style="@style/PrimaryButton"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" android:gravity="center_vertical"
+            android:drawableStart="@drawable/ic_download" android:drawablePadding="12dp"
+            android:paddingStart="20dp" android:text="Export Logs" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
