@@ -73,6 +73,7 @@
                 android:layout_gravity="center_vertical" android:layout_marginStart="14dp"
                 android:src="@drawable/ic_person" />
             <EditText
+                android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:paddingStart="44dp"
@@ -93,6 +94,7 @@
                 android:layout_gravity="center_vertical" android:layout_marginStart="14dp"
                 android:src="@drawable/ic_key" />
             <EditText
+                android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:paddingStart="44dp"
@@ -116,14 +118,6 @@
             android:layout_marginTop="20dp"
             android:text="Connect &amp; Sign In" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="14dp"
-            android:text="or"
-            android:textColor="@color/text_muted"
-            android:textSize="13sp" />
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_sso"
             style="@style/SecondaryButton"
@@ -133,7 +127,24 @@
             android:drawablePadding="10dp"
             android:paddingStart="90dp"
             android:paddingEnd="90dp"
+            android:fontFamily="@font/google_sans"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
             android:text="Sign in with Google" />
+
+        <TextView
+            android:id="@+id/btnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register with email and password"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Register"
+            android:textColor="@color/brand_orange_dark"/>
 
         <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
 
