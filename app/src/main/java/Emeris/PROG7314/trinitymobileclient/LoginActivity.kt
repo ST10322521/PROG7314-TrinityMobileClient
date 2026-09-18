@@ -1,5 +1,6 @@
 package Emeris.PROG7314.trinitymobileclient
 
+import Emeris.PROG7314.trinitymobileclient.databinding.ActivityLoginBinding
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -10,21 +11,25 @@ import androidx.core.view.WindowInsetsCompat
 
 // Login screen, nothing here yet
 class LoginActivity : AppCompatActivity() {
+    // View binding
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
 
         // pad for the status/nav bars
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
             insets
         }
 
-        findViewById<Button>(R.id.btn_sign_in).setOnClickListener { openHome() }
-        findViewById<Button>(R.id.btn_biometrics).setOnClickListener { openHome() }
+        binding.btnSignIn.setOnClickListener { openHome() }
+        binding.btnBiometrics.setOnClickListener { openHome() }
     }
 
     private fun openHome() {

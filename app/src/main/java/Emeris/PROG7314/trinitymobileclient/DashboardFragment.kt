@@ -1,46 +1,67 @@
 package Emeris.PROG7314.trinitymobileclient
 
+import Emeris.PROG7314.trinitymobileclient.databinding.FragmentDashboardBinding
+import Emeris.PROG7314.trinitymobileclient.databinding.ItemAgentRowBinding
+import Emeris.PROG7314.trinitymobileclient.databinding.ItemDividerBinding
+import Emeris.PROG7314.trinitymobileclient.model.Agent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.forEachIndexed
 import androidx.fragment.app.Fragment
 
 // Dashboard screen. Agent rows open the Agent Interface screen.
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
-
-    private data class Agent(
-        val name: String, val meta: String, val time: String, val online: Boolean
-    )
+    // View Binding setup
+    private var _binding: FragmentDashboardBinding? = null
+    private val binding get() = _binding!!
 
     // No agents yet.
     private val sampleAgents = emptyList<Agent>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val list = view.findViewById<LinearLayout>(R.id.agent_list)
-        val empty = view.findViewById<View>(R.id.agent_empty)
-        val inflater = LayoutInflater.from(requireContext())
 
-        empty.visibility = if (sampleAgents.isEmpty()) View.VISIBLE else View.GONE
+        _binding = FragmentDashboardBinding.bind(view)
+
+        binding.agentEmpty.visibility = if (sampleAgents.isEmpty()) View.VISIBLE else View.GONE
 
         sampleAgents.forEachIndexed { index, agent ->
-            val row = inflater.inflate(R.layout.item_agent_row, list, false)
-            row.findViewById<TextView>(R.id.agent_name).text = agent.name
-            row.findViewById<TextView>(R.id.agent_meta).text = agent.meta
-            row.findViewById<TextView>(R.id.agent_time).text = agent.time
-            row.findViewById<View>(R.id.dot)
-                .setBackgroundResource(if (agent.online) R.drawable.dot_green else R.drawable.dot_yellow)
 
-            row.setOnClickListener { (activity as? HomeActivity)?.openAgentInterface() }
-            list.addView(row)
+            val rowBinding = ItemAgentRowBinding.inflate(
+                layoutInflater,
+                binding.agentList,
+                false
+            )
+
+            rowBinding.agentName.text = agent.name
+            rowBinding.agentMeta.text = agent.meta
+            rowBinding.agentTime.text = agent.time
+
+            rowBinding.dot.setBackgroundResource((if (agent.online) R.drawable.dot_green else R.drawable.dot_yellow))
+
+            rowBinding.root.setOnClickListener {
+                (activity as? HomeActivity)?.openAgentInterface()
+            }
 
             // divider between rows
             if (index < sampleAgents.lastIndex) {
-                list.addView(inflater.inflate(R.layout.item_divider, list, false))
+                val dividerBinding = ItemDividerBinding.inflate(
+                    layoutInflater,
+                    binding.agentList,
+                    false
+                )
+
+                binding.agentList.addView(dividerBinding.root)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

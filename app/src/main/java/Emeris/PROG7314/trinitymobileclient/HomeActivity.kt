@@ -1,13 +1,13 @@
 package Emeris.PROG7314.trinitymobileclient
 
+import Emeris.PROG7314.trinitymobileclient.databinding.ActivityHomeBinding
+import Emeris.PROG7314.trinitymobileclient.model.NavList
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
-import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -19,18 +19,20 @@ import androidx.fragment.app.Fragment
 // Shell activity: nav drawer + shared app bar, swaps fragments into content_container.
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var drawer: DrawerLayout
-    private lateinit var appBar: View
+    // View bindings
+    private lateinit var binding: ActivityHomeBinding
+
+    // Nav list Ids
+    private val navItemIds = NavList.navItemIds
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
 
-        drawer = findViewById(R.id.drawer_layout)
-        appBar = findViewById(R.id.app_bar)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        findViewById<ImageButton>(R.id.btn_menu).setOnClickListener {
-            drawer.openDrawer(GravityCompat.START)
+        binding.btnMenu.setOnClickListener {
+            binding.drawerLayout.openDrawer(GravityCompat.START)
         }
 
         wireDrawer()
@@ -47,14 +49,15 @@ class HomeActivity : AppCompatActivity() {
     private fun handleBackNavigation() {
         onBackPressedDispatcher.addCallback(this) {
             when {
-                drawer.isDrawerOpen(GravityCompat.START) ->
-                    drawer.closeDrawer(GravityCompat.START)
+                binding.drawerLayout.isDrawerOpen(GravityCompat.START) -> {
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                }
 
                 supportFragmentManager.backStackEntryCount > 0 -> {
                     supportFragmentManager.popBackStack()
                     // restore shared app bar + drawer
-                    appBar.visibility = View.VISIBLE
-                    drawer.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+                    binding.appBar.visibility = View.VISIBLE
+                    binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 }
 
                 else -> {
@@ -65,32 +68,28 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private val navItemIds = listOf(
-        R.id.nav_dashboard, R.id.nav_listeners, R.id.nav_payloads, R.id.nav_logs, R.id.nav_settings
-    )
-
     private fun wireDrawer() {
-        findViewById<View>(R.id.nav_dashboard).setOnClickListener {
+        binding.navDrawer.navDashboard.setOnClickListener {
             selectNavItem(R.id.nav_dashboard)
             showScreen(DashboardFragment(), sharedAppBar = true); closeDrawer()
         }
-        findViewById<View>(R.id.nav_listeners).setOnClickListener {
+        binding.navDrawer.navListeners.setOnClickListener {
             selectNavItem(R.id.nav_listeners)
             showScreen(ListenersFragment(), sharedAppBar = true); closeDrawer()
         }
-        findViewById<View>(R.id.nav_payloads).setOnClickListener {
+        binding.navDrawer.navPayloads.setOnClickListener {
             selectNavItem(R.id.nav_payloads)
             showScreen(PayloadsFragment(), sharedAppBar = true); closeDrawer()
         }
-        findViewById<View>(R.id.nav_logs).setOnClickListener {
+        binding.navDrawer.navLogs.setOnClickListener {
             selectNavItem(R.id.nav_logs)
             showScreen(LogsFragment(), sharedAppBar = true); closeDrawer()
         }
-        findViewById<View>(R.id.nav_settings).setOnClickListener {
+        binding.navDrawer.navSettings.setOnClickListener {
             selectNavItem(R.id.nav_settings)
             showScreen(SettingsFragment(), sharedAppBar = true); closeDrawer()
         }
-        findViewById<View>(R.id.nav_logout).setOnClickListener {
+        binding.navDrawer.navLogout.setOnClickListener {
             closeDrawer()
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
@@ -104,12 +103,21 @@ class HomeActivity : AppCompatActivity() {
         }.resourceId
 
         for (id in navItemIds) {
-            val row = findViewById<LinearLayout>(id)
+            val row = when (id) {
+                R.id.nav_dashboard -> binding.navDrawer.navDashboard
+                R.id.nav_listeners -> binding.navDrawer.navListeners
+                R.id.nav_payloads -> binding.navDrawer.navPayloads
+                R.id.nav_logs -> binding.navDrawer.navLogs
+                R.id.nav_settings -> binding.navDrawer.navSettings
+                else -> continue
+            }
+
             val icon = row.getChildAt(0) as ImageView
             val label = row.getChildAt(1) as TextView
             val selected = id == selectedId
 
             row.setBackgroundResource(if (selected) R.drawable.bg_drawer_selected else rippleBg)
+
             val tint = ContextCompat.getColor(
                 this, if (selected) R.color.brand_orange else R.color.text_secondary
             )
@@ -129,8 +137,8 @@ class HomeActivity : AppCompatActivity() {
         sharedAppBar: Boolean,
         addToBackStack: Boolean = false
     ) {
-        appBar.visibility = if (sharedAppBar) View.VISIBLE else View.GONE
-        drawer.setDrawerLockMode(
+        binding.appBar.visibility = if (sharedAppBar) View.VISIBLE else View.GONE
+        binding.drawerLayout.setDrawerLockMode(
             if (sharedAppBar) DrawerLayout.LOCK_MODE_UNLOCKED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED
         )
 
@@ -140,5 +148,5 @@ class HomeActivity : AppCompatActivity() {
             .commit()
     }
 
-    private fun closeDrawer() = drawer.closeDrawer(GravityCompat.START)
+    private fun closeDrawer() = binding.drawerLayout.closeDrawer(GravityCompat.START)
 }

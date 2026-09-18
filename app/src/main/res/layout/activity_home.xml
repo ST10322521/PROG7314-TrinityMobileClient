@@ -81,6 +81,7 @@
 
     <!-- Navigation drawer -->
     <include
+        android:id="@+id/nav_drawer"
         layout="@layout/nav_drawer"
         android:layout_width="300dp"
         android:layout_height="match_parent"

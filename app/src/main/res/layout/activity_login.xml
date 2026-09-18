@@ -125,15 +125,15 @@
             android:textSize="13sp" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_biometrics"
+            android:id="@+id/btn_sso"
             style="@style/SecondaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_fingerprint"
+            android:drawableStart="@drawable/ic_googleSignon"
             android:drawablePadding="10dp"
             android:paddingStart="90dp"
             android:paddingEnd="90dp"
-            android:text="Sign in with biometrics" />
+            android:text="Sign in with Google" />
 
         <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
 
