@@ -4,7 +4,6 @@ import Emeris.PROG7314.trinitymobileclient.databinding.ActivityLoginBinding
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -149,7 +148,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleGoogleCredential(credential: android.credentials.Credential) {
+    private fun handleGoogleCredential(credential: Credential) {
         // Check if credential is of type Google ID
         if (credential is CustomCredential && credential.type == TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
             try {
