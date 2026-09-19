@@ -78,11 +78,11 @@
                 android:layout_height="52dp"
                 android:paddingStart="44dp"
                 android:background="@null"
-                android:hint="Operator username"
+                android:hint="Operator email"
                 android:textColorHint="@color/text_muted"
                 android:textColor="@color/text_primary"
                 android:textSize="15sp"
-                android:inputType="text" />
+                android:inputType="textEmailAddress" />
         </FrameLayout>
 
         <FrameLayout
@@ -123,7 +123,7 @@
             style="@style/SecondaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_googleSignon"
+            android:drawableStart="@drawable/ic_google_sign_on"
             android:drawablePadding="10dp"
             android:paddingStart="90dp"
             android:paddingEnd="90dp"
