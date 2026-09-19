@@ -1,10 +1,13 @@
 package Emeris.PROG7314.trinitymobileclient
 
+import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
+import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
 import Emeris.PROG7314.trinitymobileclient.databinding.ActivityHomeBinding
 import Emeris.PROG7314.trinitymobileclient.model.NavList
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
@@ -24,6 +27,9 @@ class HomeActivity : AppCompatActivity() {
     // View bindings
     private lateinit var binding: ActivityHomeBinding
 
+    // auth repo for signing out
+    private lateinit var authRepository: AuthRepository
+
     // Nav list Ids
     private val navItemIds = NavList.navItemIds
 
@@ -32,6 +38,8 @@ class HomeActivity : AppCompatActivity() {
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        authRepository = AuthProvider.repository()
 
         binding.btnMenu.setOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
@@ -93,7 +101,10 @@ class HomeActivity : AppCompatActivity() {
         }
         binding.navDrawer.navLogout.setOnClickListener {
             closeDrawer()
-            Firebase.auth.signOut()
+
+            Log.d("firebaseAuth", "Logout Selected")
+            authRepository.logout()
+
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
