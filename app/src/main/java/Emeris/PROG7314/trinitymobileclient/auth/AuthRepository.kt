@@ -1,5 +1,6 @@
 package Emeris.PROG7314.trinitymobileclient.auth
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -92,5 +93,29 @@ class AuthRepository(
                     onResult(Result.failure(task.exception?: Exception("SSO Login Failed")))
                 }
             }
+    }
+
+    /*
+    * Return current auth used
+    *
+    * Returns current [FirebaseUser], or null if no user is authenticated
+     */
+    fun currentUser(): FirebaseUser? {
+        return auth.currentUser
+    }
+
+    /**
+     * Signs out current user
+      */
+    fun logout() {
+        val user = auth.currentUser
+
+        if (user != null){
+            Log.d("firebaseAuth", "Signing out ${user.uid}")
+        } else {
+            Log.e("firebaseAuth", "Signing out requested with no signed in user")
+        }
+
+        auth.signOut()
     }
 }
