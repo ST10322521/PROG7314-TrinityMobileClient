@@ -113,7 +113,7 @@ class AuthRepository(
         if (user != null){
             Log.d("firebaseAuth", "Signing out ${user.uid}")
         } else {
-            Log.e("firebaseAuth", "Signing out requested with no signed in user")
+            Log.e("firebaseAuth", "Sign-out requested with no signed in user")
         }
 
         auth.signOut()

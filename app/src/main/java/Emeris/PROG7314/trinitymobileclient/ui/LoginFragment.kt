@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.credentials.Credential
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
+import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.lifecycle.lifecycleScope
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
@@ -152,7 +153,10 @@ class LoginFragment : Fragment() {
                 )
 
                 handleGoogleCredential(result.credential)
-            } catch (e: Exception) {
+            } catch (e: GetCredentialCancellationException) {
+                Log.d("firebaseAuth", "SSO cancelled by user")
+            }
+            catch (e: Exception) {
                 Log.e("firebaseAuth", "Google SSO failed", e)
                 Toast.makeText(requireContext(), "Login failed", Toast.LENGTH_SHORT).show()
             }
