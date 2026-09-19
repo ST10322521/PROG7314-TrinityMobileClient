@@ -18,8 +18,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import com.google.firebase.Firebase
-import com.google.firebase.auth.auth
 
 // Shell activity: nav drawer + shared app bar, swaps fragments into content_container.
 class HomeActivity : AppCompatActivity() {
