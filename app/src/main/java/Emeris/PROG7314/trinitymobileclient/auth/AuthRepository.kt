@@ -114,13 +114,20 @@ class AuthRepository(
             }
     }
 
-    /*
+    /**
     * Return current auth used
     *
-    * Returns current [FirebaseUser], or null if no user is authenticated
+    * @returns authenticated user uid [userId], or null if no user is authenticated
      */
-    fun currentUser(): FirebaseUser? {
-        return auth.currentUser
+    fun currentUserId(): String? {
+        val userId = auth.currentUser?.uid
+
+        if (userId != null){
+            Log.d("firebaseAuth", "Authenticated user: $userId")
+        } else {
+            Log.d("firebaseAuth", "No authenticated user found")
+        }
+        return userId
     }
 
     /**
