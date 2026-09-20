@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import Emeris.PROG7314.trinitymobileclient.R
+import Emeris.PROG7314.trinitymobileclient.auth.AuthError
+import Emeris.PROG7314.trinitymobileclient.auth.AuthException
 import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
 import Emeris.PROG7314.trinitymobileclient.databinding.FragmentLoginBinding
@@ -99,7 +101,7 @@ class LoginFragment : Fragment() {
             }
             result.onFailure { exception ->
                 Log.e("firebaseAuth", "login failed", exception)
-                Toast.makeText(requireContext(), "Login failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getAuthErrorMessage(exception), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -121,10 +123,10 @@ class LoginFragment : Fragment() {
                 Log.d("firebaseAuth", "Registration successful, User: ${user.uid}")
                 openHome()
             }
-                .onFailure { exception ->
-                    Log.e("firebaseAuth", "Registration failed", exception)
-                    Toast.makeText(requireContext(), "Registration failed", Toast.LENGTH_SHORT).show()
-                }
+            .onFailure { exception ->
+                Log.e("firebaseAuth", "Registration failed", exception)
+                Toast.makeText(requireContext(), getAuthErrorMessage(exception), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -195,7 +197,7 @@ class LoginFragment : Fragment() {
                 .onFailure { exception ->
                     // If sign in fails, display a message to the user
                     Log.w("firebaseAuth", "signInWithCredential:failure", exception)
-                    Toast.makeText(requireContext(), "Login failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getAuthErrorMessage(exception), Toast.LENGTH_SHORT).show()
                 }
         }
     }
@@ -234,6 +236,21 @@ class LoginFragment : Fragment() {
             openHome()
         } else {
             Log.d("firebaseAuth", "No user is currently signed in")
+        }
+    }
+
+    private fun getAuthErrorMessage(exception: Throwable): String {
+        return if (exception is AuthException) {
+            when (exception.error){
+                AuthError.INVALID_CREDENTIALS -> getString(R.string.invalid_email_or_password)
+                AuthError.INVALID_EMAIL -> getString(R.string.please_enter_a_valid_email_address)
+                AuthError.EMAIL_ALREADY_IN_USE -> getString(R.string.an_account_with_this_email_already_exists)
+                AuthError.NETWORK_ERROR -> getString(R.string.unable_to_connect_please_try_again)
+                AuthError.UNKNOWN_ERROR -> getString(R.string.authentication_failed_please_try_again)
+                else -> getString(R.string.authentication_failed_please_try_again)
+            }
+        } else {
+            getString(R.string.authentication_failed_please_try_again)
         }
     }
 }

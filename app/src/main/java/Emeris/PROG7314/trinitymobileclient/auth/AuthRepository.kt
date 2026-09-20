@@ -1,13 +1,26 @@
 package Emeris.PROG7314.trinitymobileclient.auth
 
 import android.util.Log
+import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
 class AuthRepository(
     private val auth: FirebaseAuth
 ) {
+
+    private fun mapAuthError(exception: Exception): AuthError {
+        return when (exception) {
+            is FirebaseAuthInvalidCredentialsException -> AuthError.INVALID_CREDENTIALS
+            is FirebaseAuthUserCollisionException -> AuthError.EMAIL_ALREADY_IN_USE
+            is FirebaseNetworkException -> AuthError.NETWORK_ERROR
+            else -> AuthError.UNKNOWN_ERROR
+        }
+    }
+
     /**
      * Register a new user using their email and password.
      *
@@ -32,7 +45,9 @@ class AuthRepository(
                     onResult(Result.failure(IllegalStateException("Successful Registration, No User Returned")))
                 }
             } else {
-                onResult(Result.failure(task.exception?: Exception("Registration Failed")))
+                val exception = task.exception ?: Exception("Registration Failed")
+                val authError = mapAuthError(exception)
+                onResult(Result.failure(AuthException(authError, exception)))
             }
         }
     }
@@ -61,7 +76,9 @@ class AuthRepository(
                     onResult(Result.failure(IllegalStateException("Successful Login, No User Returned")))
                 }
             } else {
-                onResult(Result.failure(task.exception?: Exception("Login Failed")))
+                val exception = task.exception ?: Exception("Login Failed")
+                val authError = mapAuthError(exception)
+                onResult(Result.failure(AuthException(authError, exception)))
             }
         }
     }
@@ -90,7 +107,9 @@ class AuthRepository(
                         onResult(Result.failure(IllegalStateException("Successful SSO Login, no user returned")))
                     }
                 } else {
-                    onResult(Result.failure(task.exception?: Exception("SSO Login Failed")))
+                    val exception = task.exception ?: Exception("SSO Login Failed")
+                    val authError = mapAuthError(exception)
+                    onResult(Result.failure(AuthException(authError, exception)))
                 }
             }
     }
