@@ -1,5 +1,6 @@
 package Emeris.PROG7314.trinitymobileclient.auth
 
+import android.util.Log
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -9,6 +10,8 @@ object AuthProvider {
         Firebase.auth.apply {
             //TODO: FOR TESTING ONLY
             useEmulator("127.0.0.1", 9099)
+
+            Log.d("firebaseAuth", "FirebaseAuth emulator configured")
         }
     }
 
