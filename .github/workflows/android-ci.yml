@@ -34,11 +34,7 @@ jobs:
           packages: "platform-tools"
 
       - name: Install Android SDK packages
-        run: |
-          sdkmanager "platforms;android-37"
-          sdkmanager "platform-tools"
-          sdkmanager "emulator"
-          sdkmanager "system-images;android-35;google_apis;x86_64"
+      - run: sdkmanager --list
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
