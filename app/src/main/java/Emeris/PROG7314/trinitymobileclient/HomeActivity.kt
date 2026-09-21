@@ -43,6 +43,12 @@ class HomeActivity : AppCompatActivity() {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
 
+        // App-bar settings gear: shortcut to the Settings screen.
+        binding.btnSettings.setOnClickListener {
+            selectNavItem(R.id.nav_settings)
+            showScreen(SettingsFragment(), sharedAppBar = true)
+        }
+
         wireDrawer()
         handleBackNavigation()
 
