@@ -40,7 +40,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentLoginBinding.inflate(
             inflater,
             container,
@@ -156,7 +156,7 @@ class LoginFragment : Fragment() {
 
                 handleGoogleCredential(result.credential)
             } catch (e: GetCredentialCancellationException) {
-                Log.d("firebaseAuth", "SSO cancelled by user")
+                Log.e("firebaseAuth", "SSO cancelled by user",e)
             }
             catch (e: Exception) {
                 Log.e("firebaseAuth", "Google SSO failed", e)
@@ -229,10 +229,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun checkCurrentUser(){
-        val currentUser = authRepository.currentUser()
+        val currentUser = authRepository.currentUserId()
 
         if (currentUser != null) {
-            Log.d("firebaseAuth", "User is already signed in: ${currentUser.uid}")
+            Log.d("firebaseAuth", "User is already signed in: $currentUser")
             openHome()
         } else {
             Log.d("firebaseAuth", "No user is currently signed in")
@@ -247,7 +247,6 @@ class LoginFragment : Fragment() {
                 AuthError.EMAIL_ALREADY_IN_USE -> getString(R.string.an_account_with_this_email_already_exists)
                 AuthError.NETWORK_ERROR -> getString(R.string.unable_to_connect_please_try_again)
                 AuthError.UNKNOWN_ERROR -> getString(R.string.authentication_failed_please_try_again)
-                else -> getString(R.string.authentication_failed_please_try_again)
             }
         } else {
             getString(R.string.authentication_failed_please_try_again)

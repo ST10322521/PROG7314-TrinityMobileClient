@@ -130,6 +130,18 @@ class AuthRepository(
         return userId
     }
 
+    fun currentUserUsername(): String? {
+        val userEmail = auth.currentUser?.email
+        val username = userEmail?.substringBefore("@")
+
+        if (username != null){
+            Log.d("firebaseAuth", "Authenticated user: $username")
+        } else {
+            Log.d("firebaseAuth", "No authenticated user found")
+        }
+        return username
+    }
+
     /**
      * Signs out current user
       */
