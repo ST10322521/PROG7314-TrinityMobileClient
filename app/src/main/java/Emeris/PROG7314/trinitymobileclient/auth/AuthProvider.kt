@@ -6,15 +6,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 
 object AuthProvider {
-    private val auth: FirebaseAuth by lazy {
-        Firebase.auth.apply {
-            //TODO: FOR TESTING ONLY
-            useEmulator("127.0.0.1", 9099)
 
-            Log.d("firebaseAuth", "FirebaseAuth emulator configured")
-        }
+    /**
+     * Firebase Authentication instance to be used throughout the app
+     */
+    private val auth: FirebaseAuth by lazy {
+        Firebase.auth
     }
 
+    /**
+     * Creates and returns an AuthRepo using the shared firebase auth instance
+     */
     fun repository(): AuthRepository {
         return AuthRepository(auth)
     }

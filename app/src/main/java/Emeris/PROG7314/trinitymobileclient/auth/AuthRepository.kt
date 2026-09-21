@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -12,9 +13,10 @@ class AuthRepository(
     private val auth: FirebaseAuth
 ) {
 
-    private fun mapAuthError(exception: Exception): AuthError {
+    internal fun mapAuthError(exception: Exception): AuthError {
         return when (exception) {
             is FirebaseAuthInvalidCredentialsException -> AuthError.INVALID_CREDENTIALS
+            is FirebaseAuthInvalidUserException -> AuthError.INVALID_CREDENTIALS
             is FirebaseAuthUserCollisionException -> AuthError.EMAIL_ALREADY_IN_USE
             is FirebaseNetworkException -> AuthError.NETWORK_ERROR
             else -> AuthError.UNKNOWN_ERROR
@@ -27,7 +29,7 @@ class AuthRepository(
      * @param email
      * @param password
      * @param onResult Callback invoked with the result of the registration attempt.
-     * Returns [Result.success] containing the [FirebaseUser] if registered, or [Result.failure] containing the error if registration fails
+     * @returns [Result.success] containing the [FirebaseUser] if registered, or [Result.failure] containing the error if registration fails
      */
     fun registerUser(
         email: String,
@@ -58,7 +60,7 @@ class AuthRepository(
      * @param email
      * @param password
      * @param onResult Callback invoked with the result of the registration attempt.
-     * Returns [Result.success] containing the [FirebaseUser] if login succeeds, or [Result.failure] containing the error if login fails
+     * @returns [Result.success] containing the [FirebaseUser] if login succeeds, or [Result.failure] containing the error if login fails
      */
     fun loginUser(
         email: String,
@@ -88,7 +90,7 @@ class AuthRepository(
      *
      * @param idToken SSO Token obtained from Credential Manager
      * @param onResult Callback invoked with the result of the registration attempt.
-     * Returns [Result.success] containing the [FirebaseUser] if login succeeds, or [Result.failure] containing the error if login fails
+     * @returns [Result.success] containing the [FirebaseUser] if login succeeds, or [Result.failure] containing the error if login fails
      */
     fun signInWithSso(
         idToken: String,
@@ -130,6 +132,11 @@ class AuthRepository(
         return userId
     }
 
+    /**
+     * Returns auth users username
+     *
+     * @return authenticated users [username], or null if it cant be found
+     */
     fun currentUserUsername(): String? {
         val userEmail = auth.currentUser?.email
         val username = userEmail?.substringBefore("@")
