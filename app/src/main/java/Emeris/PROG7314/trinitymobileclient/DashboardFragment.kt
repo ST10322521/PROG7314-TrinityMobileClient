@@ -4,6 +4,7 @@ import Emeris.PROG7314.trinitymobileclient.databinding.FragmentDashboardBinding
 import Emeris.PROG7314.trinitymobileclient.databinding.ItemAgentRowBinding
 import Emeris.PROG7314.trinitymobileclient.databinding.ItemDividerBinding
 import Emeris.PROG7314.trinitymobileclient.model.Agent
+import Emeris.PROG7314.trinitymobileclient.viewmodel.ServerStatusViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.forEachIndexed
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 
 // Dashboard screen. Agent rows open the Agent Interface screen.
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
@@ -22,8 +24,12 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     // No agents yet.
     private val sampleAgents = emptyList<Agent>()
 
+    private val viewModel: ServerStatusViewModel by viewModels() // api test
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.checkStatus() // api test
 
         _binding = FragmentDashboardBinding.bind(view)
 
