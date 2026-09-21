@@ -9,18 +9,6 @@ import com.google.gson.annotations.SerializedName
 
 interface ServerApi {
     /**
-     * GET api/v1/server/teamserverip
-     * 
-     * 
-     * Responses:
-     *  - 200: OK
-     *
-     * @return [Unit]
-     */
-    @GET("api/v1/server/teamserverip")
-    suspend fun getServerIP(): Response<Unit>
-
-    /**
      * GET api/v1/server/status
      * 
      * 
@@ -30,6 +18,18 @@ interface ServerApi {
      * @return [Unit]
      */
     @GET("api/v1/server/status")
-    suspend fun getServerStatus(): Response<Unit>
+    suspend fun apiV1ServerStatusGet(): Response<Unit>
+
+    /**
+     * GET api/v1/server/teamserverip
+     * 
+     * 
+     * Responses:
+     *  - 200: OK
+     *
+     * @return [Unit]
+     */
+    @GET("api/v1/server/teamserverip")
+    suspend fun apiV1ServerTeamserveripGet(): Response<Unit>
 
 }

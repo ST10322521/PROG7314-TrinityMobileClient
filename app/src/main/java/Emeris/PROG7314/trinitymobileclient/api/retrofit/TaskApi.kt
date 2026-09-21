@@ -19,7 +19,7 @@ interface TaskApi {
      * @return [Unit]
      */
     @DELETE("{agentID}/clearQueue")
-    suspend fun clearQueue(@Path("agentID") agentID: kotlin.Int): Response<Unit>
+    suspend fun agentIDClearQueueDelete(@Path("agentID") agentID: kotlin.Int): Response<Unit>
 
     /**
      * GET api/v1/tasks/{agentID}/activeDownloads
@@ -32,19 +32,7 @@ interface TaskApi {
      * @return [Unit]
      */
     @GET("api/v1/tasks/{agentID}/activeDownloads")
-    suspend fun getActiveDownloadsByAgentID(@Path("agentID") agentID: kotlin.Int): Response<Unit>
-
-    /**
-     * GET api/v1/tasks/tasks
-     * 
-     * 
-     * Responses:
-     *  - 200: OK
-     *
-     * @return [Unit]
-     */
-    @GET("api/v1/tasks/tasks")
-    suspend fun getTasks(): Response<Unit>
+    suspend fun apiV1TasksAgentIDActiveDownloadsGet(@Path("agentID") agentID: kotlin.Int): Response<Unit>
 
     /**
      * GET api/v1/tasks/{agentID}
@@ -57,7 +45,19 @@ interface TaskApi {
      * @return [Unit]
      */
     @GET("api/v1/tasks/{agentID}")
-    suspend fun getTasksByAgentID(@Path("agentID") agentID: kotlin.Int): Response<Unit>
+    suspend fun apiV1TasksAgentIDGet(@Path("agentID") agentID: kotlin.Int): Response<Unit>
+
+    /**
+     * GET api/v1/tasks/tasks
+     * 
+     * 
+     * Responses:
+     *  - 200: OK
+     *
+     * @return [Unit]
+     */
+    @GET("api/v1/tasks/tasks")
+    suspend fun apiV1TasksTasksGet(): Response<Unit>
 
     /**
      * GET {taskID}/stop
@@ -70,6 +70,6 @@ interface TaskApi {
      * @return [Unit]
      */
     @GET("{taskID}/stop")
-    suspend fun stopTask(@Path("taskID") taskID: kotlin.Int): Response<Unit>
+    suspend fun taskIDStopGet(@Path("taskID") taskID: kotlin.Int): Response<Unit>
 
 }

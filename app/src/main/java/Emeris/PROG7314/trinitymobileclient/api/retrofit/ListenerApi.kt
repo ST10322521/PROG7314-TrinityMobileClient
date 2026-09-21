@@ -20,32 +20,7 @@ interface ListenerApi {
      * @return [Unit]
      */
     @GET("api/v1/listeners")
-    suspend fun listeners(): Response<Unit>
-
-    /**
-     * POST api/v1/listeners/http
-     * 
-     * 
-     * Responses:
-     *  - 200: OK
-     *
-     * @param httpListenerDTO  (optional)
-     * @return [Unit]
-     */
-    @POST("api/v1/listeners/http")
-    suspend fun startHttpListener(@Body httpListenerDTO: HttpListenerDTO? = null): Response<Unit>
-
-    /**
-     * POST api/v1/listeners/tcp
-     * 
-     * 
-     * Responses:
-     *  - 200: OK
-     *
-     * @return [Unit]
-     */
-    @POST("api/v1/listeners/tcp")
-    suspend fun startTcpListener(): Response<Unit>
+    suspend fun apiV1ListenersGet(): Response<Unit>
 
     /**
      * DELETE api/v1/listeners/http
@@ -58,7 +33,20 @@ interface ListenerApi {
      * @return [Unit]
      */
     @DELETE("api/v1/listeners/http")
-    suspend fun stopHttpListener(@Query("moduleId") moduleId: kotlin.String? = null): Response<Unit>
+    suspend fun apiV1ListenersHttpDelete(@Query("moduleId") moduleId: kotlin.String? = null): Response<Unit>
+
+    /**
+     * POST api/v1/listeners/http
+     * 
+     * 
+     * Responses:
+     *  - 200: OK
+     *
+     * @param httpListenerDTO  (optional)
+     * @return [Unit]
+     */
+    @POST("api/v1/listeners/http")
+    suspend fun apiV1ListenersHttpPost(@Body httpListenerDTO: HttpListenerDTO? = null): Response<Unit>
 
     /**
      * PUT api/v1/listeners/http
@@ -71,6 +59,18 @@ interface ListenerApi {
      * @return [Unit]
      */
     @PUT("api/v1/listeners/http")
-    suspend fun updateHttpListener(@Body httpListenerDto: HttpListenerDto? = null): Response<Unit>
+    suspend fun apiV1ListenersHttpPut(@Body httpListenerDto: HttpListenerDto? = null): Response<Unit>
+
+    /**
+     * POST api/v1/listeners/tcp
+     * 
+     * 
+     * Responses:
+     *  - 200: OK
+     *
+     * @return [Unit]
+     */
+    @POST("api/v1/listeners/tcp")
+    suspend fun apiV1ListenersTcpPost(): Response<Unit>
 
 }
