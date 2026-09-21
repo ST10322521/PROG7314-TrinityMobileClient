@@ -77,6 +77,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun wireDrawer() {
+        binding.navDrawer.tvUsername.text = authRepository.currentUserUsername()?: "username"
         binding.navDrawer.navDashboard.setOnClickListener {
             selectNavItem(R.id.nav_dashboard)
             showScreen(DashboardFragment(), sharedAppBar = true); closeDrawer()
