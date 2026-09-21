@@ -9,7 +9,7 @@ TEMP_GEN_DIR="$SCRIPT_DIR/.openapi-tmp"
 
 echo "Starting TeamServer..."
 if [ ! -e "$DOTNET_PROJECT_DIR" ]; then
-    (cd "$REPO_ROOT"/.. && git clone https://github.com/iamgred/Trinity -b test)
+    (cd "$REPO_ROOT"/.. && git clone https://github.com/iamgred/Trinity -b test && grep 'TryGetMethodInfo' 'Trinity/TeamServer/Program.cs' || (cd Trinity && git merge origin/feat/teamserver-swagger-ops))
 fi
 (cd "$DOTNET_PROJECT_DIR" && git pull && dotnet run) &
 SERVER_PID=$!
