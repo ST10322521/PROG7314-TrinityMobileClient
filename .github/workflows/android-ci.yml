@@ -59,6 +59,9 @@ jobs:
           api-level: 35
           target: google_apis
           arch: x86_64
+          disable-animations: true
+          force-avd-creation: true
+          emulator-options: -no-window -no-audio -no-boot-anim
           script: |
             adb reverse tcp:9099 tcp:9099
             ./gradlew connectedAndroidTest
