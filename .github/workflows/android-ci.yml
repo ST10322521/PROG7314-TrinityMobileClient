@@ -34,7 +34,7 @@ jobs:
           packages: "platform-tools"
 
       - name: Install Android SDK packages
-      - run: sdkmanager --list
+        run: sdkmanager --list
 
       - name: Install Firebase CLI
         run: npm install -g firebase-tools
