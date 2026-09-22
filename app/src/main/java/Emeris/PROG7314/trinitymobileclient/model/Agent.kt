@@ -35,6 +35,8 @@ fun AgentDTO.toUiAgent(): Agent {
         id = id,
         name = this.username ?: "agent-$id",
         meta = listOfNotNull(
+            this.ipAddress,
+            this.os,
             this.processName,
             this.integrity?.let { "integrity $it" },
         ).joinToString(" · ").ifEmpty { "no process" },
