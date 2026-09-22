@@ -92,16 +92,18 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    //Fills the drawer footer with the signed-in user's name and initials.
+    //Fills the drawer footer and app-bar avatar with the signed-in user's name and initials.
     //Name comes from AuthRepository; falls back to placeholders when no user.
     private fun showSignedInUser() {
         val username = authRepository.currentUserUsername()
         Log.d(TAG, "drawer user = ${username ?: "none"}")
 
+        val initials = initialsOf(username) ?: getString(R.string.drawer_default_initials)
+
         binding.navDrawer.tvUsername.text =
             username ?: getString(R.string.drawer_default_username)
-        binding.navDrawer.tvAvatarInitials.text =
-            initialsOf(username) ?: getString(R.string.drawer_default_initials)
+        binding.navDrawer.tvAvatarInitials.text = initials
+        binding.tvAppBarInitials.text = initials
     }
 
     //Up to two uppercase initials from a name or email.
