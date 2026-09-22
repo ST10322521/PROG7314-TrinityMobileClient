@@ -1,7 +1,7 @@
 package Emeris.PROG7314.trinitymobileclient.settings
 
 object SettingsDefaults {
-    val DEFAULT_THEME = Themes.Auto
+    val DEFAULT_THEME = Themes.Dark
     const val DEFAULT_AUTO_LOCK_MINUTES = 5
 
     val autoLockOptions = AutoLockManager.autoLockOptions
