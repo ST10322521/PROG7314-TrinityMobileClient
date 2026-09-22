@@ -66,6 +66,22 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
     private fun renderAgents(agents: List<Agent>) {
         binding.agentList.removeAllViews()
+
+        // Campaign Status counters + Graph View now reflect live API data (design-14).
+        val active = agents.count { it.online }
+        val paused = agents.count { !it.online && it.status.equals("Paused", true) }
+        val completed = agents.count { it.status.equals("Completed", true) }
+        val campaigns = agents.mapNotNull { it.campaignId }.distinct().size
+        binding.statCampaigns.text = (if (campaigns > 0) campaigns else agents.size).toString()
+        binding.statActive.text = "Active · $active"
+        binding.statPaused.text = "Paused · $paused"
+        binding.statCompleted.text = "Completed · $completed"
+        binding.graphEmpty.text = if (agents.isEmpty()) {
+            "No agents connected"
+        } else {
+            "${agents.size} agent${if (agents.size == 1) "" else "s"} connected"
+        }
+
         if (agents.isEmpty()) {
             showEmpty("No agents")
             return
