@@ -13,6 +13,7 @@ import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
 import Emeris.PROG7314.trinitymobileclient.databinding.FragmentLoginBinding
 import android.content.Intent
+import android.text.method.PasswordTransformationMethod
 import androidx.credentials.CredentialManager
 import android.util.Log
 import android.widget.Toast
@@ -79,6 +80,19 @@ class LoginFragment : Fragment() {
         binding.btnSso.setOnClickListener {
             signInWithSso()
         }
+        binding.ivTogglePassword.setOnClickListener {
+            togglePasswordVisibility()
+        }
+    }
+
+    // Reveal/mask the password; dim eye = hidden.
+    private var passwordVisible = false
+    private fun togglePasswordVisibility() {
+        passwordVisible = !passwordVisible
+        binding.etPassword.transformationMethod =
+            if (passwordVisible) null else PasswordTransformationMethod.getInstance()
+        binding.ivTogglePassword.alpha = if (passwordVisible) 1f else 0.5f
+        binding.etPassword.setSelection(binding.etPassword.text?.length ?: 0)
     }
 
     // Login with Email/Password
