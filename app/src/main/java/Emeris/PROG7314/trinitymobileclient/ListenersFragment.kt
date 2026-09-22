@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 class ListenersFragment : Fragment(R.layout.fragment_listeners) {
     // Setting up bindings
     private var _bindings: FragmentListenersBinding? = null
-    private val bindings = _bindings!!
+    private val bindings get() = _bindings!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
