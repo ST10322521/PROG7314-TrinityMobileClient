@@ -9,6 +9,10 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
+/**
+ * https://firebase.google.com/docs/auth/android/password-auth
+ * https://firebase.google.com/docs/auth/android/google-signin
+ */
 class AuthRepository(
     private val auth: FirebaseAuth
 ) {

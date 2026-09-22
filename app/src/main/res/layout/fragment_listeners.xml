@@ -62,20 +62,20 @@
                 android:text="New" android:minHeight="0dp" />
         </LinearLayout>
 
-        <!-- Empty state -->
-        <LinearLayout style="@style/TrinityCard"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:gravity="center_horizontal"
-            android:layout_marginTop="14dp" android:paddingVertical="44dp">
-            <ImageView android:layout_width="40dp" android:layout_height="40dp"
-                android:src="@drawable/ic_listeners" android:tint="@color/text_muted" android:alpha="0.6" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginTop="14dp" android:text="No listeners yet"
-                android:textColor="@color/text_secondary" android:textSize="15sp" android:textStyle="bold" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginTop="4dp" android:gravity="center"
-                android:text="Tap New to add a command &amp; control listener"
-                android:textColor="@color/text_muted" android:textSize="13sp" />
-        </LinearLayout>
+        <!-- Listener list goes here once the API layer supplies data. -->
+        <LinearLayout
+            android:id="@+id/listeners_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="14dp"
+            android:visibility="gone" />
+
+        <!-- Shared loading / empty / error / success block. See ui/StateView.kt -->
+        <Emeris.PROG7314.trinitymobileclient.ui.StateView
+            android:id="@+id/state_listeners"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

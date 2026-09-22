@@ -11,7 +11,7 @@ echo "Starting TeamServer..."
 if [ ! -e "$DOTNET_PROJECT_DIR" ]; then
     (cd "$REPO_ROOT"/.. && git clone https://github.com/iamgred/Trinity -b test && grep 'TryGetMethodInfo' 'Trinity/TeamServer/Program.cs' || (cd Trinity && git merge origin/feat/teamserver-swagger-ops))
 fi
-(cd "$DOTNET_PROJECT_DIR" && (git pull || echo "[gen-openapi] warn: git pull failed — continuing with local TeamServer code") && dotnet run) &
+(cd "$DOTNET_PROJECT_DIR" && (git pull || echo "[gen-openapi] warn: git pull failed — continuing with local TeamServer code" && git log | head) && dotnet run) &
 SERVER_PID=$!
 
 cleanup() {

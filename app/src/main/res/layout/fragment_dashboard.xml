@@ -101,22 +101,23 @@
         <!-- Agent rows -->
         <LinearLayout android:id="@+id/agent_list" style="@style/TrinityCard"
             android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:layout_marginTop="12dp" android:padding="0dp">
+            android:orientation="vertical" android:layout_marginTop="12dp" android:padding="0dp" />
 
-            <LinearLayout android:id="@+id/agent_empty"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="vertical" android:gravity="center_horizontal" android:paddingVertical="44dp">
-                <ImageView android:layout_width="40dp" android:layout_height="40dp"
-                    android:src="@drawable/ic_server" android:tint="@color/text_muted" android:alpha="0.6" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="14dp" android:text="No agents yet"
-                    android:textColor="@color/text_secondary" android:textSize="15sp" android:textStyle="bold" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp" android:gravity="center"
-                    android:id="@+id/agent_empty_text"
-                    android:text="Agents will appear here once they check in"
-                    android:textColor="@color/text_muted" android:textSize="13sp" />
-            </LinearLayout>
+        <!-- Empty / status state. Kept as a SIBLING of agent_list so that
+             agentList.removeAllViews() cannot detach it before showEmpty() writes to it. -->
+        <LinearLayout android:id="@+id/agent_empty"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:gravity="center_horizontal" android:paddingVertical="44dp">
+            <ImageView android:layout_width="40dp" android:layout_height="40dp"
+                android:src="@drawable/ic_server" android:tint="@color/text_muted" android:alpha="0.6" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="14dp" android:text="No agents yet"
+                android:textColor="@color/text_secondary" android:textSize="15sp" android:textStyle="bold" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="4dp" android:gravity="center"
+                android:id="@+id/agent_empty_text"
+                android:text="Agents will appear here once they check in"
+                android:textColor="@color/text_muted" android:textSize="13sp" />
         </LinearLayout>
 
     </LinearLayout>
