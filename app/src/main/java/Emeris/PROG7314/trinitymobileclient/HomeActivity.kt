@@ -4,6 +4,8 @@ import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
 import Emeris.PROG7314.trinitymobileclient.databinding.ActivityHomeBinding
 import Emeris.PROG7314.trinitymobileclient.model.NavList
+import Emeris.PROG7314.trinitymobileclient.settings.SettingsProvider
+import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -18,6 +20,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 // Shell activity: nav drawer + shared app bar, swaps fragments into content_container.
 class HomeActivity : AppCompatActivity() {
@@ -38,6 +42,10 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         authRepository = AuthProvider.repository()
+
+        loadTheme()
+
+        binding.navDrawer.tvUsername.text = authRepository.currentUserUsername().toString()
 
         binding.btnMenu.setOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
@@ -158,6 +166,18 @@ class HomeActivity : AppCompatActivity() {
             .replace(R.id.content_container, fragment)
             .also { if (addToBackStack) it.addToBackStack(null) }
             .commit()
+    }
+
+    private fun loadTheme(){
+        val settingsRepository = SettingsProvider.repository(this)
+
+        lifecycleScope.launch {
+            val preferences = settingsRepository.getPreferences()
+
+            preferences?.let {
+                ThemeManager.applyTheme(it.theme)
+            }
+        }
     }
 
     private fun closeDrawer() = binding.drawerLayout.closeDrawer(GravityCompat.START)
