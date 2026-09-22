@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
+    // Room setup
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -82,4 +84,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-scalars:3.0.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+    // Room setup
+    implementation(libs.androidx.room3.runtime)
+    ksp(libs.androidx.room3.compiler)
 }
