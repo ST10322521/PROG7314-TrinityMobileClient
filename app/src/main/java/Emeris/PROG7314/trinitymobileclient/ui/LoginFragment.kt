@@ -26,6 +26,9 @@ import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
 import kotlinx.coroutines.launch
 
+/**
+ * https://firebase.google.com/docs/auth/android/google-signin
+ */
 class LoginFragment : Fragment() {
     // set up view binding
     private var _binding: FragmentLoginBinding? = null
