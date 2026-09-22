@@ -1,0 +1,6 @@
+tmux session: f22 (pi -p, --approve, worktree /tmp/restore/wt-f22)
+result:
+F22-VM-DONE
+EXIT=0
+commit:
+2cbe3b2 feat(listener-manager): ListenerListViewModel for design-16 list (F2.2)
