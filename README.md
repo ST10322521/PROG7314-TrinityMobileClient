@@ -49,24 +49,26 @@ The project uses a layered structure that separates the Android user interface, 
 
 ```mermaid
 flowchart TD
-    UI["Android UI Layer"]
-    AUTH["Authentication Layer"]
-    SETTINGS["Settings Layer"]
-    API["API Layer"]
-    DB["Room Database"]
-    FIREBASE["Firebase Authentication"]
-    SERVER["Trinity REST API"]
-    BACKEND["ASP.NET Core Backend"]
-    POSTGRES["PostgreSQL"]
+   flowchart TD
+    subgraph Android["Android Application"]
+        UI["Fragments / Activities / UI"]
+        AUTH["Authentication"]
+        SETTINGS["Settings / Room"]
+        NETWORK["NetworkManager"]
+        RETROFIT["Retrofit / OkHttp"]
 
-    UI --> AUTH
-    UI --> SETTINGS
-    UI --> API
-    AUTH --> FIREBASE
-    SETTINGS --> DB
-    API --> SERVER
-    SERVER --> BACKEND
-    BACKEND --> POSTGRES
+        UI --> AUTH
+        UI --> SETTINGS
+        UI --> NETWORK
+        NETWORK --> RETROFIT
+    end
+
+    API["ASP.NET Core Web API<br/>api/v1/... endpoints"]
+
+    DB["PostgreSQL<br/>Hosted on Ubuntu Server"]
+
+    RETROFIT -->|"REST / HTTP"| API
+    API -->|"Database access"| DB
 ```
 
 [Open diagram in Mermaid Live](https://mermaid.live)
