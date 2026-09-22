@@ -3,15 +3,15 @@ package Emeris.PROG7314.trinitymobileclient.settings
 import androidx.appcompat.app.AppCompatDelegate
 
 object ThemeManager {
-     fun applyTheme(theme: String) {
+     fun applyTheme(theme: Themes) {
         when(theme) {
-            "Auto" -> AppCompatDelegate.setDefaultNightMode(
+            Themes.Auto -> AppCompatDelegate.setDefaultNightMode(
                 AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
             )
-            "Dark" -> AppCompatDelegate.setDefaultNightMode(
+            Themes.Dark -> AppCompatDelegate.setDefaultNightMode(
                 AppCompatDelegate.MODE_NIGHT_YES
             )
-            "Light" -> AppCompatDelegate.setDefaultNightMode(
+            Themes.Light -> AppCompatDelegate.setDefaultNightMode(
                 AppCompatDelegate.MODE_NIGHT_NO
             )
         }

@@ -4,8 +4,10 @@ import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
 import Emeris.PROG7314.trinitymobileclient.databinding.ActivityHomeBinding
 import Emeris.PROG7314.trinitymobileclient.model.NavList
+import Emeris.PROG7314.trinitymobileclient.settings.SettingsDefaults
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsProvider
 import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
+import Emeris.PROG7314.trinitymobileclient.settings.Themes
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -194,7 +196,7 @@ class HomeActivity : AppCompatActivity() {
             val preferences = settingsRepository.getPreferences()
 
             preferences?.let {
-                ThemeManager.applyTheme(it.theme)
+                ThemeManager.applyTheme(Themes.valueOf(it.theme))
             }
         }
     }
@@ -205,7 +207,7 @@ class HomeActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val preferences = settingsRepository.getPreferences()
 
-            autoLockMinutes = preferences?.autoLockMinutes ?: 5
+            autoLockMinutes = preferences?.autoLockMinutes ?: SettingsDefaults.DEFAULT_AUTO_LOCK_MINUTES
 
             resetAutoLockTimer()
         }

@@ -1,12 +1,15 @@
 package Emeris.PROG7314.trinitymobileclient
 
 import Emeris.PROG7314.trinitymobileclient.databinding.FragmentSettingsBinding
+import Emeris.PROG7314.trinitymobileclient.settings.SettingsDefaults
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsRepository
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsProvider
 import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
+import Emeris.PROG7314.trinitymobileclient.settings.Themes
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
@@ -21,15 +24,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private val bindings get() = _bindings!!
 
     private lateinit var settingsRepository: SettingsRepository
-
-    private val autoLockOptions = mapOf(
-        "1 min" to 1,
-        "5 min" to 5,
-        "10 min" to 10,
-        "15 min" to 15,
-        "30 min" to 30,
-        "Never" to 0
-    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,9 +51,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         viewLifecycleOwner.lifecycleScope.launch {
             val preferences = settingsRepository.getPreferences()
 
-            preferences?.let {
-                bindings.tvTheme.text = it.theme
-                bindings.tvAutoLock.text = autoLockOptions.entries.firstOrNull { entry -> entry.value == it.autoLockMinutes } ?.key ?: "5 min"
+            if (preferences != null) {
+                bindings.tvTheme.text = preferences.theme
+                bindings.tvAutoLock.text = SettingsDefaults.autoLockText(preferences.autoLockMinutes)
+            } else {
+                bindings.tvTheme.text = SettingsDefaults.DEFAULT_THEME.name
+                bindings.tvAutoLock.text = SettingsDefaults.autoLockText(SettingsDefaults.DEFAULT_AUTO_LOCK_MINUTES)
             }
         }
     }
@@ -68,32 +65,32 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         viewLifecycleOwner.lifecycleScope.launch {
             val theme = bindings.tvTheme.text.toString()
             val autoLockText = bindings.tvAutoLock.text.toString()
-            val autoLockMinutes = autoLockOptions[autoLockText] ?: 5
+            val autoLockMinutes = SettingsDefaults.autoLockMinutes(autoLockText)
 
             settingsRepository.savePreferences(
                 theme = theme,
                 autoLockMinutes = autoLockMinutes
             )
-            ThemeManager.applyTheme(theme)
+            ThemeManager.applyTheme(Themes.valueOf(theme))
 
             Toast.makeText(requireContext(), "Settings saved", Toast.LENGTH_SHORT).show()
+            Log.d("RoomDb", "Settings saved, $theme and $autoLockMinutes")
         }
     }
 
     private fun showAutoLockDialog() {
-        AlertDialog.Builder(requireContext()).setTitle("Auto-lock").setItems(autoLockOptions.keys.toTypedArray()) {
+        AlertDialog.Builder(requireContext()).setTitle("Auto-lock").setItems(SettingsDefaults.autoLockOptions.keys.toTypedArray()) {
                 _, which ->
-            bindings.tvAutoLock.text = autoLockOptions.keys.elementAt(which)
+            bindings.tvAutoLock.text = SettingsDefaults.autoLockOptions.keys.elementAt(which)
         }.show()
     }
 
     private fun showThemeDialog() {
-        val themes = arrayOf("Auto", "Dark", "Light")
+        val themes = SettingsDefaults.themes
 
-        AlertDialog.Builder(requireContext()).setTitle("Theme").setItems(themes) {
+        AlertDialog.Builder(requireContext()).setTitle("Theme").setItems(themes.map { it.name }.toTypedArray()) {
                 _, which ->
-            val selectedTheme = themes[which]
-            bindings.tvTheme.text = selectedTheme
+            bindings.tvTheme.text = themes[which].name
         }.show()
     }
 

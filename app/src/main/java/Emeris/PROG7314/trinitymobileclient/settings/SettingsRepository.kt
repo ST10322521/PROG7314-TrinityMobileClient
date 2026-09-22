@@ -1,6 +1,7 @@
 package Emeris.PROG7314.trinitymobileclient.settings
 
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
+import Emeris.PROG7314.trinitymobileclient.database.AppDatabase
 
 class SettingsRepository(
     private val authRepository: AuthRepository,

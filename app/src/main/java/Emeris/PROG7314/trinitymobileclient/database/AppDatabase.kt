@@ -1,5 +1,7 @@
-package Emeris.PROG7314.trinitymobileclient.settings
+package Emeris.PROG7314.trinitymobileclient.database
 
+import Emeris.PROG7314.trinitymobileclient.settings.UserPreferences
+import Emeris.PROG7314.trinitymobileclient.settings.UserPreferencesDao
 import androidx.room3.Database
 import androidx.room3.RoomDatabase
 
