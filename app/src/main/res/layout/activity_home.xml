@@ -50,13 +50,17 @@
                 android:textStyle="bold"
                 android:letterSpacing="0.15" />
 
+            <!-- //To be used later -->
             <ImageButton android:layout_width="40dp" android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_search" android:contentDescription="Search" />
+            <!-- //To be used later -->
             <ImageButton android:layout_width="40dp" android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_bell" android:contentDescription="Notifications" />
-            <ImageButton android:layout_width="40dp" android:layout_height="40dp"
+            <ImageButton
+                android:id="@+id/btn_settings"
+                android:layout_width="40dp" android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_settings" android:contentDescription="Settings" />
 
