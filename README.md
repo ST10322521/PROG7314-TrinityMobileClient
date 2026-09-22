@@ -49,7 +49,6 @@ The project uses a layered structure that separates the Android user interface, 
 
 ```mermaid
 flowchart TD
-   flowchart TD
     subgraph Android["Android Application"]
         UI["Fragments / Activities / UI"]
         AUTH["Authentication"]
@@ -70,6 +69,7 @@ flowchart TD
     RETROFIT -->|"REST / HTTP"| API
     API -->|"Database access"| DB
 ```
+   
 
 [Open diagram in Mermaid Live](https://mermaid.live)
 
