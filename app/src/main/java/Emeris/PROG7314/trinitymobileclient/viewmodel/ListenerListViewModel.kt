@@ -89,7 +89,7 @@ class ListenerListViewModel(
         } else {
             "0.0.0.0:${d.httpC2BindPort ?: 0}"
         },
-        agents = 0,
+        agents = d.agentCount ?: 0,
         active = true
     )
 }
