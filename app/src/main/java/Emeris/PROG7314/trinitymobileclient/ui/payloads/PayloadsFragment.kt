@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
     // Setting up bindings
     private var _bindings: FragmentPayloadsBinding? = null
-    private val bindings = _bindings!!
+    private val bindings get() = _bindings!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

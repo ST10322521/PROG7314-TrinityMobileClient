@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 class LogsFragment : Fragment(R.layout.fragment_logs) {
     // Setting up bindings
     private var _bindings: FragmentLogsBinding? = null
-    private val bindings = _bindings!!
+    private val bindings get() = _bindings!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
