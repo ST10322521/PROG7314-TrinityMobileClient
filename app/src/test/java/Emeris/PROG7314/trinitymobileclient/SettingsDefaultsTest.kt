@@ -8,9 +8,11 @@ import org.junit.Test
 class SettingsDefaultsTest {
 
     @Test
-    fun defaultTheme_isAuto() {
+    fun defaultTheme_isDark() {
+        // The app defaults to the dark Trinity theme to match the Design.pdf mockups
+        // (previously Auto, which left the app white on a light-mode device).
         assertEquals(
-            Themes.Auto,
+            Themes.Dark,
             SettingsDefaults.DEFAULT_THEME
         )
     }
