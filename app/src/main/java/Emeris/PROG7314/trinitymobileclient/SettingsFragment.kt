@@ -7,6 +7,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsProvider
 import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
@@ -74,6 +75,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 autoLockMinutes = autoLockMinutes
             )
             ThemeManager.applyTheme(theme)
+
+            Toast.makeText(requireContext(), "Settings saved", Toast.LENGTH_SHORT).show()
         }
     }
 

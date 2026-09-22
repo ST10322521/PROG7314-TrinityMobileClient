@@ -9,8 +9,11 @@ import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.util.TypedValue
+import android.view.MotionEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -24,6 +27,11 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
 // Shell activity: nav drawer + shared app bar, swaps fragments into content_container.
+/**
+ * https://developer.android.com/reference/android/os/Looper
+ * https://developer.android.com/reference/java/lang/Runnable
+ * https://developer.android.com/reference/android/view/ViewGroup#dispatchTouchEvent(android.view.MotionEvent)
+ */
 class HomeActivity : AppCompatActivity() {
 
     // View bindings
@@ -31,6 +39,16 @@ class HomeActivity : AppCompatActivity() {
 
     // auth repo for signing out
     private lateinit var authRepository: AuthRepository
+
+    private val lockHandler = Handler(Looper.getMainLooper())
+    private var autoLockMinutes = 0
+
+    private val autoLockRunnable = Runnable {
+        authRepository.logout()
+
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
+    }
 
     // Nav list Ids
     private val navItemIds = NavList.navItemIds
@@ -44,6 +62,7 @@ class HomeActivity : AppCompatActivity() {
         authRepository = AuthProvider.repository()
 
         loadTheme()
+        loadAutoLock()
 
         binding.navDrawer.tvUsername.text = authRepository.currentUserUsername().toString()
 
@@ -180,5 +199,37 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun loadAutoLock(){
+        val settingsRepository = SettingsProvider.repository(this)
+
+        lifecycleScope.launch {
+            val preferences = settingsRepository.getPreferences()
+
+            autoLockMinutes = preferences?.autoLockMinutes ?: 5
+
+            resetAutoLockTimer()
+        }
+    }
+
+    private fun resetAutoLockTimer() {
+        lockHandler.removeCallbacks(autoLockRunnable)
+
+        if (autoLockMinutes > 0) {
+            lockHandler.postDelayed(
+                autoLockRunnable,
+                autoLockMinutes * 60 * 1000L
+            )
+        }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        resetAutoLockTimer()
+        return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onDestroy() {
+        lockHandler.removeCallbacks(autoLockRunnable)
+        super.onDestroy()
+    }
     private fun closeDrawer() = binding.drawerLayout.closeDrawer(GravityCompat.START)
 }
