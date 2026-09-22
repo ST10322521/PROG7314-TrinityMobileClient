@@ -17,10 +17,10 @@ interface ListenerApi {
      * Responses:
      *  - 200: OK
      *
-     * @return [Unit]
+     * @return [kotlin.collections.List<HttpListenerDTO>]
      */
     @GET("api/v1/listeners")
-    suspend fun apiV1ListenersGet(): Response<Unit>
+    suspend fun apiV1ListenersGet(): Response<kotlin.collections.List<HttpListenerDTO>>
 
     /**
      * DELETE api/v1/listeners/http
