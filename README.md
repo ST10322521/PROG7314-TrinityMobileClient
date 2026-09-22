@@ -102,7 +102,7 @@ GitHub Actions automatically builds and tests the project on pushes and pull req
 
 The project is maintained using Git and GitHub. Feature branches are made as new features are added, and regular commits, pushes, and pull requests integrate desired changes.
 
-![image.png]
+![Project Image](image.png)
 
 ---
 
