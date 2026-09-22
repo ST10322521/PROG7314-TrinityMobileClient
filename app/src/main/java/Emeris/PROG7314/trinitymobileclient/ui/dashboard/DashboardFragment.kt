@@ -76,11 +76,8 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         binding.statActive.text = "Active · $active"
         binding.statPaused.text = "Paused · $paused"
         binding.statCompleted.text = "Completed · $completed"
-        binding.graphEmpty.text = if (agents.isEmpty()) {
-            "No agents connected"
-        } else {
-            "${agents.size} agent${if (agents.size == 1) "" else "s"} connected"
-        }
+        binding.graphView.setAgents(agents)
+        binding.graphEmpty.visibility = if (agents.isEmpty()) View.VISIBLE else View.GONE
 
         if (agents.isEmpty()) {
             showEmpty("No agents")
