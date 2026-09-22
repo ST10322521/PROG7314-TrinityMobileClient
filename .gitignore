@@ -17,3 +17,6 @@ local.properties
 # Firebase emulator logs
 database-debug.log
 firebase-debug.log
+
+# openapi-generator-cli npx artifact
+openapitools.json
