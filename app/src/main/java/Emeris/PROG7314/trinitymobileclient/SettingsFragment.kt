@@ -1,6 +1,7 @@
 package Emeris.PROG7314.trinitymobileclient
 
 import Emeris.PROG7314.trinitymobileclient.databinding.FragmentSettingsBinding
+import Emeris.PROG7314.trinitymobileclient.settings.AutoLockManager.autoLockOptions
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsRepository
 import android.os.Bundle
 import android.view.View
@@ -21,15 +22,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private val bindings get() = _bindings!!
 
     private lateinit var settingsRepository: SettingsRepository
-
-    private val autoLockOptions = mapOf(
-        "1 min" to 1,
-        "5 min" to 5,
-        "10 min" to 10,
-        "15 min" to 15,
-        "30 min" to 30,
-        "Never" to 0
-    )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

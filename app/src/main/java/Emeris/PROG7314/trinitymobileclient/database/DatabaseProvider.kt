@@ -1,4 +1,4 @@
-package Emeris.PROG7314.trinitymobileclient.settings
+package Emeris.PROG7314.trinitymobileclient.database
 
 import android.content.Context
 import androidx.room3.Room
