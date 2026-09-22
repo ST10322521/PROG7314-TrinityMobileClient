@@ -40,6 +40,8 @@ import com.google.gson.annotations.SerializedName
  * @param campaignId 
  * @param listenerId 
  * @param payloadId 
+ * @param ipAddress 
+ * @param os 
  */
 
 
@@ -76,7 +78,13 @@ data class AgentDTO (
     val listenerId: kotlin.Int? = null,
 
     @SerializedName("payloadId")
-    val payloadId: kotlin.Int? = null
+    val payloadId: kotlin.Int? = null,
+
+    @SerializedName("ipAddress")
+    val ipAddress: kotlin.String? = null,
+
+    @SerializedName("os")
+    val os: kotlin.String? = null
 
 ) {
 
