@@ -25,7 +25,7 @@ class ListenerManagerViewModelTest {
     private var lastHost: String? = null
 
     private val fakeApi = object : ListenerApi {
-        override suspend fun apiV1ListenersGet(): Response<Unit> = Response.success(Unit)
+        override suspend fun apiV1ListenersGet(): Response<List<HttpListenerDTO>> = Response.success(emptyList())
         override suspend fun apiV1ListenersHttpDelete(moduleId: String?): Response<Unit> = Response.success(Unit)
         override suspend fun apiV1ListenersHttpPost(httpListenerDTO: HttpListenerDTO?): Response<Unit> {
             httpCreated++
