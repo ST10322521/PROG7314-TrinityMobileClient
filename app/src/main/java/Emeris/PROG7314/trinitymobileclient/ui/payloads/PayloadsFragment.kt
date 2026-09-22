@@ -1,19 +1,20 @@
-package Emeris.PROG7314.trinitymobileclient
+package Emeris.PROG7314.trinitymobileclient.ui.payloads
 
-import Emeris.PROG7314.trinitymobileclient.databinding.FragmentSettingsBinding
+import Emeris.PROG7314.trinitymobileclient.R
+import Emeris.PROG7314.trinitymobileclient.databinding.FragmentPayloadsBinding
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 
-class SettingsFragment : Fragment(R.layout.fragment_settings) {
+class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
     // Setting up bindings
-    private var _bindings: FragmentSettingsBinding? = null
+    private var _bindings: FragmentPayloadsBinding? = null
     private val bindings = _bindings!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        _bindings = FragmentSettingsBinding.bind(view)
+        _bindings = FragmentPayloadsBinding.bind(view)
     }
 
     override fun onDestroyView() {
@@ -21,4 +22,3 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         _bindings = null
     }
 }
-

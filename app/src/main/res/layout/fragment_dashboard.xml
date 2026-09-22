@@ -113,6 +113,7 @@
                     android:textColor="@color/text_secondary" android:textSize="15sp" android:textStyle="bold" />
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:layout_marginTop="4dp" android:gravity="center"
+                    android:id="@+id/agent_empty_text"
                     android:text="Agents will appear here once they check in"
                     android:textColor="@color/text_muted" android:textSize="13sp" />
             </LinearLayout>

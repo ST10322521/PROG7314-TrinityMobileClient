@@ -7,6 +7,13 @@ import Emeris.PROG7314.trinitymobileclient.model.NavList
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import Emeris.PROG7314.trinitymobileclient.model.Agent
+import Emeris.PROG7314.trinitymobileclient.ui.agentmanager.AgentInterfaceFragment
+import Emeris.PROG7314.trinitymobileclient.ui.dashboard.DashboardFragment
+import Emeris.PROG7314.trinitymobileclient.ui.listeners.ListenersFragment
+import Emeris.PROG7314.trinitymobileclient.ui.logs.LogsFragment
+import Emeris.PROG7314.trinitymobileclient.ui.payloads.PayloadsFragment
+import Emeris.PROG7314.trinitymobileclient.ui.settings.SettingsFragment
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
@@ -140,8 +147,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     // called from the Dashboard agent list
-    fun openAgentInterface() {
-        showScreen(AgentInterfaceFragment(), sharedAppBar = false, addToBackStack = true)
+    fun openAgentInterface(agent: Agent) {
+        showScreen(AgentInterfaceFragment.newInstance(agent.id), sharedAppBar = false, addToBackStack = true)
     }
 
     private fun showScreen(

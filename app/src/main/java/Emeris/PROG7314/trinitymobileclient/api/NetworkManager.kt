@@ -1,6 +1,7 @@
 package Emeris.PROG7314.trinitymobileclient.api
 
 import Emeris.PROG7314.trinitymobileclient.api.infrastructure.ApiClient
+import Emeris.PROG7314.trinitymobileclient.api.retrofit.AgentApi
 import Emeris.PROG7314.trinitymobileclient.api.retrofit.CommandApi
 import Emeris.PROG7314.trinitymobileclient.api.retrofit.ListenerApi
 import Emeris.PROG7314.trinitymobileclient.api.retrofit.ServerApi
@@ -22,4 +23,5 @@ object NetworkManager {
     val listenerApi: ListenerApi by lazy { apiClient.createService(ListenerApi::class.java) }
     val taskApi: TaskApi by lazy { apiClient.createService(TaskApi::class.java) }
     val commandApi: CommandApi by lazy { apiClient.createService(CommandApi::class.java) }
+    val agentApi: AgentApi by lazy { apiClient.createService(AgentApi::class.java) }
 }

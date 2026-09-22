@@ -20,10 +20,10 @@
         <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="6dp">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="AGENT-001" android:textColor="@color/white"
+                android:id="@+id/agent_title" android:text="AGENT-001" android:textColor="@color/white"
                 android:textSize="17sp" android:textStyle="bold" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Campaign X · Agent Interface" android:textColor="#EEFFFFFF" android:textSize="12sp" />
+                android:id="@+id/agent_subtitle" android:text="Campaign X · Agent Interface" android:textColor="#EEFFFFFF" android:textSize="12sp" />
         </LinearLayout>
         <ImageButton android:layout_width="42dp" android:layout_height="42dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -55,20 +55,20 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:background="@drawable/bg_badge_green" android:paddingHorizontal="10dp" android:paddingVertical="3dp"
                         android:drawableStart="@drawable/dot_green" android:drawablePadding="6dp"
-                        android:text="Active" android:textColor="@color/status_green" android:textSize="11sp" android:textStyle="bold" />
+                        android:id="@+id/agent_status" android:text="Active" android:textColor="@color/status_green" android:textSize="11sp" android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:layout_marginTop="16dp">
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                        <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="IP Address" />
+                        <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Process" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="192.168.1.10" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
+                            android:id="@+id/agent_process" android:text="192.168.1.10" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                        <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="OS" />
+                        <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Integrity" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Windows 10" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
+                            android:id="@+id/agent_integrity" android:text="Windows 10" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -76,12 +76,12 @@
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                         <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sleep / Jitter" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="60s / 15%" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
+                            android:id="@+id/agent_sleep" android:text="60s / 15%" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                         <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Last Check-in" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="2m ago" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
+                            android:id="@+id/agent_last_checkin" android:text="2m ago" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

@@ -12,7 +12,7 @@ class ServerStatusViewModel : ViewModel() {
     fun checkStatus() {
         viewModelScope.launch {
             try {
-                val response = NetworkManager.serverApi.getServerStatus()
+                val response = NetworkManager.serverApi.apiV1ServerStatusGet()
                 if (response.isSuccessful) {
                     Log.d("API", "Server is reachable.")
                 } else {
