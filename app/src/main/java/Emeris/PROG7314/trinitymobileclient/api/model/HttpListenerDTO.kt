@@ -39,6 +39,7 @@ import com.google.gson.annotations.SerializedName
  * @param httpHostHeader 
  * @param hostRotationStrategy 
  * @param maxRetryStrategy 
+ * @param agentCount 
  * @param error 
  */
 
@@ -74,6 +75,9 @@ data class HttpListenerDTO (
 
     @SerializedName("maxRetryStrategy")
     val maxRetryStrategy: kotlin.String? = null,
+
+    @SerializedName("agentCount")
+    val agentCount: kotlin.Int? = null,
 
     @SerializedName("error")
     val error: kotlin.String? = null
