@@ -108,6 +108,32 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/nav_console"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="14dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_terminal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Console"
+                android:textColor="@color/text_secondary"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/nav_payloads"
             android:layout_width="match_parent"
             android:layout_height="48dp"
@@ -200,11 +226,12 @@
         android:padding="16dp">
 
         <TextView
+            android:id="@+id/tvAvatarInitials"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:background="@drawable/bg_avatar"
             android:gravity="center"
-            android:text="UN"
+            android:text="@string/drawer_default_initials"
             android:textColor="@color/brand_orange"
             android:textSize="13sp"
             android:textStyle="bold" />

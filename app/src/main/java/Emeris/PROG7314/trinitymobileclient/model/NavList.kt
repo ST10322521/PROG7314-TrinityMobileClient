@@ -6,6 +6,7 @@ object NavList {
     val navItemIds = listOf(
         R.id.nav_dashboard,
         R.id.nav_listeners,
+        R.id.nav_console,
         R.id.nav_payloads,
         R.id.nav_logs,
         R.id.nav_settings
