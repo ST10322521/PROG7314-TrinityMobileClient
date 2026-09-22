@@ -10,7 +10,8 @@ import android.os.Bundle
 import Emeris.PROG7314.trinitymobileclient.model.Agent
 import Emeris.PROG7314.trinitymobileclient.ui.agentmanager.AgentInterfaceFragment
 import Emeris.PROG7314.trinitymobileclient.ui.dashboard.DashboardFragment
-import Emeris.PROG7314.trinitymobileclient.ui.listeners.ListenersFragment
+import Emeris.PROG7314.trinitymobileclient.ui.commandconsole.CommandConsoleFragment
+import Emeris.PROG7314.trinitymobileclient.ui.listenermanager.ListenerManagerFragment
 import Emeris.PROG7314.trinitymobileclient.ui.logs.LogsFragment
 import Emeris.PROG7314.trinitymobileclient.ui.payloads.PayloadsFragment
 import Emeris.PROG7314.trinitymobileclient.ui.settings.SettingsFragment
@@ -90,7 +91,11 @@ class HomeActivity : AppCompatActivity() {
         }
         binding.navDrawer.navListeners.setOnClickListener {
             selectNavItem(R.id.nav_listeners)
-            showScreen(ListenersFragment(), sharedAppBar = true); closeDrawer()
+            showScreen(ListenerManagerFragment(), sharedAppBar = false, addToBackStack = true); closeDrawer()
+        }
+        binding.navDrawer.navConsole.setOnClickListener {
+            selectNavItem(R.id.nav_console)
+            showScreen(CommandConsoleFragment(), sharedAppBar = false, addToBackStack = true); closeDrawer()
         }
         binding.navDrawer.navPayloads.setOnClickListener {
             selectNavItem(R.id.nav_payloads)
@@ -125,6 +130,7 @@ class HomeActivity : AppCompatActivity() {
             val row = when (id) {
                 R.id.nav_dashboard -> binding.navDrawer.navDashboard
                 R.id.nav_listeners -> binding.navDrawer.navListeners
+                R.id.nav_console -> binding.navDrawer.navConsole
                 R.id.nav_payloads -> binding.navDrawer.navPayloads
                 R.id.nav_logs -> binding.navDrawer.navLogs
                 R.id.nav_settings -> binding.navDrawer.navSettings
