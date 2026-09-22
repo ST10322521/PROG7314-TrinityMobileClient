@@ -19,20 +19,24 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 
-// Shell activity: nav drawer + shared app bar, swaps fragments into content_container.
+//Shell activity: nav drawer + shared app bar.
+//Swaps fragments into content_container. Manual nav, no Nav Component.
+//View binding renames drawer ids, so nav_logout is binding.navDrawer.navLogout.
+//https://developer.android.com/guide/fragments/transactions
 class HomeActivity : AppCompatActivity() {
 
-    // View bindings
+    //View bindings
     private lateinit var binding: ActivityHomeBinding
 
-    // auth repo for signing out
+    //auth repo for signing out
     private lateinit var authRepository: AuthRepository
 
-    // Nav list Ids
+    //Nav list Ids
     private val navItemIds = NavList.navItemIds
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(TAG, "onCreate")
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -40,41 +44,72 @@ class HomeActivity : AppCompatActivity() {
         authRepository = AuthProvider.repository()
 
         binding.btnMenu.setOnClickListener {
+            Log.d(TAG, "drawer opened")
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        // App-bar settings gear: shortcut to the Settings screen.
+        //App-bar settings gear: shortcut to the Settings screen.
         binding.btnSettings.setOnClickListener {
             selectNavItem(R.id.nav_settings)
             showScreen(SettingsFragment(), sharedAppBar = true)
         }
 
+        showSignedInUser()
         wireDrawer()
         handleBackNavigation()
 
-        // start on Dashboard
+        //start on Dashboard
         if (savedInstanceState == null) {
             selectNavItem(R.id.nav_dashboard)
             showScreen(DashboardFragment(), sharedAppBar = true)
         }
     }
 
-    // Back: close drawer, else pop pushed screen, else default.
+    //Fills the drawer footer with the signed-in user's name and initials.
+    //Name comes from AuthRepository; falls back to placeholders when no user.
+    private fun showSignedInUser() {
+        val username = authRepository.currentUserUsername()
+        Log.d(TAG, "drawer user = ${username ?: "none"}")
+
+        binding.navDrawer.tvUsername.text =
+            username ?: getString(R.string.drawer_default_username)
+        binding.navDrawer.tvAvatarInitials.text =
+            initialsOf(username) ?: getString(R.string.drawer_default_initials)
+    }
+
+    //Up to two uppercase initials from a name or email.
+    //"ada lovelace" -> "AL", "ada@trinity.io" -> "A", blank/null -> null.
+    private fun initialsOf(username: String?): String? {
+        val name = username?.substringBefore('@')?.trim().orEmpty()
+        if (name.isEmpty()) return null
+
+        return name.split(' ', '.', '_')
+            .filter { it.isNotBlank() }
+            .take(2)
+            .map { it.first().uppercaseChar() }
+            .joinToString("")
+            .ifEmpty { null }
+    }
+
+    //Back: close drawer, else pop detail screen, else leave the activity.
     private fun handleBackNavigation() {
         onBackPressedDispatcher.addCallback(this) {
             when {
                 binding.drawerLayout.isDrawerOpen(GravityCompat.START) -> {
+                    Log.d(TAG, "back -> close drawer")
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                 }
 
                 supportFragmentManager.backStackEntryCount > 0 -> {
+                    Log.d(TAG, "back -> pop detail screen")
                     supportFragmentManager.popBackStack()
-                    // restore shared app bar + drawer
+                    //restore shared app bar + drawer
                     binding.appBar.visibility = View.VISIBLE
                     binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 }
 
                 else -> {
+                    Log.d(TAG, "back -> leave HomeActivity")
                     isEnabled = false
                     onBackPressedDispatcher.onBackPressed()
                 }
@@ -82,6 +117,8 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    //Every drawer route. Each row selects itself, swaps in its fragment and
+    //closes the drawer; logout also clears the session and returns to login.
     private fun wireDrawer() {
         binding.navDrawer.navDashboard.setOnClickListener {
             selectNavItem(R.id.nav_dashboard)
@@ -114,7 +151,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    // Highlight the selected drawer row, reset the rest.
+    //Highlight the selected drawer row, reset the rest.
     private fun selectNavItem(selectedId: Int) {
         val rippleBg = TypedValue().also {
             theme.resolveAttribute(android.R.attr.selectableItemBackground, it, true)
@@ -145,16 +182,23 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    // called from the Dashboard agent list
+    //Opens the agent detail screen from the Dashboard agent list.
+    //Pushed onto the back stack so back returns to the Dashboard.
     fun openAgentInterface() {
+        Log.d(TAG, "nav -> AgentInterface")
         showScreen(AgentInterfaceFragment(), sharedAppBar = false, addToBackStack = true)
     }
 
+    //Single entry point for every screen change.
+    //sharedAppBar = false hides the app bar and locks the drawer (detail screens).
+    //addToBackStack = true for pushed detail screens only.
     private fun showScreen(
         fragment: Fragment,
         sharedAppBar: Boolean,
         addToBackStack: Boolean = false
     ) {
+        Log.d(TAG, "nav -> ${fragment::class.simpleName} (sharedAppBar=$sharedAppBar)")
+
         binding.appBar.visibility = if (sharedAppBar) View.VISIBLE else View.GONE
         binding.drawerLayout.setDrawerLockMode(
             if (sharedAppBar) DrawerLayout.LOCK_MODE_UNLOCKED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED
@@ -167,4 +211,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun closeDrawer() = binding.drawerLayout.closeDrawer(GravityCompat.START)
+
+    private companion object {
+        const val TAG = "HomeActivity"
+    }
 }
