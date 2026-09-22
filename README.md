@@ -1,463 +1,145 @@
-# NB!!!!
+# Trinity Mobile Client
 
-1. Please create a branch for each feature being worked on!!
-2. Please make your branch name accurate to the feature being worked on
-3. Please make sure your branch can merge without conflicts or test fails before accepting the pull request
+## Contributors
 
----
+- James Marshall - ST10434366
+- Lyle Richardson - ST10322521
+- Sky Martin - ST10286905
+- Simon Slingerland - ST10438897
 
-# Part 2 Prototype — Team Responsibilities
+## Project Overview
 
-# Simon — Android UI & Navigation
+The Trinity Mobile Client is a native Android application for PROG7314 Part 2.
 
-> **Simon is responsible ONLY for creating the navigable Android application interface.**
-
-> Simon does not implement authentication, REST API communication, database functionality, settings logic, business logic, ViewModels, repositories, or custom-feature functionality.
-
-> The purpose of Simon's work is to provide a complete, intuitive, navigable application shell that Lyle, James, and Sky can connect their functionality to.
-
-## Development
-
-- [ ] Create Android application structure
-- [ ] Configure Kotlin/Android project
-- [ ] Configure package structure
-- [ ] Configure app theme
-- [ ] Configure colours
-- [ ] Configure fonts
-- [ ] Configure styles
-- [ ] Create reusable UI components
-- [ ] Create common loading UI components
-- [ ] Create common error UI components
-- [ ] Implement navigation architecture
-- [ ] Create navigation routes
-- [ ] Implement Home/Dashboard screen
-- [ ] Implement Login screen UI
-- [ ] Implement Registration screen UI
-- [ ] Implement Settings screen UI
-- [ ] Implement custom-feature screen UI
-- [ ] Create required forms and input fields
-- [ ] Create buttons and user controls
-- [ ] Create screen layouts
-- [ ] Create loading-state UI
-- [ ] Create empty-state UI
-- [ ] Create error-state UI
-- [ ] Create success-state UI
-- [ ] Implement forward navigation
-- [ ] Implement back navigation
-- [ ] Ensure every required screen can be reached
-- [ ] Ensure every required screen can return appropriately
-- [ ] Add basic UI-level input feedback where appropriate
-- [ ] Add comments to UI/navigation code
-- [ ] Add technical references where external UI/code patterns are used
-
-## Navigation Scope
-
-- [ ] Application launches successfully
-- [ ] Login screen can be opened
-- [ ] Registration screen can be opened
-- [ ] Home/Dashboard can be opened
-- [ ] Settings screen can be opened
-- [ ] Custom-feature screens can be opened
-- [ ] Navigation between screens works
-- [ ] Back navigation works
-- [ ] Appropriate navigation routes exist
-- [ ] Navigation does not crash
-- [ ] Placeholder UI exists where functionality will later be implemented by another member
-
-## UI Testing
-
-> Simon tests only the UI and navigation he created.
-
-- [ ] Test application launches
-- [ ] Test navigation to Login
-- [ ] Test navigation to Registration
-- [ ] Test navigation to Home/Dashboard
-- [ ] Test navigation to Settings
-- [ ] Test navigation to custom-feature screens
-- [ ] Test forward navigation
-- [ ] Test back navigation
-- [ ] Test navigation routes
-- [ ] Test required UI elements exist
-- [ ] Test basic UI input fields
-- [ ] Test basic UI validation/display behaviour
-- [ ] Test loading UI
-- [ ] Test empty-state UI
-- [ ] Test error-state UI
-- [ ] Test success-state UI
-- [ ] Test invalid UI interactions do not crash the application
-- [ ] Run all UI/navigation tests locally
-- [ ] Fix failures in their own UI/navigation code
-- [ ] Verify tests pass through GitHub Actions
-
-## Explicitly NOT Simon's Responsibility
-
-- [ ] SSO implementation
-- [ ] Authentication implementation
-- [ ] Registration logic
-- [ ] Session management
-- [ ] Logout logic
-- [ ] User identification
-- [ ] Settings/preferences logic
-- [ ] Application ViewModels
-- [ ] Repositories
-- [ ] REST API communication
-- [ ] API clients
-- [ ] Database functionality
-- [ ] Backend functionality
-- [ ] Business logic
-- [ ] Custom-feature functionality
-- [ ] Connecting application functionality to the API
-- [ ] Authentication tests
-- [ ] API tests
-- [ ] Database tests
-- [ ] Custom-feature tests
-
-## Deliverable
-
-**A complete, visually functional and navigable Android application shell containing all required screens and navigation routes, with UI/navigation tests proving that the application can be navigated successfully.**
+The application is being designed to provide a mobile interface for interacting with a remote instance/Trinity server and its connected agents. The Android client combines Firebase Authentication, local settings persistence, and RESTful API integration to provide authenticated access to current functionality.
 
 ---
 
-# Lyle — Authentication & Settings
+## Purpose and Scope
 
-## Authentication Development
+The purpose of the Trinity Mobile Client is to create a mobile client for the Trinity System that is currently in development.
 
-- [ ] Select SSO provider
-- [ ] Configure authentication service
-- [ ] Configure Android authentication integration
-- [ ] Implement authentication client
-- [ ] Implement SSO login
-- [ ] Implement registration
-- [ ] Implement registration validation
-- [ ] Implement successful authentication handling
-- [ ] Implement authentication failure handling
-- [ ] Implement authentication cancellation handling
-- [ ] Implement authentication state
-- [ ] Implement authenticated state
-- [ ] Implement unauthenticated state
-- [ ] Implement session restoration
-- [ ] Implement session expiry handling
-- [ ] Implement logout
-- [ ] Implement user identification
-- [ ] Connect authentication functionality to Simon's UI
-- [ ] Add authentication/state logging using Android `Log`
-- [ ] Add clear comments to authentication code
-- [ ] Add technical references where external code/patterns are used
+Part 2 of this project is a prototype focusing on some core features such as:
 
-## Settings Development
+- User registration and authentication
+  - Email and Password
+  - Single Sign-On (SSO)
 
-- [ ] Define user preference model
-- [ ] Implement preference retrieval
-- [ ] Implement preference modification
-- [ ] Implement preference saving
-- [ ] Associate preferences with authenticated user
-- [ ] Restore preferences after login
-- [ ] Handle preference errors
-- [ ] Connect settings functionality to Simon's Settings UI
-- [ ] Add preference state logging
+- Persistent application settings
+  - Theme selection
+  - Automatic application lockout during absence
 
-## Unit Testing
+- Communication with the Trinity REST API currently in development
+  - Server status
+  - Server information
+  - Listener management
+  - Task management
+  - Agent command functionality
+  - Remote payload configuration and build
 
-> Lyle writes and maintains all tests for the authentication and settings functionality he develops.
-
-- [ ] Set up authentication/settings testing
-- [ ] Test successful registration
-- [ ] Test invalid registration
-- [ ] Test duplicate registration
-- [ ] Test successful SSO login
-- [ ] Test failed login
-- [ ] Test cancelled login
-- [ ] Test authentication error handling
-- [ ] Test authenticated state
-- [ ] Test unauthenticated state
-- [ ] Test session restoration
-- [ ] Test session expiry
-- [ ] Test logout
-- [ ] Test preference creation
-- [ ] Test preference retrieval
-- [ ] Test preference modification
-- [ ] Test preference persistence
-- [ ] Test user-specific preferences
-- [ ] Test invalid preference values
-- [ ] Test authentication failures do not crash application logic
-- [ ] Run tests locally
-- [ ] Fix failures in their own code/tests
-- [ ] Verify tests pass through GitHub Actions
-
-## Deliverable
-
-**Working authentication and settings functionality connected to Simon's UI + tests proving the functionality works.**
+- Logging and error handling
 
 ---
 
-# James — REST API & Database
+## Architecture
 
-## Database Development
+The project uses a layered structure that separates the Android user interface, authentication, local persistence, and network communication.
 
-- [ ] Select database technology
-- [ ] Create cloud database
-- [ ] Design database schema
-- [ ] Create tables/collections
-- [ ] Define relationships
-- [ ] Define user-data ownership
-- [ ] Configure database security
-- [ ] Create development/test data
-- [ ] Add database logging where appropriate
-- [ ] Add clear comments to backend code
-- [ ] Add technical references where external code/patterns are used
+### High Level Architecture
 
-## REST API Development
+[![]\(https://mermaid.ink/img/pako\:eNptkm9v2jAQxr-K5dcQCND801QpLXSgbcBIUKUte2GSI1gQO3Ic2o7y3XcOUBUxv_Kdf_fc47MPNJUZ0ICud_Il3TClSTxMBMFV1atcsXJDQpEpybPfCT3vSFiWO54yzaVI6J8TbtZygtCTYnkBQlekQ8JU8z3XHEywnFzB4TIeG81ab5D-n1w0iuPJ9GuEVARac5EbmYWUxRU2HcXPs8U3pKagX6Ta_mCC5aCuoMUoXsyeJjFSC9BKrrlGrdl2rHXZgJ9vQdrt-8bfTfJi6ebgbOLGVXN4aX46BZFd2oVzM7EwmluIk0epgDzDyqS_rFTnnpW8s7c7lmWZolJynOons8MHLJ7LSucKop_fm5IxhpARKchyVQtdkwjU_jyLU9XFjHH2jtMYRTFOYhzH84S-m9Yf1s7EkGm2YhUQlqZQVYYaPtAWzRXPaKBVDS1agCqYCenBlCcUH7WAhAa4VZDVr-2MqW07lTuJXhJxxPqSiV_4lhcJJet8Q4M121UY1WXGNAw5wz9YfGQVjgHUo8Sb0cD2Gw0aHOgrRgPXct2-7zme7Qy6Tu-uRd9o4HUtv3_X7Xld17Fd2_OOLfq36dq1XL_nOp7T8-2-bw-cwfEfJU7nSg?type=png\)](https://mermaid.live/edit#pako:eNptkmFv2jAQhv-K5c8QGpoAiaZKaaEDbQOWBFXqsg8mOYIFsSPHoe0o_33nAFURzSff3XPvvT5nT1OZAfXpaitf0jVTmsTDRBD8qnqZK1auSSAyJXn2J6GnEwnKcstTprkUCf17xM23mCD0qFhegNAV6ZAg1XzHNQcTLCYXcLCIx0az1mukv5KLRnE8mX6PkIpAay5yIxNKWVxg01H8NAt_IDUF_SLV5hcTLAd1AYWjOJw9TmKkQtBKrrhGrdlmrHXZgJ9vQdrtu8bfVfJs6apwMnHlqimehx-rILLzuGBuNhZEcwtx8iAVkCdYmvS3percsZJ3dnbHsizTVEqOW_1kdniPzXNZ6VxB9Ptn0zLGEDIiBVksa6FrEoHanXZx7DqbMc7ecRujKMZNjON4ntB3M_rD2okYMs2WrALC0hSqylDDe9qiueIZ9bWqoUULUAUzId2b9oTioxaQUB-PCrL6tZ0xtWmncivRSyIO2F8y8YxveZZQss7X1F-xbYVRXWZMw5Az_AeLj6zCNYB6kHgz6tu9RoP6e_qK0c3Achyn2_Xsruv1ey5W36jftvuWfes6bt_zuq5727cPLfqvGXtjeR5mBp7j9Qeu23Ptw38HROd6)
 
-- [ ] Select backend framework
-- [ ] Create backend project
-- [ ] Configure backend environment
-- [ ] Configure database connection
-- [ ] Create API structure
-- [ ] Define request structures
-- [ ] Define response structures
-- [ ] Create GET endpoints
-- [ ] Create POST endpoints
-- [ ] Create PUT/PATCH endpoints
-- [ ] Create DELETE endpoints
-- [ ] Create custom-feature endpoints where required
-- [ ] Implement endpoints required by the Android application
+The application also has a separate local Room database that currently stores basic user-specific application preferences.
 
-## API Validation
+### Android Layer
 
-- [ ] Validate request bodies
-- [ ] Validate required fields
-- [ ] Validate data types
-- [ ] Handle malformed requests
-- [ ] Handle missing resources
-- [ ] Handle duplicate data
-- [ ] Handle database errors
-- [ ] Return correct HTTP status codes
-- [ ] Return consistent API errors
+The application separates packages into:
 
-## API Security
+- `auth` - Firebase authentication
+- `api` - REST API communication
+- `database` - Room database
+- `settings` - User preference management
+- `model` - Application data models
+- `ui` - UI-specific components
 
-- [ ] Validate authenticated API requests
-- [ ] Associate requests with users
-- [ ] Prevent cross-user data access
-- [ ] Handle expired authentication
-- [ ] Handle unauthorized requests
+The authentication layer uses `AuthProvider` and `AuthRepository` to abstract Firebase Authentication from the UI.
 
-## Deployment
+The settings layer uses `SettingsRepository`, Room, and `UserPreferences` to keep user-specific settings locally.
 
-- [ ] Deploy API to cloud hosting
-- [ ] Configure production environment variables
-- [ ] Connect production database
-- [ ] Verify production API
-- [ ] Document API endpoints
-- [ ] Add backend logging
-
-## Frontend/API Integration
-
-> James is responsible for the backend side of the frontend/backend connection.
-
-- [ ] Define API contract with frontend developers
-- [ ] Define endpoint requirements
-- [ ] Define request formats
-- [ ] Define response formats
-- [ ] Define error formats
-- [ ] Ensure API is accessible by Android application
-- [ ] Ensure API authentication works with the Android application
-- [ ] Ensure API responses contain required data
-- [ ] Support Lyle/Sky integration requirements
-
-## Unit/Backend Testing
-
-- [ ] Set up backend testing structure
-- [ ] Test GET endpoints
-- [ ] Test POST endpoints
-- [ ] Test PUT/PATCH endpoints
-- [ ] Test DELETE endpoints
-- [ ] Test successful database operations
-- [ ] Test failed database operations
-- [ ] Test invalid request bodies
-- [ ] Test missing fields
-- [ ] Test invalid data types
-- [ ] Test missing resources
-- [ ] Test duplicate data
-- [ ] Test unauthorized requests
-- [ ] Test expired authentication
-- [ ] Test cross-user data protection
-- [ ] Test API error responses
-- [ ] Test HTTP status codes
-- [ ] Test API → database communication
-- [ ] Test database → API responses
-- [ ] Test deployed production API where practical
-- [ ] Test backend error handling
-- [ ] Test malformed requests
-- [ ] Run tests locally
-- [ ] Fix failures in their own code/tests
-- [ ] Verify tests pass through GitHub Actions
-
-## Deliverable
-
-**Working cloud REST API/database + backend tests proving the backend works and API contract required by the Android application is available.**
+`NetworkManager` and `ApiClient` provide the centralised REST communication.
 
 ---
 
-# Sky — Custom Features
+## Technology Stack
 
-> **Sky owns the custom user-defined functionality selected from the Part 1 design.**
+**_Android:_** Kotlin, Android SDK, AndroidX, Material 3, View Binding
 
-> Each custom feature should be tracked as its own GitHub Issue.
+**_Authentication:_** Firebase Authentication, Google Identity, Credential Manager
 
----
+**_Local storage:_** Room/SQLite
 
-# Custom Feature #1
+**_Networking:_** Retrofit, OkHttp, Gson
 
-## Development
+**_Backend:_** ASP.NET Core Web API, PostgreSQL, Ubuntu
 
-- [ ] Define Feature #1 requirements
-- [ ] Create Feature #1 data model
-- [ ] Implement Feature #1 business logic
-- [ ] Implement Feature #1 UI functionality using Simon's UI shell
-- [ ] Implement Feature #1 validation
-- [ ] Implement Feature #1 frontend API communication
-- [ ] Connect Feature #1 to required REST API endpoints
-- [ ] Connect Feature #1 to required database functionality through the API
-- [ ] Implement Feature #1 error handling
-- [ ] Add Feature #1 logging
-- [ ] Add comments to Feature #1 code
-- [ ] Add technical references where external code/patterns are used
-
-## Unit Testing
-
-- [ ] Test Feature #1 normal operation
-- [ ] Test Feature #1 invalid input
-- [ ] Test Feature #1 empty input
-- [ ] Test Feature #1 business logic
-- [ ] Test Feature #1 API communication logic
-- [ ] Test Feature #1 data persistence
-- [ ] Test Feature #1 data retrieval
-- [ ] Test Feature #1 error handling
-- [ ] Test Feature #1 edge cases
-- [ ] Run tests locally
-- [ ] Fix failures in their own code/tests
-- [ ] Verify tests pass through GitHub Actions
+**_Development:_** Gradle, Git, GitHub, GitHub Actions
 
 ---
 
-# Custom Feature #2
+## Testing and CI
 
-## Development
+Application logic is covered by automated unit tests and can be manually triggered with:
 
-- [ ] Define Feature #2 requirements
-- [ ] Create Feature #2 data model
-- [ ] Implement Feature #2 business logic
-- [ ] Implement Feature #2 UI functionality using Simon's UI shell
-- [ ] Implement Feature #2 validation
-- [ ] Implement Feature #2 frontend API communication
-- [ ] Connect Feature #2 to required REST API endpoints
-- [ ] Connect Feature #2 to required database functionality through the API
-- [ ] Implement Feature #2 error handling
-- [ ] Add Feature #2 logging
-- [ ] Add comments to Feature #2 code
-- [ ] Add technical references where external code/patterns are used
+`./gradlew test`
 
-## Unit Testing
+`./gradlew assembleDebug`
 
-- [ ] Test Feature #2 normal operation
-- [ ] Test Feature #2 invalid input
-- [ ] Test Feature #2 empty input
-- [ ] Test Feature #2 business logic
-- [ ] Test Feature #2 API communication logic
-- [ ] Test Feature #2 data persistence
-- [ ] Test Feature #2 data retrieval
-- [ ] Test Feature #2 error handling
-- [ ] Test Feature #2 edge cases
-- [ ] Run tests locally
-- [ ] Fix failures in their own code/tests
-- [ ] Verify tests pass through GitHub Actions
-
-> Repeat this structure for every custom feature specified in the Part 1 design.
-
-## Deliverable
-
-**Working custom functionality + tests proving each custom feature works.**
+GitHub Actions automatically builds and tests the project on pushes and pull requests.
 
 ---
 
-# Member 5 — Team Lead
+## Version Control
 
-> **Member 5 does not develop application features and does not write application unit tests.**
+The project is maintained using Git and GitHub. Feature branches are made as new features are added, and regular commits, pushes, and pull requests integrate desired changes.
 
-> Member 5's responsibility is:
->
-> **Set Up → Coordinate → Integrate → Compile → Verify → Submit**
+![alt text](image.png)
 
 ---
 
-# Team Lead — GitHub Setup
+## Demonstration
 
-- [ ] Create GitHub repository
-- [ ] Add team members
-- [ ] Configure repository permissions
-- [ ] Create `main` branch
-- [ ] Establish branch naming convention
-- [ ] Establish commit convention
-- [ ] Configure branch protection
-- [ ] Create GitHub Issues
-- [ ] Create GitHub Project board
-- [ ] Create milestones
-- [ ] Assign responsibilities
-- [ ] Establish pull request workflow
-- [ ] Ensure members commit regularly
-- [ ] Ensure members push work regularly
+Video Demonstration:
 
 ---
 
-# Team Lead — Initial Project Setup
+## Disclosure of AI Usage
 
-> The Team Lead creates the starting environment so Simon, Lyle, James, and Sky can work independently.
+AI usage will be documented as entries using the format below:
 
-- [ ] Create/initialise Android project
-- [ ] Configure initial Gradle project
-- [ ] Configure `.gitignore`
-- [ ] Create initial package/project structure
-- [ ] Push initial project to GitHub
-- [ ] Verify clean project builds
-- [ ] Verify all members can clone repository
-- [ ] Verify all members can build project
-- [ ] Establish development branches
-- [ ] Ensure project supports unit testing
-- [ ] Ensure project is ready for development
+Disclosure of AI Usage in my Assessment:
 
-> **After initial setup, application development belongs to Simon, Lyle, James, and Sky.**
+```
+Sections: README file.
+
+Name of AI tool(s) used: ChatGPT.
+
+Purpose/intention behind use: To fix bad spelling
+
+Date(s) in which generative AI was used: 22/09/2026
+
+A link to the actual generative AI chat: [\[https://generic.ai/share/xyz\](https://generic.ai/share/xyz)](https://chatgpt.com/share/6ab29fc8-90fc-83ea-ad52-27d710697265)
+```
+
+```
+Sections: Values/Colors
+
+Name of AI tool(s) used: ChatGPT.
+
+Purpose/intention behind use: To generate a light palot
+
+Date(s) in which generative AI was used: 22/09/2026
+
+A link to the actual generative AI chat: [\[\\[https://generic.ai/share/xyz\\](https://generic.ai/share/xyz)\](https://chatgpt.com/share/6ab29fc8-90fc-83ea-ad52-27d710697265)](https://chatgpt.com/share/6ab2a08c-bc58-83ea-bea1-4464cda5734c)
+```
 
 ---
-
-# Team Lead — GitHub Actions / CI
-
-> **The Team Lead sets up and configures GitHub Actions. They do not write the tests that GitHub Actions executes.**
-
-## Workflow Setup
-
-- [ ] Create `.github/workflows/` directory
-- [ ] Create GitHub Actions workflow file
-- [ ] Configure JDK
-- [ ] Configure Gradle
-- [ ] Configure Android build environment
-- [ ] Configure application compilation
-- [ ] Configure unit-test execution
-- [ ] Configure workflow to run on every push
-- [ ] Configure workflow to run on pull requests
-- [ ] Configure appropriate build/test commands
-- [ ] Commit workflow configuration
-- [ ] Push workflow configuration
-- [ ] Verify GitHub Actions starts correctly
-- [ ] Verify application build runs
-- [ ] Verify unit tests run
-- [ ] Verify failed tests cause workflow failure
-- [ ] Verify successful tests produce a passing workflow
-- [ ] Maintain CI configuration throughout development
-
-## Team Lead Does NOT Write
-
-- [ ] Simon's UI tests
-- [ ] Lyle's authentication/settings tests
-- [ ] James's API/database tests
-- [ ] Sky's custom-feature tests

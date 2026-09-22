@@ -3,30 +3,30 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!-- Trinity C2 dark theme palette -->
-    <color name="bg_root">#FF0E0E10</color>
-    <color name="bg_surface">#FF161618</color>
-    <color name="bg_card">#FF1C1C1F</color>
-    <color name="bg_card_alt">#FF232327</color>
-    <color name="bg_input">#FF202024</color>
-    <color name="divider">#FF2C2C30</color>
+    <!-- Trinity C2 light theme palette -->
+    <color name="bg_root">#FFF5F5F7</color>
+    <color name="bg_surface">#FFFFFFFF</color>
+    <color name="bg_card">#FFFFFFFF</color>
+    <color name="bg_card_alt">#FFEDEDEF</color>
+    <color name="bg_input">#FFF0F0F2</color>
+    <color name="divider">#FFD8D8DC</color>
 
     <color name="brand_orange">#FFF57A1E</color>
-    <color name="brand_orange_dark">#FFC85E10</color>
+    <color name="brand_orange_dark">#FFD65F0F</color>
     <color name="brand_orange_soft">#33F57A1E</color>
 
-    <color name="text_primary">#FFF5F5F7</color>
-    <color name="text_secondary">#FF9A9AA2</color>
-    <color name="text_muted">#FF6C6C74</color>
+    <color name="text_primary">#FF1C1C1E</color>
+    <color name="text_secondary">#FF6C6C74</color>
+    <color name="text_muted">#FF98989F</color>
 
-    <color name="status_green">#FF35C759</color>
-    <color name="status_green_soft">#3335C759</color>
-    <color name="status_yellow">#FFF5C518</color>
-    <color name="status_yellow_soft">#33F5C518</color>
-    <color name="status_red">#FFE5484D</color>
-    <color name="status_red_soft">#33E5484D</color>
-    <color name="status_blue">#FF3B82F6</color>
-    <color name="status_blue_soft">#333B82F6</color>
-    <color name="status_purple">#FFA855F7</color>
-    <color name="status_purple_soft">#33A855F7</color>
+    <color name="status_green">#FF248A3D</color>
+    <color name="status_green_soft">#33248A3D</color>
+    <color name="status_yellow">#FFB88600</color>
+    <color name="status_yellow_soft">#33B88600</color>
+    <color name="status_red">#FFD62F3A</color>
+    <color name="status_red_soft">#33D62F3A</color>
+    <color name="status_blue">#FF2878D7</color>
+    <color name="status_blue_soft">#332878D7</color>
+    <color name="status_purple">#FF8E44D6</color>
+    <color name="status_purple_soft">#338E44D6</color>
 </resources>
