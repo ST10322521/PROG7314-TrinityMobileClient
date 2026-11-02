@@ -27,4 +27,63 @@
     <!-- Drawer user footer. -->
     <string name="drawer_default_username">Signed in</string>
     <string name="drawer_default_initials">TR</string>
+
+    <!-- Settings screen. -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_subtitle">Configure and manage your preferences</string>
+
+    <!-- Settings: account card. -->
+    <string name="settings_account">Account</string>
+    <string name="settings_account_signed_out">Not signed in</string>
+    <string name="settings_account_no_email">No email on this account</string>
+    <string name="settings_reset_password">Reset password</string>
+    <string name="settings_sign_out">Sign out</string>
+    <string name="settings_sign_out_confirm_title">Sign out?</string>
+    <string name="settings_sign_out_confirm_message">You will need to sign in again to use Trinity.</string>
+    <string name="settings_reset_password_confirm_title">Reset password?</string>
+    <string name="settings_reset_password_confirm_message">A password reset link will be sent to %1$s.</string>
+    <string name="settings_reset_password_sent">Reset link sent to %1$s</string>
+    <string name="settings_reset_password_failed">Could not send the reset link. Please try again.</string>
+    <string name="settings_send">Send</string>
+    <string name="settings_cancel">Cancel</string>
+
+    <!-- Settings: team server health card. -->
+    <string name="settings_server_health">Team Server Health</string>
+    <string name="settings_server_not_connected">Not connected</string>
+    <string name="settings_server_ipv4">IPv4</string>
+    <string name="settings_server_ipv6">IPv6</string>
+    <string name="settings_server_profiles">C2 Profiles</string>
+    <string name="settings_value_none">—</string>
+    <string name="settings_value_zero">0</string>
+
+    <!-- Settings: categories. -->
+    <string name="settings_categories">Settings Categories</string>
+    <string name="settings_category_general">General</string>
+    <string name="settings_category_server">Team Server</string>
+    <string name="settings_category_notifications">Notifications</string>
+    <string name="settings_category_integrations">Integrations</string>
+    <string name="settings_category_about">About</string>
+
+    <!-- Settings: general preferences. -->
+    <string name="settings_general">General</string>
+    <string name="settings_language">App Language</string>
+    <string name="settings_language_hint">Interface language</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_hint">Console appearance</string>
+    <string name="settings_biometric">Biometric Authentication</string>
+    <string name="settings_biometric_hint">Fingerprint / face unlock</string>
+    <string name="settings_notifications">Push Notifications</string>
+    <string name="settings_notifications_hint">Alerts on this device</string>
+    <string name="settings_auto_lock">Auto-lock</string>
+    <string name="settings_auto_lock_hint">Lock after inactivity</string>
+    <string name="settings_save">Save Changes</string>
+    <string name="settings_saved">Settings saved</string>
+    <string name="settings_save_signed_out">Sign in to save your settings</string>
+    <string name="settings_save_failed">Could not save settings. Please try again.</string>
+
+    <!-- Settings: about card. -->
+    <string name="settings_about">About</string>
+    <string name="settings_about_app">Trinity Mobile Client</string>
+    <string name="settings_about_description">Companion app for the Trinity C2 framework. Monitor agents, listeners and payloads from your phone.</string>
+    <string name="settings_about_version">Version %1$s</string>
 </resources>
