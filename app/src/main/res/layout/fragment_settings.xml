@@ -91,6 +91,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/account_actions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -541,8 +542,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/settings_biometric"
-                    android:thumbTint="@color/white"
-                    android:trackTint="@color/brand_orange" />
+                    app:thumbTint="@color/switch_thumb"
+                    app:trackTint="@color/switch_track" />
             </LinearLayout>
 
             <!-- Push notifications -->
@@ -581,8 +582,8 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:contentDescription="@string/settings_notifications"
-                    android:thumbTint="@color/white"
-                    android:trackTint="@color/brand_orange" />
+                    app:thumbTint="@color/switch_thumb"
+                    app:trackTint="@color/switch_track" />
             </LinearLayout>
 
             <!-- Auto-lock -->
