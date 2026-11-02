@@ -8,6 +8,7 @@ import Emeris.PROG7314.trinitymobileclient.settings.SettingsDefaults
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsProvider
 import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
 import Emeris.PROG7314.trinitymobileclient.settings.Themes
+import Emeris.PROG7314.trinitymobileclient.ui.initialsOf
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -104,20 +105,6 @@ class HomeActivity : AppCompatActivity() {
             username ?: getString(R.string.drawer_default_username)
         binding.navDrawer.tvAvatarInitials.text = initials
         binding.tvAppBarInitials.text = initials
-    }
-
-    //Up to two uppercase initials from a name or email.
-    //"ada lovelace" -> "AL", "ada@trinity.io" -> "A", blank/null -> null.
-    private fun initialsOf(username: String?): String? {
-        val name = username?.substringBefore('@')?.trim().orEmpty()
-        if (name.isEmpty()) return null
-
-        return name.split(' ', '.', '_')
-            .filter { it.isNotBlank() }
-            .take(2)
-            .map { it.first().uppercaseChar() }
-            .joinToString("")
-            .ifEmpty { null }
     }
 
     //Back: close drawer, else pop detail screen, else leave the activity.
