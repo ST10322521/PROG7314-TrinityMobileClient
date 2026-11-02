@@ -44,11 +44,32 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private var selectedAutoLockMinutes = SettingsDefaults.DEFAULT_AUTO_LOCK_MINUTES
     private var selectedLanguage = SettingsDefaults.DEFAULT_LANGUAGE
 
+    //What is currently saved, so leaving with different values can ask first.
+    //Null until Room has loaded.
+    private var savedValues: SettingsValues? = null
+
+    //Unsaved picks kept over a rebuild (rotation, dark mode switch).
+    //Applied once Room has loaded so they win over the saved values.
+    private var restoredValues: SettingsValues? = null
+
+    private var selectedCategoryId = R.id.cat_general
+
+    //One snapshot of everything the Save button writes.
+    private data class SettingsValues(
+        val theme: Themes,
+        val autoLockMinutes: Int,
+        val language: String,
+        val biometricEnabled: Boolean,
+        val notificationsEnabled: Boolean
+    )
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.d(TAG, "onViewCreated")
 
         _bindings = FragmentSettingsBinding.bind(view)
+
+        savedInstanceState?.let { restoreState(it) }
 
         settingsRepository = SettingsProvider.repository(requireContext())
         authRepository = AuthProvider.repository()
@@ -87,7 +108,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         Log.d(TAG, "account card user = ${username ?: "none"}")
 
         bindings.tvAccountName.text = username ?: getString(R.string.settings_account_signed_out)
-        bindings.tvAccountEmail.text = email ?: getString(R.string.settings_account_no_email)
+        bindings.tvAccountEmail.text = when {
+            username == null -> getString(R.string.settings_account_signed_out_hint)
+            email == null -> getString(R.string.settings_account_no_email)
+            else -> email
+        }
         bindings.tvAccountInitials.text =
             initialsOf(username) ?: getString(R.string.drawer_default_initials)
 
@@ -181,7 +206,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.catAbout.setOnClickListener {
             openCategory(bindings.catAbout, bindings.sectionAbout)
         }
-        selectCategory(bindings.catGeneral)
+        //restored after a rebuild, General otherwise
+        val restored = view?.findViewById<LinearLayout>(selectedCategoryId) ?: bindings.catGeneral
+        selectCategory(restored)
     }
 
     private fun openCategory(row: LinearLayout, section: View) {
@@ -211,6 +238,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             bindings.catGeneral, bindings.catServer, bindings.catNotifications,
             bindings.catIntegrations, bindings.catAbout
         )
+        selectedCategoryId = selected.id
         for (row in rows) {
             val isSelected = row == selected
             row.isSelected = isSelected
@@ -252,8 +280,87 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 b.switchBiometric.isChecked = SettingsDefaults.DEFAULT_BIOMETRIC_ENABLED
                 b.switchNotifications.isChecked = SettingsDefaults.DEFAULT_NOTIFICATIONS_ENABLED
             }
+            savedValues = currentValues()
+
+            //unsaved picks from before a rebuild win over what Room has
+            restoredValues?.let {
+                Log.d(TAG, "restoring unsaved picks: $it")
+                applyValues(it)
+                restoredValues = null
+            }
             showPreferenceLabels()
         }
+    }
+
+    private fun currentValues() = SettingsValues(
+        theme = selectedTheme,
+        autoLockMinutes = selectedAutoLockMinutes,
+        language = selectedLanguage,
+        biometricEnabled = bindings.switchBiometric.isChecked,
+        notificationsEnabled = bindings.switchNotifications.isChecked
+    )
+
+    private fun applyValues(values: SettingsValues) {
+        selectedTheme = values.theme
+        selectedAutoLockMinutes = values.autoLockMinutes
+        selectedLanguage = values.language
+        bindings.switchBiometric.isChecked = values.biometricEnabled
+        bindings.switchNotifications.isChecked = values.notificationsEnabled
+    }
+
+    //Unsaved changes
+
+    //True when something on screen differs from what is saved.
+    //HomeActivity asks this before navigating away.
+    fun hasUnsavedChanges(): Boolean {
+        if (_bindings == null) return false
+        val saved = savedValues ?: return false
+        return currentValues() != saved
+    }
+
+    //Asks before throwing away unsaved settings. onKeep lets the caller undo
+    //anything it already changed, like the drawer highlight.
+    fun confirmDiscard(onDiscard: () -> Unit, onKeep: () -> Unit = {}) {
+        Log.d(TAG, "unsaved changes, asking before leaving")
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.settings_discard_title)
+            .setMessage(R.string.settings_discard_message)
+            .setPositiveButton(R.string.settings_discard) { _, _ ->
+                Log.d(TAG, "discarded unsaved changes")
+                onDiscard()
+            }
+            .setNegativeButton(R.string.settings_keep_editing) { _, _ -> onKeep() }
+            .setOnCancelListener { onKeep() }
+            .show()
+    }
+
+    //Rebuild state
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_CATEGORY, selectedCategoryId)
+        if (_bindings == null) return
+
+        val values = currentValues()
+        outState.putString(KEY_THEME, values.theme.name)
+        outState.putInt(KEY_AUTO_LOCK, values.autoLockMinutes)
+        outState.putString(KEY_LANGUAGE, values.language)
+        outState.putBoolean(KEY_BIOMETRIC, values.biometricEnabled)
+        outState.putBoolean(KEY_NOTIFICATIONS, values.notificationsEnabled)
+    }
+
+    private fun restoreState(state: Bundle) {
+        selectedCategoryId = state.getInt(KEY_CATEGORY, R.id.cat_general)
+        val theme = state.getString(KEY_THEME) ?: return
+
+        restoredValues = SettingsValues(
+            theme = Themes.entries.firstOrNull { it.name == theme } ?: SettingsDefaults.DEFAULT_THEME,
+            autoLockMinutes = state.getInt(KEY_AUTO_LOCK, SettingsDefaults.DEFAULT_AUTO_LOCK_MINUTES),
+            language = state.getString(KEY_LANGUAGE) ?: SettingsDefaults.DEFAULT_LANGUAGE,
+            biometricEnabled = state.getBoolean(KEY_BIOMETRIC, SettingsDefaults.DEFAULT_BIOMETRIC_ENABLED),
+            notificationsEnabled = state.getBoolean(KEY_NOTIFICATIONS, SettingsDefaults.DEFAULT_NOTIFICATIONS_ENABLED)
+        )
+        Log.d(TAG, "rebuild: category=${resources.getResourceEntryName(selectedCategoryId)}")
     }
 
     private fun showPreferenceLabels() {
@@ -286,6 +393,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         "RoomDb",
                         "Settings saved, theme=$theme autoLock=$autoLockMinutes language=$language " +
                             "biometric=$biometricEnabled notifications=$notificationsEnabled"
+                    )
+                    savedValues = SettingsValues(
+                        theme, autoLockMinutes, language, biometricEnabled, notificationsEnabled
                     )
                     ThemeManager.applyTheme(theme)
                     R.string.settings_saved
@@ -351,5 +461,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private companion object {
         const val TAG = "SettingsFragment"
+        const val KEY_CATEGORY = "settings_category"
+        const val KEY_THEME = "settings_theme"
+        const val KEY_AUTO_LOCK = "settings_auto_lock"
+        const val KEY_LANGUAGE = "settings_language"
+        const val KEY_BIOMETRIC = "settings_biometric"
+        const val KEY_NOTIFICATIONS = "settings_notifications"
     }
 }
