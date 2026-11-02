@@ -10,7 +10,7 @@ import androidx.room3.RoomDatabase
  */
 @Database(
     entities = [UserPreferences::class],
-    version = 1
+    version = 2
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun userPreferencesDao(): UserPreferencesDao

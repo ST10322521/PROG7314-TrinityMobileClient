@@ -58,4 +58,42 @@ class SettingsDefaultsTest {
             SettingsDefaults.autoLockMinutes("Invalid")
         )
     }
+
+    @Test
+    fun newSettingDefaults_areCorrect() {
+        assertEquals("en", SettingsDefaults.DEFAULT_LANGUAGE)
+        assertEquals(false, SettingsDefaults.DEFAULT_BIOMETRIC_ENABLED)
+        assertEquals(true, SettingsDefaults.DEFAULT_NOTIFICATIONS_ENABLED)
+    }
+
+    @Test
+    fun languageText_returnsCorrectLabels() {
+        assertEquals("English", SettingsDefaults.languageText("en"))
+        assertEquals("Afrikaans", SettingsDefaults.languageText("af"))
+        assertEquals("isiZulu", SettingsDefaults.languageText("zu"))
+    }
+
+    @Test
+    fun languageText_returnsEnglishForUnknownCode() {
+        assertEquals("English", SettingsDefaults.languageText("xx"))
+    }
+
+    @Test
+    fun languageCode_returnsCorrectCodes() {
+        assertEquals("en", SettingsDefaults.languageCode("English"))
+        assertEquals("af", SettingsDefaults.languageCode("Afrikaans"))
+        assertEquals("zu", SettingsDefaults.languageCode("isiZulu"))
+    }
+
+    @Test
+    fun languageCode_returnsDefaultForUnknownText() {
+        assertEquals("en", SettingsDefaults.languageCode("Klingon"))
+    }
+
+    @Test
+    fun languageOptions_includeTwoSouthAfricanLanguages() {
+        val codes = SettingsDefaults.languageOptions.values
+        assertEquals(true, codes.contains("af"))
+        assertEquals(true, codes.contains("zu"))
+    }
 }
