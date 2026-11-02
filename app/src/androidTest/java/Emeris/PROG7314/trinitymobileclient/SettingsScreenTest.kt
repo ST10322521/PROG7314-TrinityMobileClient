@@ -107,4 +107,107 @@ class SettingsScreenTest {
             assertFalse("General should no longer be selected", general.isSelected)
         }
     }
+
+    //Opens Settings and gives Room a moment to load before the checks run.
+    private fun withLoadedSettings(block: (ActivityScenario<HomeActivity>) -> Unit) {
+        ActivityScenario.launch(HomeActivity::class.java).use { scenario ->
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.nav_settings).performClick()
+                activity.supportFragmentManager.executePendingTransactions()
+            }
+            Thread.sleep(1500)
+            block(scenario)
+        }
+    }
+
+    private fun settingsOf(activity: HomeActivity) =
+        activity.supportFragmentManager.findFragmentById(R.id.content_container) as SettingsFragment
+
+    @Test
+    fun unsavedChanges_trackedAgainstSavedValues() {
+        withLoadedSettings { scenario ->
+            scenario.onActivity { activity ->
+                val settings = settingsOf(activity)
+                val biometric = activity.findViewById<SwitchCompat>(R.id.switch_biometric)
+
+                assertFalse("Nothing changed yet", settings.hasUnsavedChanges())
+                biometric.performClick()
+                assertTrue("Flipped a switch", settings.hasUnsavedChanges())
+                biometric.performClick()
+                assertFalse("Flipped it back", settings.hasUnsavedChanges())
+            }
+        }
+    }
+
+    @Test
+    fun leavingWithUnsavedChanges_staysOnSettingsUntilConfirmed() {
+        withLoadedSettings { scenario ->
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.switch_biometric).performClick()
+                activity.findViewById<View>(R.id.nav_dashboard).performClick()
+                activity.supportFragmentManager.executePendingTransactions()
+
+                //discard prompt is showing, so the screen has not changed
+                assertTrue(
+                    activity.supportFragmentManager.findFragmentById(R.id.content_container)
+                        is SettingsFragment
+                )
+            }
+        }
+    }
+
+    @Test
+    fun leavingWithoutChanges_navigatesStraightAway() {
+        withLoadedSettings { scenario ->
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.nav_dashboard).performClick()
+                activity.supportFragmentManager.executePendingTransactions()
+
+                assertTrue(
+                    activity.supportFragmentManager.findFragmentById(R.id.content_container)
+                        is DashboardFragment
+                )
+            }
+        }
+    }
+
+    @Test
+    fun rebuild_keepsCategoryAndUnsavedPicks() {
+        withLoadedSettings { scenario ->
+            var biometricBefore = false
+            scenario.onActivity { activity ->
+                activity.findViewById<View>(R.id.cat_about).performClick()
+                val biometric = activity.findViewById<SwitchCompat>(R.id.switch_biometric)
+                biometric.performClick()
+                biometricBefore = biometric.isChecked
+            }
+
+            //same as a rotation or the system dark mode switching
+            scenario.recreate()
+            Thread.sleep(1500)
+
+            scenario.onActivity { activity ->
+                assertTrue(
+                    "About should still be highlighted",
+                    activity.findViewById<View>(R.id.cat_about).isSelected
+                )
+                assertEquals(
+                    "Unsaved switch change should survive",
+                    biometricBefore,
+                    activity.findViewById<SwitchCompat>(R.id.switch_biometric).isChecked
+                )
+                assertTrue("Still counts as unsaved", settingsOf(activity).hasUnsavedChanges())
+            }
+        }
+    }
+
+    @Test
+    fun signedOut_accountCardExplainsWhy() {
+        openSettings { activity ->
+            if (AuthProvider.repository().currentUserId() != null) return@openSettings
+
+            val email = activity.findViewById<TextView>(R.id.tv_account_email).text.toString()
+            assertEquals(activity.getString(R.string.settings_account_signed_out_hint), email)
+        }
+    }
 }
