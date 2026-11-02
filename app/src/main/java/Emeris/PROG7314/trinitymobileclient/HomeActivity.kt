@@ -125,9 +125,18 @@ class HomeActivity : AppCompatActivity() {
                 }
 
                 else -> {
-                    Log.d(TAG, "back -> leave HomeActivity")
-                    isEnabled = false
-                    onBackPressedDispatcher.onBackPressed()
+                    val leave = {
+                        Log.d(TAG, "back -> leave HomeActivity")
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
+                    //ask first if Settings has unsaved changes
+                    val settings = currentScreen() as? SettingsFragment
+                    if (settings?.hasUnsavedChanges() == true) {
+                        settings.confirmDiscard(onDiscard = leave)
+                    } else {
+                        leave()
+                    }
                 }
             }
         }
@@ -212,6 +221,34 @@ class HomeActivity : AppCompatActivity() {
         fragment: Fragment,
         sharedAppBar: Boolean,
         addToBackStack: Boolean = false
+    ) {
+        val current = currentScreen()
+
+        //already on Settings: don't rebuild it and lose what's being edited
+        if (current is SettingsFragment && fragment is SettingsFragment) {
+            Log.d(TAG, "nav -> already on Settings")
+            return
+        }
+
+        //leaving Settings with unsaved changes: ask first, put the highlight back if they stay
+        if (current is SettingsFragment && current.hasUnsavedChanges()) {
+            current.confirmDiscard(
+                onDiscard = { replaceScreen(fragment, sharedAppBar, addToBackStack) },
+                onKeep = { selectNavItem(R.id.nav_settings) }
+            )
+            return
+        }
+
+        replaceScreen(fragment, sharedAppBar, addToBackStack)
+    }
+
+    private fun currentScreen(): Fragment? =
+        supportFragmentManager.findFragmentById(R.id.content_container)
+
+    private fun replaceScreen(
+        fragment: Fragment,
+        sharedAppBar: Boolean,
+        addToBackStack: Boolean
     ) {
         Log.d(TAG, "nav -> ${fragment::class.simpleName} (sharedAppBar=$sharedAppBar)")
 
