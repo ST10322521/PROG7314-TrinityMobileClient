@@ -93,6 +93,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         val canReset = email != null && authRepository.hasPasswordSignIn()
         bindings.btnResetPassword.visibility = if (canReset) View.VISIBLE else View.GONE
+        //nothing to sign out of when nobody is signed in
+        bindings.btnSignOut.visibility = if (username != null) View.VISIBLE else View.GONE
+        //drop the empty button row so the card doesn't keep a gap
+        val anyAction = canReset || username != null
+        bindings.accountActions.visibility = if (anyAction) View.VISIBLE else View.GONE
     }
 
     private fun confirmSignOut() {
