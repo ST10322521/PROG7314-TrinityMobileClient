@@ -287,6 +287,13 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    //Settings calls this after a save so a new auto-lock time works straight away
+    fun applyAutoLock(minutes: Int) {
+        Log.d(TAG, "auto-lock -> $minutes min")
+        autoLockMinutes = minutes
+        resetAutoLockTimer()
+    }
+
     private fun resetAutoLockTimer() {
         lockHandler.removeCallbacks(autoLockRunnable)
 

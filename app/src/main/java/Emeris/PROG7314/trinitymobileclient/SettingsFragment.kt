@@ -397,6 +397,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     savedValues = SettingsValues(
                         theme, autoLockMinutes, language, biometricEnabled, notificationsEnabled
                     )
+                    (activity as? HomeActivity)?.applyAutoLock(autoLockMinutes)
                     ThemeManager.applyTheme(theme)
                     R.string.settings_saved
                 } else {
