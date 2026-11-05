@@ -44,7 +44,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             rowBinding.dot.setBackgroundResource((if (agent.online) R.drawable.dot_green else R.drawable.dot_yellow))
 
             rowBinding.root.setOnClickListener {
-                (activity as? HomeActivity)?.openAgentInterface()
+                (activity as? HomeActivity)?.openAgentInterface(agent.id)
             }
 
             // divider between rows

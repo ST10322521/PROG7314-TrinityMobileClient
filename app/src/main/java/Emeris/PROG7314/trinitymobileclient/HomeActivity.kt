@@ -4,8 +4,16 @@ import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
 import Emeris.PROG7314.trinitymobileclient.databinding.ActivityHomeBinding
 import Emeris.PROG7314.trinitymobileclient.model.NavList
+import Emeris.PROG7314.trinitymobileclient.data.sync.CommandSyncScheduler
+import Emeris.PROG7314.trinitymobileclient.model.EventLog
+import Emeris.PROG7314.trinitymobileclient.model.TaskNotification
+import Emeris.PROG7314.trinitymobileclient.notifications.NotificationHelper
+import Emeris.PROG7314.trinitymobileclient.signalr.SignalRManager
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
@@ -14,6 +22,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -21,6 +30,12 @@ import androidx.fragment.app.Fragment
 
 // Shell activity: nav drawer + shared app bar, swaps fragments into content_container.
 class HomeActivity : AppCompatActivity() {
+
+    companion object {
+        private const val TAG = "HomeActivity"
+        private const val HUB_URL = "https://your-api/hubs/trinity" // ← replace with your hub URL
+        private const val REQUEST_NOTIFICATION_PERMISSION = 1001
+    }
 
     // View bindings
     private lateinit var binding: ActivityHomeBinding
@@ -45,6 +60,12 @@ class HomeActivity : AppCompatActivity() {
 
         wireDrawer()
         handleBackNavigation()
+
+        NotificationHelper.initialize(applicationContext)
+        requestNotificationPermission()
+        connectHub()
+        // Retry any commands that failed or were queued during a previous session
+        CommandSyncScheduler.schedule(this)
 
         // start on Dashboard
         if (savedInstanceState == null) {
@@ -139,9 +160,79 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        SignalRManager.getInstance().disconnect()
+        Log.d(TAG, "Hub disconnected")
+    }
+
+    // ── SignalR + Notifications ───────────────────────────────────────────────
+
+    private fun connectHub() {
+        SignalRManager.getInstance().connect(
+            hubUrl      = HUB_URL,
+            onConnected = {
+                Log.d(TAG, "Hub connected")
+                registerGlobalHubHandlers()
+            },
+            onError = { e ->
+                Log.e(TAG, "Hub connection failed", e)
+            }
+        )
+    }
+
+    /**
+     * Global hub handlers — active for the entire app session.
+     *
+     * Note: Both "TaskNotification" and "EventLogNotification" are sent by the
+     * server to specific groups only. This client will only receive them while
+     * subscribed to the relevant agent/campaign group.
+     *
+     * Subscribe/unsubscribe is managed per-fragment:
+     *   - AgentInterfaceFragment  → subscribeToAgent / unsubscribeFromAgent
+     *   - LogsFragment            → subscribeToEventLog / unsubscribeFromEventLog
+     *
+     * Handlers here turn incoming messages into push notifications so the user
+     * is alerted even if they navigate away from the relevant screen.
+     */
+    private fun registerGlobalHubHandlers() {
+        val hub = SignalRManager.getInstance()
+
+        // TaskNotification — pushed by: SendTaskResponseAsync(agentID, notification)
+        hub.on("TaskNotification", TaskNotification::class.java) { notification ->
+            NotificationHelper.showAlert(
+                context = applicationContext,
+                title   = "Agent [${notification.agentId}]",
+                message = notification.output
+            )
+        }
+
+        // EventLogNotification — pushed by: SendEventLogAsync(campaignID, eventLog)
+        hub.on("EventLogNotification", EventLog::class.java) { log ->
+            NotificationHelper.showEvent(
+                context = applicationContext,
+                title   = "Event Log",
+                message = "[${log.level}] ${log.message}"
+            )
+        }
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                    REQUEST_NOTIFICATION_PERMISSION
+                )
+            }
+        }
+    }
+
     // called from the Dashboard agent list
-    fun openAgentInterface() {
-        showScreen(AgentInterfaceFragment(), sharedAppBar = false, addToBackStack = true)
+    fun openAgentInterface(agentId: String) {
+        showScreen(AgentInterfaceFragment.newInstance(agentId), sharedAppBar = false, addToBackStack = true)
     }
 
     private fun showScreen(

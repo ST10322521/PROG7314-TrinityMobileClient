@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -62,5 +63,16 @@ dependencies {
     implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
+
+    // SignalR hub client (ASP.NET Core SignalR for Android)
+    implementation(libs.signalr)
+    // Gson — JSON serialization for hub message models
+    implementation(libs.gson)
+    // Room — offline command queue
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    // WorkManager — background sync on connectivity restore
+    implementation(libs.work.runtime.ktx)
 
 }
