@@ -398,7 +398,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         theme, autoLockMinutes, language, biometricEnabled, notificationsEnabled
                     )
                     (activity as? HomeActivity)?.applyAutoLock(autoLockMinutes)
-                    ThemeManager.applyTheme(theme)
                     R.string.settings_saved
                 } else {
                     Log.w(TAG, "save skipped, no signed-in user")
@@ -409,10 +408,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 R.string.settings_save_failed
             }
 
-            //applyTheme can recreate the activity, so the view may be gone by now
+            //screen may have been closed while Room was writing
             val b = _bindings ?: return@launch
             b.btnSaveSettings.isEnabled = true
-            Toast.makeText(b.root.context, message, Toast.LENGTH_SHORT).show()
+            //app context so the toast stays up when applyTheme rebuilds the activity
+            Toast.makeText(b.root.context.applicationContext, message, Toast.LENGTH_SHORT).show()
+
+            //theme last, it can recreate the activity
+            if (message == R.string.settings_saved) ThemeManager.applyTheme(theme)
         }
     }
 
