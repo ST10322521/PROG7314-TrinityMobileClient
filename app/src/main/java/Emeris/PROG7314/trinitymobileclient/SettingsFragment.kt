@@ -144,6 +144,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
         requireActivity().finish()
+        ThemeManager.applyTheme(Themes.Auto)
     }
 
     private fun confirmPasswordReset() {
