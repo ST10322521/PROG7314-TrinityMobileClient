@@ -68,4 +68,7 @@ dependencies {
     // Room setup
     implementation(libs.androidx.room3.runtime)
     ksp(libs.androidx.room3.compiler)
+
+    // Biometrics
+    implementation("androidx.biometric:biometric:1.1.0")
 }
