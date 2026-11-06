@@ -87,7 +87,6 @@ dependencies {
 
     // WorkManager
     implementation(libs.work.runtime.ktx)
-}
     // Biometrics
     implementation("androidx.biometric:biometric:1.1.0")
 }

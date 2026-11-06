@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Trinity</string>
+    <string name="hello_blank_fragment">Lumela</string>
+    <string name="invalid_email_or_password">Imeile kapa phasewete ha e sebetse</string>
+    <string name="please_enter_a_valid_email_address">Ka kopo kenya aterese e nepahetseng ea imeile</string>
+    <string name="an_account_with_this_email_already_exists">Akhaonto e nang le imeile ena e se e ntse e le teng</string>
+    <string name="unable_to_connect_please_try_again">Ha ho khonehe ho hokela. Ka kopo leka hape.</string>
+    <string name="authentication_failed_please_try_again">Netefatso e hlolehile. Ka kopo leka hape</string>
+    <string name="state_loading">E a laela…</string>
+    <string name="state_retry">Leka hape</string>
+    <string name="state_error_title">Ho na le ho sa tsamaeang hantle</string>
+    <string name="state_error_message">Ha ho khonehe ho laela skrine ena. Ka kopo leka hape.</string>
+    <string name="state_success_title">Ho phethiloe</string>
+    <string name="state_success_message">Ketso e phethetsoe ka katleho.</string>
+    <string name="state_listeners_empty_title">Ha ho na bamameli hajoale</string>
+    <string name="state_listeners_empty_message">Tobetsa Ncha ho kenya momameli oa litaelo le taolo</string>
+    <string name="state_payloads_empty_title">Ha ho na li-payload hajoale</string>
+    <string name="state_payloads_empty_message">Li-payload tse hlahisitsoeng li tla hlaha mona</string>
+    <string name="state_logs_empty_title">Ha ho na lirekoto hajoale</string>
+    <string name="state_logs_empty_message">Mesebetsi ea sistimi le mosebelisi e tla hlaha mona</string>
+    <string name="drawer_default_username">U kene</string>
+    <string name="login_failed">Ho kena ho hlolehile</string>
+    <string name="email_is_required">Imeile ea hlokahala</string>
+    <string name="password_is_required">Phasewete ea hlokahala</string>
+    <string name="biometric_login">Ho kena ka biometric</string>
+    <string name="use_your_fingerprint_to_sign_in">Sebelisa monwana oa hau ho kena</string>
+    <string name="use_another_login_method">Sebelisa mokhoa o mong oa ho kena</string>
+    <string name="enable_fingerprint_login">Lumella ho kena ka monwana?</string>
+    <string name="use_your_fingerprint_to_quickly_unlock_the_app_the_next_time_you_sign_in">Sebelisa monwana oa hau ho notlolla sesebelisoa kapele nakong e tlang ha u kena.</string>
+</resources>
