@@ -9,6 +9,7 @@ import Emeris.PROG7314.trinitymobileclient.settings.SettingsRepository
 import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
 import Emeris.PROG7314.trinitymobileclient.settings.Themes
 import Emeris.PROG7314.trinitymobileclient.ui.initialsOf
+import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -21,6 +22,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
@@ -138,6 +140,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     //so back can't reopen the app signed out.
     private fun signOut() {
         Log.d(TAG, "sign out confirmed")
+        //Same as the drawer logout: forget the fingerprint login for this user.
+        requireContext().getSharedPreferences("biometric_preferences", Context.MODE_PRIVATE).edit {
+            remove("biometric_login_enabled")
+            remove("biometric_user_id")
+        }
         authRepository.logout()
 
         val intent = Intent(requireContext(), LoginActivity::class.java)
