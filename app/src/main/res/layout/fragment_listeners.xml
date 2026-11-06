@@ -10,10 +10,10 @@
         android:padding="16dp">
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Listeners" android:textColor="@color/text_primary"
+            android:text="@string/listeners" android:textColor="@color/text_primary"
             android:textSize="24sp" android:textStyle="bold" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Manage command &amp; control listeners" android:textColor="@color/text_secondary"
+            android:text="@string/manage_command_amp_control_listeners" android:textColor="@color/text_secondary"
             android:textSize="13sp" android:layout_marginTop="2dp" />
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             <LinearLayout style="@style/TrinityCard" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                 <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="Total" />
+                    android:layout_height="wrap_content" android:text="@string/total" />
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="0" android:textColor="@color/text_primary" android:textSize="22sp"
                     android:textStyle="bold" android:layout_marginTop="4dp" />
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical"
                 android:layout_marginStart="10dp">
                 <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="Active" />
+                    android:layout_height="wrap_content" android:text="@string/active" />
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="0" android:textColor="@color/status_green" android:textSize="22sp"
                     android:textStyle="bold" android:layout_marginTop="4dp" />
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical"
                 android:layout_marginStart="10dp">
                 <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="Agents" />
+                    android:layout_height="wrap_content" android:text="@string/agents" />
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="0" android:textColor="@color/brand_orange" android:textSize="22sp"
                     android:textStyle="bold" android:layout_marginTop="4dp" />
@@ -51,13 +51,13 @@
             <TextView android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
                 android:background="@drawable/bg_input" android:gravity="center_vertical"
                 android:paddingStart="14dp" android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="10dp" android:text="Filter listeners…"
+                android:drawablePadding="10dp" android:text="@string/filter_listeners"
                 android:textColor="@color/text_muted" android:textSize="14sp" />
             <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_new_listener" style="@style/PrimaryButton"
                 android:layout_width="wrap_content" android:layout_height="46dp"
                 android:layout_marginStart="10dp" android:paddingHorizontal="18dp"
                 android:drawableStart="@drawable/ic_add" android:drawablePadding="6dp"
-                android:text="New" android:minHeight="0dp" />
+                android:text="@string/new_" android:minHeight="0dp" />
         </LinearLayout>
 
         <LinearLayout

@@ -10,10 +10,10 @@
         android:padding="16dp">
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Payloads" android:textColor="@color/text_primary"
+            android:text="@string/payloads" android:textColor="@color/text_primary"
             android:textSize="24sp" android:textStyle="bold" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Generate and manage payloads" android:textColor="@color/text_secondary"
+            android:text="@string/generate_and_manage_payloads" android:textColor="@color/text_secondary"
             android:textSize="13sp" android:layout_marginTop="2dp" />
 
         <LinearLayout style="@style/TrinityCard"
@@ -21,16 +21,16 @@
             android:orientation="vertical" android:layout_marginTop="16dp">
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Generate Payload" android:textColor="@color/text_primary"
+                android:text="@string/generate_payload" android:textColor="@color/text_primary"
                 android:textSize="16sp" android:textStyle="bold" />
 
             <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="Listener" android:layout_marginTop="16dp" />
+                android:layout_height="wrap_content" android:text="@string/listener" android:layout_marginTop="16dp" />
             <TextView android:layout_width="match_parent" android:layout_height="46dp"
                 android:layout_marginTop="6dp" android:background="@drawable/bg_input"
                 android:gravity="center_vertical" android:paddingStart="14dp" android:paddingEnd="14dp"
                 android:drawableEnd="@drawable/ic_chevron_down"
-                android:text="Select a listener"
+                android:text="@string/select_a_listener"
                 android:textColor="@color/text_muted" android:textSize="14sp" />
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                         android:layout_marginTop="6dp" android:background="@drawable/bg_input"
                         android:gravity="center_vertical" android:paddingStart="14dp" android:paddingEnd="14dp"
                         android:drawableEnd="@drawable/ic_chevron_down"
-                        android:text="Executable" android:textColor="@color/text_primary" android:textSize="14sp" />
+                        android:text="@string/executable" android:textColor="@color/text_primary" android:textSize="14sp" />
                 </LinearLayout>
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
@@ -58,7 +58,7 @@
             </LinearLayout>
 
             <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="Output Format" android:layout_marginTop="14dp" />
+                android:layout_height="wrap_content" android:text="@string/output_format" android:layout_marginTop="14dp" />
             <TextView android:layout_width="match_parent" android:layout_height="46dp"
                 android:layout_marginTop="6dp" android:background="@drawable/bg_input"
                 android:gravity="center_vertical" android:paddingStart="14dp" android:paddingEnd="14dp"
@@ -70,9 +70,9 @@
                 <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                     android:layout_weight="1" android:orientation="vertical">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Stageless payload" android:textColor="@color/text_primary" android:textSize="14sp" />
+                        android:text="@string/stageless_payload" android:textColor="@color/text_primary" android:textSize="14sp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Embed full agent (larger file)" android:textColor="@color/text_muted" android:textSize="12sp" />
+                        android:text="@string/embed_full_agent_larger_file" android:textColor="@color/text_muted" android:textSize="12sp" />
                 </LinearLayout>
                 <androidx.appcompat.widget.SwitchCompat
                     android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -86,14 +86,14 @@
                 android:layout_marginTop="16dp"
                 android:drawableStart="@drawable/ic_download" android:drawablePadding="8dp"
                 android:paddingStart="90dp" android:paddingEnd="90dp"
-                android:text="Generate Payload" />
+                android:text="@string/generate_payload" />
         </LinearLayout>
 
         <LinearLayout style="@style/TrinityCard"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:layout_marginTop="14dp">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Recent Payloads" android:textColor="@color/text_primary"
+                android:text="@string/recent_payloads" android:textColor="@color/text_primary"
                 android:textSize="16sp" android:textStyle="bold" android:layout_marginBottom="8dp" />
 
             <LinearLayout
