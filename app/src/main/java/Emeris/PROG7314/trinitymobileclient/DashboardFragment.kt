@@ -13,11 +13,13 @@ import android.widget.TextView
 import androidx.core.view.forEachIndexed
 import androidx.fragment.app.Fragment
 
+// dashboard: agent list, tapping a row opens the Agent Interface
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     // View Binding setup
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
 
+    // TODO(connect to backend): agents dont come from the server yet
     private val agents = emptyList<Agent>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,6 +47,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 (activity as? HomeActivity)?.openAgentInterface(agent.id)
             }
 
+            // divider between rows, not after the last one
             if (index < agents.lastIndex) {
                 val dividerBinding = ItemDividerBinding.inflate(
                     layoutInflater,

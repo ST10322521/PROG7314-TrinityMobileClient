@@ -9,6 +9,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
+// saved auto-lock time works straight away, and the sign out theme reset goes back to the system theme
 @RunWith(AndroidJUnit4::class)
 class AutoLockAndThemeTest {
 

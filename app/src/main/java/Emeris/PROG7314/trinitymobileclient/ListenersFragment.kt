@@ -6,9 +6,11 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 
+// listeners screen, UI only. call the show* functions once the API is wired in
 class ListenersFragment : Fragment(R.layout.fragment_listeners) {
 
     private var _bindings: FragmentListenersBinding? = null
+    // getter not eager init, eager init crashed the app
     private val bindings get() = _bindings!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -17,6 +19,7 @@ class ListenersFragment : Fragment(R.layout.fragment_listeners) {
 
         _bindings = FragmentListenersBinding.bind(view)
 
+        // TODO(connect to backend): no listeners come from the server yet so it starts empty
         showEmpty()
     }
 

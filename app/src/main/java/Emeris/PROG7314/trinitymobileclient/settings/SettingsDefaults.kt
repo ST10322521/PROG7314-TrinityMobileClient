@@ -21,6 +21,7 @@ object SettingsDefaults {
         return  autoLockOptions[text] ?: DEFAULT_AUTO_LOCK_MINUTES
     }
 
+    // unknown code falls back to English
     fun languageText(code: String): String {
         return languageOptions.entries.firstOrNull {
             it.value == code

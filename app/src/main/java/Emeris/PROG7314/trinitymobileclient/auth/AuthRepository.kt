@@ -173,12 +173,14 @@ class AuthRepository(
         return auth.currentUser?.email
     }
 
+    // google only accounts have no password to reset
     fun hasPasswordSignIn(): Boolean {
         return auth.currentUser?.providerData?.any {
             it.providerId == EmailAuthProvider.PROVIDER_ID
         } ?: false
     }
 
+    // https://firebase.google.com/docs/auth/android/manage-users#send_a_password_reset_email
     fun sendPasswordReset(
         email: String,
         onResult: (Result<Unit>) -> Unit

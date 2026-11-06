@@ -6,9 +6,11 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 
+// payloads screen, UI only. call the show* functions once the API is wired in
 class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
 
     private var _bindings: FragmentPayloadsBinding? = null
+    // getter not eager init, eager init crashed the app
     private val bindings get() = _bindings!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -17,6 +19,7 @@ class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
 
         _bindings = FragmentPayloadsBinding.bind(view)
 
+        // TODO(connect to backend): no payloads come from the server yet so it starts empty
         showEmpty()
     }
 
@@ -42,6 +45,7 @@ class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
         bindings.statePayloads.showError(onRetry = onRetry)
     }
 
+    // for when a payload finishes generating
     fun showSuccess() {
         Log.d(TAG, "state -> success")
         bindings.payloadsContent.visibility = View.GONE

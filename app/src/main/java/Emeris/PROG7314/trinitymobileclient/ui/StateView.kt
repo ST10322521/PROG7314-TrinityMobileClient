@@ -11,6 +11,9 @@ import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
+// one card for the loading / empty / error / success states, used by Listeners, Logs and Payloads
+// UI only, the screens decide which state to show
+// https://developer.android.com/develop/ui/views/layout/custom-views/custom-view-components
 class StateView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -48,6 +51,7 @@ class StateView @JvmOverloads constructor(
         visibility = View.VISIBLE
     }
 
+    // retry button only shows when you pass onRetry
     fun showError(
         @StringRes title: Int = R.string.state_error_title,
         @StringRes message: Int = R.string.state_error_message,
@@ -83,6 +87,7 @@ class StateView @JvmOverloads constructor(
         visibility = View.VISIBLE
     }
 
+    // hides the card so the real list can show
     fun showContent() {
         Log.d(TAG, "showContent")
         reset()
@@ -97,6 +102,7 @@ class StateView @JvmOverloads constructor(
         binding.stateIcon.visibility = View.VISIBLE
     }
 
+    // clear everything so the next state starts clean
     private fun reset() {
         binding.stateProgress.visibility = View.GONE
         binding.stateIcon.visibility = View.GONE
