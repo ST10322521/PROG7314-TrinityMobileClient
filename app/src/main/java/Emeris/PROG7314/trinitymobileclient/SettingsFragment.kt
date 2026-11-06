@@ -1,5 +1,6 @@
 package Emeris.PROG7314.trinitymobileclient
 
+import Emeris.PROG7314.trinitymobileclient.api.ApiClient
 import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
 import Emeris.PROG7314.trinitymobileclient.databinding.FragmentSettingsBinding
@@ -72,6 +73,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         showAccount()
         showAppVersion()
         wireCategories()
+        loadServerHealth()
 
         showPreferenceLabels()
         loadPreferences()
@@ -208,6 +210,42 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             null
         }
         bindings.tvAppVersion.text = getString(R.string.settings_about_version, version ?: getString(R.string.settings_value_none))
+    }
+
+    private fun loadServerHealth() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val statusResult = runCatching { ApiClient.server.getStatus() }
+            val ipResult = runCatching { ApiClient.server.getTeamServerIp() }
+
+            val serverOnline = statusResult.getOrNull()?.isSuccessful == true
+
+            bindings.tvServerStatus.text = if (serverOnline) {
+                "● Server Online"
+            } else {
+                "● Server Offline"
+            }
+
+            bindings.tvServerStatus.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    if (serverOnline) R.color.status_green else R.color.status_red
+                )
+            )
+
+            val ipResponse = ipResult.getOrNull()
+            if (ipResponse?.isSuccessful == true) {
+                bindings.tvServerIpv4.text = ipResponse.body()?.string()?.trim()
+                    ?: getString(R.string.settings_value_none)
+            }
+
+            statusResult.onFailure {
+                Log.e(TAG, "server status error", it)
+            }
+
+            ipResult.onFailure {
+                Log.e(TAG, "team server IP error", it)
+            }
+        }
     }
 
     private fun wireCategories() {
