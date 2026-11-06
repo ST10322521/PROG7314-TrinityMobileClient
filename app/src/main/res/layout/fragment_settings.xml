@@ -630,6 +630,48 @@
             android:text="@string/settings_save" />
 
         <TextView
+            android:id="@+id/section_integrations"
+            style="@style/LabelCaps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_integrations"
+            android:layout_marginTop="18dp" />
+
+        <LinearLayout
+            style="@style/TrinityCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="8dp">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:alpha="0.6"
+                android:src="@drawable/ic_integrations"
+                app:tint="@color/text_muted" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/settings_integrations_empty_title"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:text="@string/settings_integrations_empty_message"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <TextView
             android:id="@+id/section_about"
             style="@style/LabelCaps"
             android:layout_width="wrap_content"

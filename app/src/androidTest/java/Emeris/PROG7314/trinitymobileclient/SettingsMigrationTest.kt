@@ -15,7 +15,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-// v1 -> v2 keeps the saved theme and auto-lock and gives the new columns their defaults
+// v1 -> v2 keeps theme and auto-lock. new columns get defualts
 // https://developer.android.com/training/data-storage/room/migrating-db-versions#test
 @RunWith(AndroidJUnit4::class)
 class SettingsMigrationTest {
