@@ -27,6 +27,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import androidx.core.content.edit
 
 // Shell activity: nav drawer + shared app bar. Swaps fragments into content_container.
 // Manual nav, no Nav Component. View binding renames drawer ids, so nav_logout is
@@ -35,6 +36,7 @@ import kotlinx.coroutines.launch
  * https://developer.android.com/guide/fragments/transactions
  * https://developer.android.com/reference/android/os/Looper
  * https://developer.android.com/reference/java/lang/Runnable
+ * https://developer.android.com/identity/sign-in/biometric-auth
  * https://developer.android.com/reference/android/view/ViewGroup#dispatchTouchEvent(android.view.MotionEvent)
  */
 class HomeActivity : AppCompatActivity() {
@@ -49,14 +51,26 @@ class HomeActivity : AppCompatActivity() {
     private var autoLockMinutes = 0
 
     private val autoLockRunnable = Runnable {
-        authRepository.logout()
-
         startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 
-    //Nav list Ids
+    //Nav list IdsautoLockRunnable
     private val navItemIds = NavList.navItemIds
+
+    // Biometric Auth
+    private val biometricPreferences by lazy {
+        getSharedPreferences(
+            "biometric_preferences",
+            MODE_PRIVATE
+        )
+    }
+
+    private companion object {
+        const val TAG = "HomeActivity"
+        const val BIOMETRIC_LOGIN_ENABLED = "biometric_login_enabled"
+        const val BIOMETRIC_USER_ID = "biometric_user_id"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -173,6 +187,12 @@ class HomeActivity : AppCompatActivity() {
             closeDrawer()
 
             Log.d("firebaseAuth", "Logout Selected")
+
+            biometricPreferences.edit {
+                remove(BIOMETRIC_LOGIN_ENABLED)
+                remove(BIOMETRIC_USER_ID)
+            }
+
             authRepository.logout()
 
             startActivity(Intent(this, LoginActivity::class.java))
@@ -284,8 +304,4 @@ class HomeActivity : AppCompatActivity() {
         super.onDestroy()
     }
     private fun closeDrawer() = binding.drawerLayout.closeDrawer(GravityCompat.START)
-
-    private companion object {
-        const val TAG = "HomeActivity"
-    }
 }
