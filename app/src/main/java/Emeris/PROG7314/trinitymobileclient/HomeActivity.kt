@@ -21,6 +21,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -297,6 +298,10 @@ class HomeActivity : AppCompatActivity() {
         autoLockMinutes = minutes
         resetAutoLockTimer()
     }
+
+    //so tests can check the stored auto-lock time
+    @VisibleForTesting
+    fun autoLockMinutesForTest(): Int = autoLockMinutes
 
     private fun resetAutoLockTimer() {
         lockHandler.removeCallbacks(autoLockRunnable)
