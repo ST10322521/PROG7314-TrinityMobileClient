@@ -47,6 +47,8 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 (activity as? HomeActivity)?.openAgentInterface(agent.id)
             }
 
+            binding.agentList.addView(rowBinding.root)
+
             // divider between rows, not after the last one
             if (index < agents.lastIndex) {
                 val dividerBinding = ItemDividerBinding.inflate(
