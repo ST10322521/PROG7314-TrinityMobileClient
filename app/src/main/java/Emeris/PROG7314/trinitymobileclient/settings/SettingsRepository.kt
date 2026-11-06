@@ -15,7 +15,7 @@ class SettingsRepository(
         return userPreferencesDao.getPreferences(userId)
     }
 
-    // false when nobody is signed in so the screen can say why nothing saved
+    // false when nobody is signed in. the screen says why nothing saved
     suspend fun savePreferences(
         theme: String,
         autoLockMinutes: Int,

@@ -13,7 +13,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
-// Settings screen checks. no Espresso (broken on API 37), so views get performClick() on the UI thread
+// Settings screen checks. no Espresso, its broken on API 37. so we use performClick()
 @RunWith(AndroidJUnit4::class)
 class SettingsScreenTest {
 

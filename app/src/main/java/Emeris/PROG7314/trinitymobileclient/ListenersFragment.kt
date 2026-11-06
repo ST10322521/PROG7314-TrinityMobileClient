@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 class ListenersFragment : Fragment(R.layout.fragment_listeners) {
 
     private var _bindings: FragmentListenersBinding? = null
-    // getter not eager init, eager init crashed the app
+    // getter not eager init. eager init crashed the app
     private val bindings get() = _bindings!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

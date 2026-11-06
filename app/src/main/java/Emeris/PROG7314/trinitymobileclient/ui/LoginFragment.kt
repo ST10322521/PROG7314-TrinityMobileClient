@@ -1,6 +1,7 @@
 package Emeris.PROG7314.trinitymobileclient.ui
 
 import Emeris.PROG7314.trinitymobileclient.HomeActivity
+import Emeris.PROG7314.trinitymobileclient.LoginActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import Emeris.PROG7314.trinitymobileclient.R
 import Emeris.PROG7314.trinitymobileclient.api.ApiClient
+import Emeris.PROG7314.trinitymobileclient.auth.TeamServerSession
 import Emeris.PROG7314.trinitymobileclient.api.model.LoginRequest
 import Emeris.PROG7314.trinitymobileclient.auth.AuthError
 import Emeris.PROG7314.trinitymobileclient.auth.AuthException
@@ -72,6 +74,11 @@ class LoginFragment : Fragment() {
 
     private var biometricAction = BiometricAction.NONE
 
+    private val locked: Boolean
+        get() = requireActivity().intent.getBooleanExtra(LoginActivity.EXTRA_LOCKED, false)
+
+    private lateinit var unlockPrompt: BiometricPrompt
+
     private companion object {
         const val BIOMETRIC_LOGIN_ENABLED = "biometric_login_enabled"
         const val BIOMETRIC_USER_ID = "biometric_user_id"
@@ -133,7 +140,7 @@ class LoginFragment : Fragment() {
 
     private var passwordVisible = false
 
-    // show or hide the password, dim eye = hidden
+    // show or hide the password. dim eye = hidden
     private fun togglePasswordVisibility() {
         passwordVisible = !passwordVisible
 
@@ -160,6 +167,7 @@ class LoginFragment : Fragment() {
                 val response = ApiClient.auth.login(LoginRequest(username, password))
                 if (response.isSuccessful) {
                     Log.d("teamServerAuth", "Login successful")
+                    TeamServerSession.start(requireContext(), username)
                     offerBiometricLogin()
                 } else {
                     Log.w("teamServerAuth", "Login failed: HTTP ${response.code()}")
@@ -406,6 +414,11 @@ class LoginFragment : Fragment() {
             "User is already signed in: $currentUser"
         )
 
+        if (locked) {
+            unlockApp()
+            return
+        }
+
         // Read the saved biometric login settings
         val biometricEnabled = biometricPreferences.getBoolean(
             BIOMETRIC_LOGIN_ENABLED,
@@ -445,6 +458,46 @@ class LoginFragment : Fragment() {
             openHome()
         }
     }
+
+    private val unlockAuthenticators =
+        BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+
+    private fun unlockApp() {
+        val canUnlock = BiometricManager.from(requireContext())
+            .canAuthenticate(unlockAuthenticators) == BiometricManager.BIOMETRIC_SUCCESS
+
+        if (!canUnlock) {
+            Log.d("biometricAuth", "No screen lock on device, signing out after auto-lock")
+            authRepository.logout()
+            Toast.makeText(requireContext(), R.string.app_locked_sign_in_again, Toast.LENGTH_LONG).show()
+            return
+        }
+
+        unlockPrompt = BiometricPrompt(
+            this,
+            ContextCompat.getMainExecutor(requireContext()),
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    Log.d("biometricAuth", "App unlocked")
+                    openHome()
+                }
+
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    Log.d("biometricAuth", "Unlock cancelled: $errorCode - $errString")
+                    if (_binding == null) return
+                    Toast.makeText(requireContext(), R.string.app_locked_tap_to_unlock, Toast.LENGTH_LONG).show()
+                    binding.main.setOnClickListener { unlockPrompt.authenticate(unlockPromptInfo()) }
+                }
+            }
+        )
+        unlockPrompt.authenticate(unlockPromptInfo())
+    }
+
+    private fun unlockPromptInfo() = BiometricPrompt.PromptInfo.Builder()
+        .setTitle(getString(R.string.app_locked))
+        .setSubtitle(getString(R.string.app_locked_subtitle))
+        .setAllowedAuthenticators(unlockAuthenticators)
+        .build()
 
     // Convert authentication exceptions into user-friendly messages
     private fun getAuthErrorMessage(exception: Throwable): String {

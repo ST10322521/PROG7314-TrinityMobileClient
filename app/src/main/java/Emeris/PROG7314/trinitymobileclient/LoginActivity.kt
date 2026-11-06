@@ -1,5 +1,6 @@
 package Emeris.PROG7314.trinitymobileclient
 
+import Emeris.PROG7314.trinitymobileclient.auth.TeamServerSession
 import Emeris.PROG7314.trinitymobileclient.ui.LoginFragment
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -9,8 +10,13 @@ import androidx.core.view.WindowInsetsCompat
 
 class LoginActivity : AppCompatActivity() {
 
+    companion object {
+        const val EXTRA_LOCKED = "locked"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        TeamServerSession.init(this)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 

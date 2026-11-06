@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
 
     private var _bindings: FragmentPayloadsBinding? = null
-    // getter not eager init, eager init crashed the app
+    // getter not eager init. eager init crashed the app
     private val bindings get() = _bindings!!
 
     // Form state

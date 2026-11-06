@@ -11,8 +11,8 @@ import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
-// one card for the loading / empty / error / success states, used by Listeners, Logs and Payloads
-// UI only, the screens decide which state to show
+// one card for loading / empty / error / success. used by Listeners, Logs and Payloads
+// UI only. the screens pick the state
 // https://developer.android.com/develop/ui/views/layout/custom-views/custom-view-components
 class StateView @JvmOverloads constructor(
     context: Context,
@@ -87,7 +87,7 @@ class StateView @JvmOverloads constructor(
         visibility = View.VISIBLE
     }
 
-    // hides the card so the real list can show
+    // hides the card so the list can show
     fun showContent() {
         Log.d(TAG, "showContent")
         reset()
