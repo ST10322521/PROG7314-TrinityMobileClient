@@ -122,8 +122,6 @@ class SignalRManager private constructor() {
         )
     }
 
-    // ── Group management ──────────────────────────────────────────────────────
-
     /**
      * Join a SignalR group.
      *
@@ -161,8 +159,6 @@ class SignalRManager private constructor() {
         Log.d(TAG, "Leaving group: '$groupName'")
         invoke(leaveMethodName, groupName, onComplete, onError)
     }
-
-    // ── Agent terminal subscription ─────────────────────────────────────────
 
     /**
      * Subscribe to a specific agent's terminal stream.
@@ -267,8 +263,6 @@ class SignalRManager private constructor() {
         hubConnection!!.on(methodName) { handler() }
         Log.d(TAG, "Registered empty handler for hub method: '$methodName'")
     }
-
-    // ── Sending messages ──────────────────────────────────────────────────────
 
     /**
      * Fire-and-forget invoke of a hub method with no arguments
