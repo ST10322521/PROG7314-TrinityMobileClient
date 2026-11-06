@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="14dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground">
+
+    <!-- Type badge -->
+    <TextView
+        android:id="@+id/payload_type_badge"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:gravity="center"
+        android:background="@drawable/bg_avatar"
+        android:text="EXE"
+        android:textColor="@color/brand_orange"
+        android:textSize="10sp"
+        android:textStyle="bold" />
+
+    <!-- Name + meta -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="14dp">
+        <TextView
+            android:id="@+id/payload_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payload"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/payload_meta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Listener · Campaign"
+            android:textColor="@color/text_muted"
+            android:textSize="12sp"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+    <!-- Date -->
+    <TextView
+        android:id="@+id/payload_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp" />
+</LinearLayout>

@@ -90,4 +90,9 @@ dependencies {
     
     // Biometrics
     implementation("androidx.biometric:biometric:1.1.0")
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp.logging)
 }
