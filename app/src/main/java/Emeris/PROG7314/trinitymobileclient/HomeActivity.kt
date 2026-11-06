@@ -192,6 +192,7 @@ class HomeActivity : AppCompatActivity() {
             authRepository.logout()
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
+            ThemeManager.applyTheme(Themes.Auto)
         }
     }
 
