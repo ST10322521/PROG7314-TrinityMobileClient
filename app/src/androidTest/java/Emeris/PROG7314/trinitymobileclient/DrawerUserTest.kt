@@ -8,7 +8,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
-// drawer footer always shows something, never the "User Name" layout placeholder
+// drawer footer always shows a name. never the "User Name" placeholder
 @RunWith(AndroidJUnit4::class)
 class DrawerUserTest {
 

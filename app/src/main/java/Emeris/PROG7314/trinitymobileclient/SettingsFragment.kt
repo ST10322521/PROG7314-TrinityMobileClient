@@ -1,8 +1,10 @@
 package Emeris.PROG7314.trinitymobileclient
 
+import Emeris.PROG7314.trinitymobileclient.api.ApiClient
 import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
 import Emeris.PROG7314.trinitymobileclient.databinding.FragmentSettingsBinding
+import Emeris.PROG7314.trinitymobileclient.settings.LanguageManager
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsDefaults
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsProvider
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsRepository
@@ -21,13 +23,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.biometric.BiometricManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
-// settings screen: account card, the 5 preferences (saved per user in Room) and the category rows
+// settings screen. account card, 5 preferences and the category rows. saved per user in Room
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private var _bindings: FragmentSettingsBinding? = null
     private val bindings get() = _bindings!!
@@ -35,15 +38,15 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var authRepository: AuthRepository
 
-    // what is picked right now, kept as values so saving still works once the labels are translated
+    // what is picked right now. kept as values so saving works when translated
     private var selectedTheme = SettingsDefaults.DEFAULT_THEME
     private var selectedAutoLockMinutes = SettingsDefaults.DEFAULT_AUTO_LOCK_MINUTES
     private var selectedLanguage = SettingsDefaults.DEFAULT_LANGUAGE
 
-    // what is in Room, null until it loads
+    // what is in Room. null untill it loads
     private var savedValues: SettingsValues? = null
 
-    // unsaved picks from before a rotation or theme switch
+    // unsaved picks from before a rotaion or theme switch
     private var restoredValues: SettingsValues? = null
 
     private var selectedCategoryId = R.id.cat_general
@@ -70,6 +73,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         showAccount()
         showAppVersion()
         wireCategories()
+        loadServerHealth()
 
         showPreferenceLabels()
         loadPreferences()
@@ -78,9 +82,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.tvTheme.setOnClickListener { showThemeDialog() }
         bindings.tvAutoLock.setOnClickListener { showAutoLockDialog() }
 
-        // TODO(KAN-108): login reads its own biometric_preferences, not this switch
-        bindings.switchBiometric.setOnCheckedChangeListener { _, checked ->
+        bindings.switchBiometric.setOnCheckedChangeListener { button, checked ->
             Log.d(TAG, "biometric toggled -> $checked")
+            if (checked && button.isPressed && !fingerprintReady()) {
+                button.isChecked = false
+                Toast.makeText(requireContext(), R.string.settings_biometric_unavailable, Toast.LENGTH_LONG).show()
+            }
         }
         bindings.switchNotifications.setOnCheckedChangeListener { _, checked ->
             Log.d(TAG, "notifications toggled -> $checked")
@@ -91,7 +98,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.btnResetPassword.setOnClickListener { confirmPasswordReset() }
     }
 
-    // reset password only for email accounts, google accounts dont have a password
+    // reset password only for email accounts. google ones dont have a password
     private fun showAccount() {
         val username = authRepository.currentUserUsername()
         val email = authRepository.currentUserEmail()
@@ -122,7 +129,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             .show()
     }
 
-    // same as the drawer logout, forget the fingerprint login too
+    // same as the drawer logout. forget the fingerprint login too
     private fun signOut() {
         Log.d(TAG, "sign out confirmed")
         requireContext().getSharedPreferences("biometric_preferences", Context.MODE_PRIVATE).edit {
@@ -131,13 +138,38 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
         authRepository.logout()
 
-        // clear the task so back cant reopen the app signed out
+        // clear the task so back cant reopen the app
         val intent = Intent(requireContext(), LoginActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
         requireActivity().finish()
         ThemeManager.applyTheme(Themes.Auto)
+        LanguageManager.resetLanguage()
     }
+
+    private fun biometricPrefs() =
+        requireContext().getSharedPreferences("biometric_preferences", Context.MODE_PRIVATE)
+
+    private fun biometricLoginOn(): Boolean {
+        val prefs = biometricPrefs()
+        return prefs.getBoolean("biometric_login_enabled", false) &&
+            prefs.getString("biometric_user_id", null) == authRepository.currentUserId()
+    }
+
+    private fun saveBiometricLogin(enabled: Boolean) {
+        biometricPrefs().edit {
+            if (enabled) {
+                putBoolean("biometric_login_enabled", true)
+                putString("biometric_user_id", authRepository.currentUserId())
+            } else {
+                remove("biometric_login_enabled")
+                remove("biometric_user_id")
+            }
+        }
+    }
+
+    private fun fingerprintReady() = BiometricManager.from(requireContext())
+        .canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
 
     private fun confirmPasswordReset() {
         val email = authRepository.currentUserEmail() ?: return
@@ -152,7 +184,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun sendPasswordReset(email: String) {
         Log.d(TAG, "password reset requested")
-        // disabled until firebase answers so it cant be spammed
+        // disabled untill firebase answers. stops spamming
         bindings.btnResetPassword.isEnabled = false
 
         authRepository.sendPasswordReset(email) { result ->
@@ -180,6 +212,58 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.tvAppVersion.text = getString(R.string.settings_about_version, version ?: getString(R.string.settings_value_none))
     }
 
+    private fun loadServerHealth() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val statusResult = runCatching { ApiClient.server.getStatus() }
+            val ipResult = runCatching { ApiClient.server.getTeamServerIp() }
+
+            val serverOnline = statusResult.getOrNull()?.isSuccessful == true
+            // Update server health icon
+            bindings.tvServerStatus.text = if (serverOnline) {
+                "● Server Online"
+            } else {
+                "● Server Offline"
+            }
+
+            bindings.tvServerStatus.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    if (serverOnline) R.color.status_green else R.color.status_red
+                )
+            )
+
+
+            // Style UI for IPV4 and IPV6
+            val ipResponse = ipResult.getOrNull()
+
+            if (ipResponse?.isSuccessful == true) {
+                val body = ipResponse.body()?.string()
+
+                if (!body.isNullOrBlank()) {
+                    try {
+                        val json = org.json.JSONObject(body)
+
+                        bindings.tvServerIpv4.text =
+                            json.optString("ipV4", getString(R.string.settings_value_none))
+
+                        bindings.tvServerIpv6.text =
+                            json.optString("ipV6", getString(R.string.settings_value_none))
+                    } catch (e: Exception) {
+                        Log.e(TAG, "could not parse team server IP", e)
+                    }
+                }
+            }
+
+            statusResult.onFailure {
+                Log.e(TAG, "server status error", it)
+            }
+
+            ipResult.onFailure {
+                Log.e(TAG, "team server IP error", it)
+            }
+        }
+    }
+
     private fun wireCategories() {
         bindings.catGeneral.setOnClickListener {
             openCategory(bindings.catGeneral, bindings.sectionGeneral)
@@ -189,6 +273,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
         bindings.catNotifications.setOnClickListener {
             openCategory(bindings.catNotifications, bindings.sectionNotifications)
+        }
+        bindings.catIntegrations.setOnClickListener {
+            openCategory(bindings.catIntegrations, bindings.sectionIntegrations)
         }
         bindings.catAbout.setOnClickListener {
             openCategory(bindings.catAbout, bindings.sectionAbout)
@@ -203,7 +290,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.settingsScroll.smoothScrollTo(0, topInContent(section))
     }
 
-    // sections sit inside cards, so add up the offset's until the scroll content
+    // sections sit inside cards. add up the offset's to the scroll content
     private fun topInContent(view: View): Int {
         var top = 0
         var current: View? = view
@@ -256,11 +343,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     ?: SettingsDefaults.DEFAULT_THEME
                 selectedAutoLockMinutes = preferences.autoLockMinutes
                 selectedLanguage = preferences.language
-                b.switchBiometric.isChecked = preferences.biometricEnabled
+                b.switchBiometric.isChecked = biometricLoginOn()
                 b.switchNotifications.isChecked = preferences.notificationsEnabled
             } else {
                 Log.d(TAG, "no saved preferences, showing defaults")
-                b.switchBiometric.isChecked = SettingsDefaults.DEFAULT_BIOMETRIC_ENABLED
+                b.switchBiometric.isChecked = biometricLoginOn()
                 b.switchNotifications.isChecked = SettingsDefaults.DEFAULT_NOTIFICATIONS_ENABLED
             }
             savedValues = currentValues()
@@ -291,7 +378,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.switchNotifications.isChecked = values.notificationsEnabled
     }
 
-    // HomeActivity asks this before leaving the screen
+    // HomeActivity asks this before leaving
     fun hasUnsavedChanges(): Boolean {
         if (_bindings == null) return false
         val saved = savedValues ?: return false
@@ -341,8 +428,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun showPreferenceLabels() {
-        bindings.tvTheme.text = selectedTheme.name
-        bindings.tvAutoLock.text = SettingsDefaults.autoLockText(selectedAutoLockMinutes)
+        bindings.tvTheme.text = themeLabel(selectedTheme)
+        bindings.tvAutoLock.text = autoLockLabel(selectedAutoLockMinutes)
         bindings.tvLanguage.text = SettingsDefaults.languageText(selectedLanguage)
     }
 
@@ -375,6 +462,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         theme, autoLockMinutes, language, biometricEnabled, notificationsEnabled
                     )
                     (activity as? HomeActivity)?.applyAutoLock(autoLockMinutes)
+                    saveBiometricLogin(biometricEnabled)
                     R.string.settings_saved
                 } else {
                     Log.w(TAG, "save skipped, no signed-in user")
@@ -387,16 +475,18 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
             val b = _bindings ?: return@launch
             b.btnSaveSettings.isEnabled = true
-            // app context so the toast stays up when the theme rebuilds the activity
+            // app context so the toast stays when the theme rebuilds
             Toast.makeText(b.root.context.applicationContext, message, Toast.LENGTH_SHORT).show()
 
-            // theme last, its can recreate the activity
-            if (message == R.string.settings_saved) ThemeManager.applyTheme(theme)
+            // theme and languge last. both can recreate the activty
+            if (message == R.string.settings_saved) {
+                ThemeManager.applyTheme(theme)
+                LanguageManager.applyLanguage(language)
+            }
         }
     }
 
-    // pickers only change the selection, Save is what writes it
-    // TODO(KAN-104): the language is saved but nothing switches the app to it yet
+    // pickers only change the selection. Save writes it
     private fun showLanguageDialog() {
         val labels = SettingsDefaults.languageOptions.keys.toTypedArray()
 
@@ -410,12 +500,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun showAutoLockDialog() {
-        val labels = SettingsDefaults.autoLockOptions.keys.toTypedArray()
+        val minutes = SettingsDefaults.autoLockOptions.values.toList()
+        val labels = minutes.map { autoLockLabel(it) }.toTypedArray()
 
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.settings_auto_lock)
             .setItems(labels) { _, which ->
-                selectedAutoLockMinutes = SettingsDefaults.autoLockMinutes(labels[which])
+                selectedAutoLockMinutes = minutes[which]
                 Log.d(TAG, "auto-lock picked -> $selectedAutoLockMinutes min")
                 showPreferenceLabels()
             }.show()
@@ -426,12 +517,24 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.settings_theme)
-            .setItems(themes.map { it.name }.toTypedArray()) { _, which ->
+            .setItems(themes.map { themeLabel(it) }.toTypedArray()) { _, which ->
                 selectedTheme = themes[which]
                 Log.d(TAG, "theme picked -> $selectedTheme")
                 showPreferenceLabels()
             }.show()
     }
+
+    private fun themeLabel(theme: Themes): String = getString(
+        when (theme) {
+            Themes.Auto -> R.string.settings_theme_auto
+            Themes.Dark -> R.string.settings_theme_dark
+            Themes.Light -> R.string.settings_theme_light
+        }
+    )
+
+    private fun autoLockLabel(minutes: Int): String =
+        if (minutes == 0) getString(R.string.settings_auto_lock_never)
+        else getString(R.string.settings_auto_lock_minutes, minutes)
 
     override fun onDestroyView() {
         super.onDestroyView()
