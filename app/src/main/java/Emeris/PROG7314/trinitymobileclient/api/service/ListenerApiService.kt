@@ -6,6 +6,7 @@ import Emeris.PROG7314.trinitymobileclient.api.model.CreateSmbListenerRequest
 import Emeris.PROG7314.trinitymobileclient.api.model.CreateTcpListenerRequest
 import Emeris.PROG7314.trinitymobileclient.api.model.UpdateHttpListenerRequest
 import Emeris.PROG7314.trinitymobileclient.api.model.UpdateHttpsListenerRequest
+import Emeris.PROG7314.trinitymobileclient.api.model.ListenerDto
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
@@ -18,7 +19,7 @@ import retrofit2.http.Path
 interface ListenerApiService {
 
     @GET("api/v1/listeners")
-    suspend fun getListeners(): Response<ResponseBody>
+    suspend fun getListeners(): Response<List<ListenerDto>>
 
     @POST("api/v1/listeners/http")
     suspend fun createHttp(@Body body: CreateHttpListenerRequest): Response<ResponseBody>

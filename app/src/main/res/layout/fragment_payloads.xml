@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_root">
@@ -9,96 +10,309 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Payloads" android:textColor="@color/text_primary"
-            android:textSize="24sp" android:textStyle="bold" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Generate and manage payloads" android:textColor="@color/text_secondary"
-            android:textSize="13sp" android:layout_marginTop="2dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payloads"
+            android:textColor="@color/text_primary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Generate and manage payloads"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp" />
 
         <!-- Generate card -->
-        <LinearLayout style="@style/TrinityCard"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:layout_marginTop="16dp">
+        <LinearLayout
+            style="@style/TrinityCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="16dp">
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Generate Payload" android:textColor="@color/text_primary"
-                android:textSize="16sp" android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Generate Payload"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-            <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="Listener" android:layout_marginTop="16dp" />
-            <TextView android:layout_width="match_parent" android:layout_height="46dp"
-                android:layout_marginTop="6dp" android:background="@drawable/bg_input"
-                android:gravity="center_vertical" android:paddingStart="14dp" android:paddingEnd="14dp"
+            <!-- Name -->
+            <TextView
+                style="@style/LabelCaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name (optional)"
+                android:layout_marginTop="16dp" />
+            <EditText
+                android:id="@+id/et_payload_name"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_input"
+                android:hint="e.g. dropper-v1"
+                android:textColorHint="@color/text_muted"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:inputType="text"
+                android:imeOptions="actionNext" />
+
+            <!-- Listener -->
+            <TextView
+                style="@style/LabelCaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Listener"
+                android:layout_marginTop="14dp" />
+            <TextView
+                android:id="@+id/tv_listener"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_input"
+                android:gravity="center_vertical"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
                 android:drawableEnd="@drawable/ic_chevron_down"
                 android:text="Select a listener"
-                android:textColor="@color/text_muted" android:textSize="14sp" />
+                android:textColor="@color/text_muted"
+                android:textSize="14sp"
+                android:clickable="true"
+                android:focusable="true" />
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:layout_marginTop="14dp">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical">
-                    <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:text="Type" />
-                    <TextView android:layout_width="match_parent" android:layout_height="46dp"
-                        android:layout_marginTop="6dp" android:background="@drawable/bg_input"
-                        android:gravity="center_vertical" android:paddingStart="14dp" android:paddingEnd="14dp"
-                        android:drawableEnd="@drawable/ic_chevron_down"
-                        android:text="Executable" android:textColor="@color/text_primary" android:textSize="14sp" />
+            <!-- Campaign -->
+            <TextView
+                style="@style/LabelCaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Campaign"
+                android:layout_marginTop="14dp" />
+            <TextView
+                android:id="@+id/tv_campaign"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_input"
+                android:gravity="center_vertical"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:drawableEnd="@drawable/ic_chevron_down"
+                android:text="Select a campaign"
+                android:textColor="@color/text_muted"
+                android:textSize="14sp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <!-- Type + Arch row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="14dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/LabelCaps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Type" />
+                    <TextView
+                        android:id="@+id/tv_payload_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_input"
+                        android:gravity="center_vertical"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:text="Windows EXE"
+                        android:textColor="@color/text_muted"
+                        android:textSize="14sp" />
                 </LinearLayout>
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-                    <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" android:text="Arch" />
-                    <TextView android:layout_width="match_parent" android:layout_height="46dp"
-                        android:layout_marginTop="6dp" android:background="@drawable/bg_input"
-                        android:gravity="center_vertical" android:paddingStart="14dp" android:paddingEnd="14dp"
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+                    <TextView
+                        style="@style/LabelCaps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Arch" />
+                    <TextView
+                        android:id="@+id/tv_payload_arch"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_input"
+                        android:gravity="center_vertical"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
                         android:drawableEnd="@drawable/ic_chevron_down"
-                        android:text="x64" android:textColor="@color/text_primary" android:textSize="14sp" />
+                        android:text="x64"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:clickable="true"
+                        android:focusable="true" />
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:text="Output Format" android:layout_marginTop="14dp" />
-            <TextView android:layout_width="match_parent" android:layout_height="46dp"
-                android:layout_marginTop="6dp" android:background="@drawable/bg_input"
-                android:gravity="center_vertical" android:paddingStart="14dp" android:paddingEnd="14dp"
+            <!-- Rotation Strategy -->
+            <TextView
+                style="@style/LabelCaps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rotation Strategy"
+                android:layout_marginTop="14dp" />
+            <TextView
+                android:id="@+id/tv_rotation_strategy"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_input"
+                android:gravity="center_vertical"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
                 android:drawableEnd="@drawable/ic_chevron_down"
-                android:text="Windows EXE (.exe)" android:textColor="@color/text_primary" android:textSize="14sp" />
+                android:text="Round Robin"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:clickable="true"
+                android:focusable="true" />
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="16dp">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Stageless payload" android:textColor="@color/text_primary" android:textSize="14sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Embed full agent (larger file)" android:textColor="@color/text_muted" android:textSize="12sp" />
+            <!-- Sleep + Jitter row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="14dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        style="@style/LabelCaps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sleep (s)" />
+                    <EditText
+                        android:id="@+id/et_sleep"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_input"
+                        android:text="60"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:inputType="number"
+                        android:imeOptions="actionNext" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="12dp">
+                    <TextView
+                        style="@style/LabelCaps"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jitter (%)" />
+                    <EditText
+                        android:id="@+id/et_jitter"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:layout_marginTop="6dp"
+                        android:background="@drawable/bg_input"
+                        android:text="0"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:inputType="number"
+                        android:imeOptions="actionDone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Stageless toggle -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Stageless payload"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Embed full agent (larger file)"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
                 </LinearLayout>
                 <androidx.appcompat.widget.SwitchCompat
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    android:id="@+id/switch_stageless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:checked="true"
                     android:thumbTint="@color/white"
                     android:trackTint="@color/brand_orange" />
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_generate" style="@style/PrimaryButton"
-                android:layout_width="match_parent" android:layout_height="wrap_content"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_generate"
+                style="@style/PrimaryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:drawableStart="@drawable/ic_download" android:drawablePadding="8dp"
-                android:paddingStart="90dp" android:paddingEnd="90dp"
+                android:drawableStart="@drawable/ic_download"
+                android:drawablePadding="8dp"
                 android:text="Generate Payload" />
         </LinearLayout>
 
         <!-- Recent payloads -->
-        <LinearLayout style="@style/TrinityCard"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:layout_marginTop="14dp">
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Recent Payloads" android:textColor="@color/text_primary"
-                android:textSize="16sp" android:textStyle="bold" android:layout_marginBottom="8dp" />
+        <LinearLayout
+            style="@style/TrinityCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="14dp">
 
-            <!-- Generated payload list goes here once the API layer supplies data. -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recent Payloads"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
             <LinearLayout
                 android:id="@+id/payloads_content"
                 android:layout_width="match_parent"
@@ -106,11 +320,11 @@
                 android:orientation="vertical"
                 android:visibility="gone" />
 
-            <!-- Shared loading / empty / error / success block. See ui/StateView.kt -->
             <Emeris.PROG7314.trinitymobileclient.ui.StateView
                 android:id="@+id/state_payloads"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

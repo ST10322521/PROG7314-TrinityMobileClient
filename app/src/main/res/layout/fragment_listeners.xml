@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_root">
@@ -9,73 +10,206 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Listeners" android:textColor="@color/text_primary"
-            android:textSize="24sp" android:textStyle="bold" />
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Manage command &amp; control listeners" android:textColor="@color/text_secondary"
-            android:textSize="13sp" android:layout_marginTop="2dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Listeners"
+            android:textColor="@color/text_primary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manage command &amp; control listeners"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp"
+            android:layout_marginTop="2dp" />
 
-        <!-- Stats row -->
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:layout_marginTop="16dp">
-            <LinearLayout style="@style/TrinityCard" android:layout_width="0dp"
-                android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="Total" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="0" android:textColor="@color/text_primary" android:textSize="22sp"
-                    android:textStyle="bold" android:layout_marginTop="4dp" />
+        <!-- Total listeners -->
+        <LinearLayout
+            style="@style/TrinityCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    style="@style/LabelCaps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Listeners" />
+                <TextView
+                    android:id="@+id/tv_stat_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="–"
+                    android:textColor="@color/text_primary"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="2dp" />
             </LinearLayout>
-            <LinearLayout style="@style/TrinityCard" android:layout_width="0dp"
-                android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical"
-                android:layout_marginStart="10dp">
-                <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="Active" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="0" android:textColor="@color/status_green" android:textSize="22sp"
-                    android:textStyle="bold" android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <!-- Per-type counts -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <LinearLayout
+                style="@style/TrinityCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal">
+                <TextView
+                    style="@style/LabelCaps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HTTP" />
+                <TextView
+                    android:id="@+id/tv_stat_http"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="–"
+                    android:textColor="@color/status_blue"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
-            <LinearLayout style="@style/TrinityCard" android:layout_width="0dp"
-                android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical"
-                android:layout_marginStart="10dp">
-                <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="Agents" />
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="0" android:textColor="@color/brand_orange" android:textSize="22sp"
-                    android:textStyle="bold" android:layout_marginTop="4dp" />
+
+            <LinearLayout
+                style="@style/TrinityCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginStart="8dp">
+                <TextView
+                    style="@style/LabelCaps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HTTPS" />
+                <TextView
+                    android:id="@+id/tv_stat_https"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="–"
+                    android:textColor="@color/status_green"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/TrinityCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginStart="8dp">
+                <TextView
+                    style="@style/LabelCaps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TCP" />
+                <TextView
+                    android:id="@+id/tv_stat_tcp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="–"
+                    android:textColor="@color/status_purple"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/TrinityCard"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:layout_marginStart="8dp">
+                <TextView
+                    style="@style/LabelCaps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SMB" />
+                <TextView
+                    android:id="@+id/tv_stat_smb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="–"
+                    android:textColor="@color/status_yellow"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp" />
             </LinearLayout>
         </LinearLayout>
 
         <!-- Filter + New -->
-        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="horizontal" android:layout_marginTop="14dp">
-            <TextView android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
-                android:background="@drawable/bg_input" android:gravity="center_vertical"
-                android:paddingStart="14dp" android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="10dp" android:text="Filter listeners…"
-                android:textColor="@color/text_muted" android:textSize="14sp" />
-            <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_new_listener" style="@style/PrimaryButton"
-                android:layout_width="wrap_content" android:layout_height="46dp"
-                android:layout_marginStart="10dp" android:paddingHorizontal="18dp"
-                android:drawableStart="@drawable/ic_add" android:drawablePadding="6dp"
-                android:text="New" android:minHeight="0dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="14dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_input"
+                android:gravity="center_vertical"
+                android:paddingStart="14dp"
+                android:drawableStart="@drawable/ic_search"
+                android:drawablePadding="10dp"
+                android:text="Filter listeners…"
+                android:textColor="@color/text_muted"
+                android:textSize="14sp" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_new_listener"
+                style="@style/PrimaryButton"
+                android:layout_width="wrap_content"
+                android:layout_height="46dp"
+                android:layout_marginStart="10dp"
+                android:paddingHorizontal="18dp"
+                android:drawableStart="@drawable/ic_add"
+                android:drawablePadding="6dp"
+                android:text="New"
+                android:minHeight="0dp" />
         </LinearLayout>
 
-        <!-- Listener list goes here once the API layer supplies data. -->
+        <!-- Listener rows card -->
         <LinearLayout
-            android:id="@+id/listeners_content"
+            style="@style/TrinityCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="14dp"
-            android:visibility="gone" />
+            android:padding="0dp">
 
-        <!-- Shared loading / empty / error / success block. See ui/StateView.kt -->
-        <Emeris.PROG7314.trinitymobileclient.ui.StateView
-            android:id="@+id/state_listeners"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp" />
+            <LinearLayout
+                android:id="@+id/listeners_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" />
+
+            <Emeris.PROG7314.trinitymobileclient.ui.StateView
+                android:id="@+id/state_listeners"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

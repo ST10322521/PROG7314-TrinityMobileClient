@@ -1,5 +1,6 @@
 package Emeris.PROG7314.trinitymobileclient.api.service
 
+import Emeris.PROG7314.trinitymobileclient.api.model.OperatorDto
 import Emeris.PROG7314.trinitymobileclient.api.model.OperatorRequest
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -13,7 +14,7 @@ import retrofit2.http.Path
 interface OperatorApiService {
 
     @GET("api/v1/operators")
-    suspend fun getOperators(): Response<ResponseBody>
+    suspend fun getOperators(): Response<List<OperatorDto>>
 
     @POST("api/v1/operators")
     suspend fun createOperator(@Body body: OperatorRequest): Response<ResponseBody>
