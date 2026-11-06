@@ -215,9 +215,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private fun loadServerHealth() {
         viewLifecycleOwner.lifecycleScope.launch {
             val statusResult = runCatching { ApiClient.server.getStatus() }
-            val response = statusResult.getOrNull()
+            val ipResult = runCatching { ApiClient.server.getTeamServerIp() }
 
-            val serverOnline = response?.isSuccessful == true
+            val serverOnline = statusResult.getOrNull()?.isSuccessful == true
             // Update server health icon
             bindings.tvServerStatus.text = if (serverOnline) {
                 "● Server Online"
@@ -232,11 +232,14 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 )
             )
 
-            // Style UI for IPV4 and IPV6
-            if (serverOnline) {
-                val body = response.body()?.string()
 
-                if (body != null) {
+            // Style UI for IPV4 and IPV6
+            val ipResponse = ipResult.getOrNull()
+
+            if (ipResponse?.isSuccessful == true) {
+                val body = ipResponse.body()?.string()
+
+                if (!body.isNullOrBlank()) {
                     try {
                         val json = org.json.JSONObject(body)
 
@@ -246,13 +249,17 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         bindings.tvServerIpv6.text =
                             json.optString("ipV6", getString(R.string.settings_value_none))
                     } catch (e: Exception) {
-                        Log.e(TAG, "could not parse server status", e)
+                        Log.e(TAG, "could not parse team server IP", e)
                     }
                 }
             }
 
             statusResult.onFailure {
                 Log.e(TAG, "server status error", it)
+            }
+
+            ipResult.onFailure {
+                Log.e(TAG, "team server IP error", it)
             }
         }
     }
