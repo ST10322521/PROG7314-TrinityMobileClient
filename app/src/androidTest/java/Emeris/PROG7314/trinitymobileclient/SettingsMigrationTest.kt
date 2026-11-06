@@ -15,9 +15,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-//Checks the v1 -> v2 Room migration keeps a user's saved theme and auto-lock
-//and gives the new columns their defaults.
-//https://developer.android.com/training/data-storage/room/migrating-db-versions#test
 @RunWith(AndroidJUnit4::class)
 class SettingsMigrationTest {
 
@@ -28,7 +25,6 @@ class SettingsMigrationTest {
     fun createVersion1Database() {
         context.deleteDatabase(dbName)
 
-        //same table Room built for AppDatabase version 1
         val db = SQLiteDatabase.openOrCreateDatabase(context.getDatabasePath(dbName), null)
         db.execSQL(
             "CREATE TABLE IF NOT EXISTS `user_preferences` (`userId` TEXT NOT NULL, " +

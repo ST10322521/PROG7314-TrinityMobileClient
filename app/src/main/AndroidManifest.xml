@@ -20,7 +20,6 @@
         android:theme="@style/Theme.TrinityMobileClient"
         android:usesCleartextTraffic="true">
 
-        <!-- Launcher screen -->
         <activity
             android:name=".LoginActivity"
             android:exported="true"
@@ -31,7 +30,6 @@
             </intent-filter>
         </activity>
 
-        <!-- App shell -->
         <activity
             android:name=".HomeActivity"
             android:exported="false"

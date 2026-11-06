@@ -169,30 +169,16 @@ class AuthRepository(
         auth.signOut()
     }
 
-    /**
-     * Returns the signed-in user's email, or null if nobody is signed in
-     */
     fun currentUserEmail(): String? {
         return auth.currentUser?.email
     }
 
-    /**
-     * True when the signed-in user has an email + password login.
-     * Google (SSO) only accounts have no password to reset.
-     */
     fun hasPasswordSignIn(): Boolean {
         return auth.currentUser?.providerData?.any {
             it.providerId == EmailAuthProvider.PROVIDER_ID
         } ?: false
     }
 
-    /**
-     * Sends a password reset email.
-     * https://firebase.google.com/docs/auth/android/manage-users#send_a_password_reset_email
-     *
-     * @param email address to send the reset link to
-     * @param onResult Callback invoked with the result of the request.
-     */
     fun sendPasswordReset(
         email: String,
         onResult: (Result<Unit>) -> Unit

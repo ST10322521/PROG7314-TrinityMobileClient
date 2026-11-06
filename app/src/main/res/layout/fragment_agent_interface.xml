@@ -4,7 +4,6 @@
     android:orientation="vertical"
     android:background="@color/bg_root">
 
-    <!-- App bar + back button -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +38,6 @@
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:padding="16dp">
 
-            <!-- Endpoint card -->
             <LinearLayout style="@style/TrinityCard"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -87,7 +85,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Command console -->
             <LinearLayout style="@style/TrinityCard"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:layout_marginTop="12dp">
@@ -132,7 +129,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Settings actions -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="Settings" android:textColor="@color/text_primary"
                 android:textSize="16sp" android:textStyle="bold" android:layout_marginTop="16dp" />
@@ -161,7 +157,6 @@
                     android:text="Kill Agent" android:textSize="13sp" />
             </LinearLayout>
 
-            <!-- Agent tasks -->
             <LinearLayout style="@style/TrinityCard"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="vertical" android:layout_marginTop="16dp">
@@ -195,7 +190,6 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Task tabs -->
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:layout_marginTop="14dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"

@@ -16,7 +16,6 @@
             android:text="View and analyse all system and user activity logs" android:textColor="@color/text_secondary"
             android:textSize="13sp" android:layout_marginTop="2dp" />
 
-        <!-- 2x2 stat grid -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginTop="16dp">
             <LinearLayout style="@style/TrinityCard" android:layout_width="0dp"
@@ -58,7 +57,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Filter + Source -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginTop="14dp">
             <TextView android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
@@ -73,7 +71,6 @@
                 android:textColor="@color/text_secondary" android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- Level tabs -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginTop="14dp">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -93,7 +90,6 @@
                 android:text="Info" android:textColor="@color/text_secondary" android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- Log entry list goes here once the API layer supplies data. -->
         <LinearLayout
             android:id="@+id/logs_content"
             android:layout_width="match_parent"
@@ -102,14 +98,12 @@
             android:layout_marginTop="12dp"
             android:visibility="gone" />
 
-        <!-- Shared loading / empty / error / success block. See ui/StateView.kt -->
         <Emeris.PROG7314.trinitymobileclient.ui.StateView
             android:id="@+id/state_logs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp" />
 
-        <!-- Quick actions -->
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Quick Actions" android:textColor="@color/text_primary"
             android:textSize="16sp" android:textStyle="bold" android:layout_marginTop="18dp" />

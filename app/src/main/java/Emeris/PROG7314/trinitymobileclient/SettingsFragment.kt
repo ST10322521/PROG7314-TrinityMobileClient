@@ -27,36 +27,23 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
-//User settings: account card, general preferences (language, theme, biometric,
-//notifications, auto-lock) saved to Room, and category rows that jump to their section.
-//https://developer.android.com/develop/ui/views/components/dialogs
-//https://developer.android.com/reference/androidx/appcompat/app/AppCompatDelegate#setDefaultNightMode(int)
-//https://developer.android.com/reference/androidx/core/widget/NestedScrollView
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
-    //Setting up bindings
     private var _bindings: FragmentSettingsBinding? = null
     private val bindings get() = _bindings!!
 
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var authRepository: AuthRepository
 
-    //Current picker values. Kept here instead of read back from the labels,
-    //so saving still works once the labels are translated.
     private var selectedTheme = SettingsDefaults.DEFAULT_THEME
     private var selectedAutoLockMinutes = SettingsDefaults.DEFAULT_AUTO_LOCK_MINUTES
     private var selectedLanguage = SettingsDefaults.DEFAULT_LANGUAGE
 
-    //What is currently saved, so leaving with different values can ask first.
-    //Null until Room has loaded.
     private var savedValues: SettingsValues? = null
 
-    //Unsaved picks kept over a rebuild (rotation, dark mode switch).
-    //Applied once Room has loaded so they win over the saved values.
     private var restoredValues: SettingsValues? = null
 
     private var selectedCategoryId = R.id.cat_general
 
-    //One snapshot of everything the Save button writes.
     private data class SettingsValues(
         val theme: Themes,
         val autoLockMinutes: Int,
@@ -80,7 +67,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         showAppVersion()
         wireCategories()
 
-        //defaults first so the screen is never blank while Room loads
         showPreferenceLabels()
         loadPreferences()
 
@@ -100,10 +86,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.btnResetPassword.setOnClickListener { confirmPasswordReset() }
     }
 
-    //Account card
-
-    //Fills the account card from Firebase. Reset password only shows for
-    //email + password accounts, Google-only accounts have no password.
     private fun showAccount() {
         val username = authRepository.currentUserUsername()
         val email = authRepository.currentUserEmail()
@@ -120,9 +102,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         val canReset = email != null && authRepository.hasPasswordSignIn()
         bindings.btnResetPassword.visibility = if (canReset) View.VISIBLE else View.GONE
-        //nothing to sign out of when nobody is signed in
         bindings.btnSignOut.visibility = if (username != null) View.VISIBLE else View.GONE
-        //drop the empty button row so the card doesn't keep a gap
         val anyAction = canReset || username != null
         bindings.accountActions.visibility = if (anyAction) View.VISIBLE else View.GONE
     }
@@ -136,11 +116,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             .show()
     }
 
-    //Signs out and returns to login with the back stack cleared,
-    //so back can't reopen the app signed out.
     private fun signOut() {
         Log.d(TAG, "sign out confirmed")
-        //Same as the drawer logout: forget the fingerprint login for this user.
         requireContext().getSharedPreferences("biometric_preferences", Context.MODE_PRIVATE).edit {
             remove("biometric_login_enabled")
             remove("biometric_user_id")
@@ -165,13 +142,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             .show()
     }
 
-    //Button stays disabled until Firebase answers, so it can't be spammed.
     private fun sendPasswordReset(email: String) {
         Log.d(TAG, "password reset requested")
         bindings.btnResetPassword.isEnabled = false
 
         authRepository.sendPasswordReset(email) { result ->
-            //screen may have been closed while waiting
             val b = _bindings ?: return@sendPasswordReset
             b.btnResetPassword.isEnabled = true
 
@@ -184,8 +159,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
     }
 
-    //About card
-
     private fun showAppVersion() {
         val version = try {
             requireContext().packageManager
@@ -197,10 +170,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.tvAppVersion.text = getString(R.string.settings_about_version, version ?: getString(R.string.settings_value_none))
     }
 
-    //Categories
-
-    //Each category row highlights itself and scrolls to its section.
-    //Integrations has no section yet, so it is left as is.
     private fun wireCategories() {
         bindings.catGeneral.setOnClickListener {
             openCategory(bindings.catGeneral, bindings.sectionGeneral)
@@ -214,7 +183,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.catAbout.setOnClickListener {
             openCategory(bindings.catAbout, bindings.sectionAbout)
         }
-        //restored after a rebuild, General otherwise
         val restored = view?.findViewById<LinearLayout>(selectedCategoryId) ?: bindings.catGeneral
         selectCategory(restored)
     }
@@ -225,7 +193,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.settingsScroll.smoothScrollTo(0, topInContent(section))
     }
 
-    //Section views can be nested inside cards, so add up offsets until the scroll content.
     private fun topInContent(view: View): Int {
         var top = 0
         var current: View? = view
@@ -236,7 +203,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         return top
     }
 
-    //Same highlight as the nav drawer: orange + bold for the selected row.
     private fun selectCategory(selected: LinearLayout) {
         val rippleBg = TypedValue().also {
             requireContext().theme.resolveAttribute(android.R.attr.selectableItemBackground, it, true)
@@ -263,8 +229,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
     }
 
-    //Preferences
-
     private fun loadPreferences() {
         viewLifecycleOwner.lifecycleScope.launch {
             val preferences = try {
@@ -290,7 +254,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             }
             savedValues = currentValues()
 
-            //unsaved picks from before a rebuild win over what Room has
             restoredValues?.let {
                 Log.d(TAG, "restoring unsaved picks: $it")
                 applyValues(it)
@@ -316,18 +279,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.switchNotifications.isChecked = values.notificationsEnabled
     }
 
-    //Unsaved changes
-
-    //True when something on screen differs from what is saved.
-    //HomeActivity asks this before navigating away.
     fun hasUnsavedChanges(): Boolean {
         if (_bindings == null) return false
         val saved = savedValues ?: return false
         return currentValues() != saved
     }
 
-    //Asks before throwing away unsaved settings. onKeep lets the caller undo
-    //anything it already changed, like the drawer highlight.
     fun confirmDiscard(onDiscard: () -> Unit, onKeep: () -> Unit = {}) {
         Log.d(TAG, "unsaved changes, asking before leaving")
         AlertDialog.Builder(requireContext())
@@ -341,8 +298,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             .setOnCancelListener { onKeep() }
             .show()
     }
-
-    //Rebuild state
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
@@ -384,7 +339,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         val biometricEnabled = bindings.switchBiometric.isChecked
         val notificationsEnabled = bindings.switchNotifications.isChecked
 
-        //no double saves while Room is writing
         bindings.btnSaveSettings.isEnabled = false
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -416,18 +370,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 R.string.settings_save_failed
             }
 
-            //screen may have been closed while Room was writing
             val b = _bindings ?: return@launch
             b.btnSaveSettings.isEnabled = true
-            //app context so the toast stays up when applyTheme rebuilds the activity
             Toast.makeText(b.root.context.applicationContext, message, Toast.LENGTH_SHORT).show()
 
-            //theme last, it can recreate the activity
             if (message == R.string.settings_saved) ThemeManager.applyTheme(theme)
         }
     }
-
-    //Picker dialogs: each just updates the selection, Save writes it.
 
     private fun showLanguageDialog() {
         val labels = SettingsDefaults.languageOptions.keys.toTypedArray()

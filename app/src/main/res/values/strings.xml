@@ -8,7 +8,6 @@
     <string name="an_account_with_this_email_already_exists">An account with this email already exists</string>
     <string name="unable_to_connect_please_try_again">Unable to connect. Please try again.</string>
     <string name="authentication_failed_please_try_again">Authentication failed. Please try again</string>
-    <!-- Shared UI-state copy (StateView): loading / empty / error / success. -->
     <string name="state_loading">Loading…</string>
     <string name="state_retry">Retry</string>
     <string name="state_error_title">Something went wrong</string>
@@ -16,7 +15,6 @@
     <string name="state_success_title">Done</string>
     <string name="state_success_message">The action completed successfully.</string>
 
-    <!-- Per-screen empty states. -->
     <string name="state_listeners_empty_title">No listeners yet</string>
     <string name="state_listeners_empty_message">Tap New to add a command &amp; control listener</string>
     <string name="state_payloads_empty_title">No payloads yet</string>
@@ -24,15 +22,12 @@
     <string name="state_logs_empty_title">No logs yet</string>
     <string name="state_logs_empty_message">System and user activity will appear here</string>
 
-    <!-- Drawer user footer. -->
     <string name="drawer_default_username">Signed in</string>
     <string name="drawer_default_initials" translatable="false">TR</string>
 
-    <!-- Settings screen. -->
     <string name="settings_title">Settings</string>
     <string name="settings_subtitle">Configure and manage your preferences</string>
 
-    <!-- Settings: account card. -->
     <string name="settings_account">Account</string>
     <string name="settings_account_signed_out">Not signed in</string>
     <string name="settings_account_no_email">No email on this account</string>
@@ -52,7 +47,6 @@
     <string name="settings_send">Send</string>
     <string name="settings_cancel">Cancel</string>
 
-    <!-- Settings: team server health card. -->
     <string name="settings_server_health">Team Server Health</string>
     <string name="settings_server_not_connected">Not connected</string>
     <string name="settings_server_ipv4">IPv4</string>
@@ -61,7 +55,6 @@
     <string name="settings_value_none">—</string>
     <string name="settings_value_zero">0</string>
 
-    <!-- Settings: categories. -->
     <string name="settings_categories">Settings Categories</string>
     <string name="settings_category_general">General</string>
     <string name="settings_category_server">Team Server</string>
@@ -69,7 +62,6 @@
     <string name="settings_category_integrations">Integrations</string>
     <string name="settings_category_about">About</string>
 
-    <!-- Settings: general preferences. -->
     <string name="settings_general">General</string>
     <string name="settings_language">App Language</string>
     <string name="settings_language_hint">Interface language</string>
@@ -86,13 +78,11 @@
     <string name="settings_save_signed_out">Sign in to save your settings</string>
     <string name="settings_save_failed">Could not save settings. Please try again.</string>
 
-    <!-- Settings: about card. -->
     <string name="settings_about">About</string>
     <string name="settings_about_app">Trinity Mobile Client</string>
     <string name="settings_about_description">Companion app for the Trinity C2 framework. Monitor agents, listeners and payloads from your phone.</string>
     <string name="settings_about_version">Version %1$s</string>
 
-    <!-- Login + biometric prompt. -->
     <string name="login_failed">Login failed</string>
     <string name="email_is_required">Email is required</string>
     <string name="password_is_required">Password is required</string>

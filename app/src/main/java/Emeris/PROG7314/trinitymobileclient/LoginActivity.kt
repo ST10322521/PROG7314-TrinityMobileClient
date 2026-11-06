@@ -14,7 +14,6 @@ class LoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
-        // pad for the status/nav bars
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.loginFragmentContainer)) { v, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom)

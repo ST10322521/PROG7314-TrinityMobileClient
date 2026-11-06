@@ -30,7 +30,6 @@
             android:textSize="13sp"
             android:layout_marginTop="2dp" />
 
-        <!-- Account -->
         <TextView
             style="@style/LabelCaps"
             android:layout_width="wrap_content"
@@ -116,7 +115,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Team Server Health -->
         <LinearLayout
             android:id="@+id/card_server_health"
             style="@style/TrinityCard"
@@ -218,7 +216,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Categories: tapping a row scrolls to its section -->
         <TextView
             style="@style/LabelCaps"
             android:layout_width="wrap_content"
@@ -406,7 +403,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- General preferences -->
         <TextView
             android:id="@+id/section_general"
             style="@style/LabelCaps"
@@ -422,7 +418,6 @@
             android:orientation="vertical"
             android:layout_marginTop="8dp">
 
-            <!-- Language -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -465,7 +460,6 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <!-- Theme -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -508,7 +502,6 @@
                     android:textSize="13sp" />
             </LinearLayout>
 
-            <!-- Biometric -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -546,7 +539,6 @@
                     app:trackTint="@color/switch_track" />
             </LinearLayout>
 
-            <!-- Push notifications -->
             <LinearLayout
                 android:id="@+id/section_notifications"
                 android:layout_width="match_parent"
@@ -586,7 +578,6 @@
                     app:trackTint="@color/switch_track" />
             </LinearLayout>
 
-            <!-- Auto-lock -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -638,7 +629,6 @@
             android:layout_marginTop="16dp"
             android:text="@string/settings_save" />
 
-        <!-- About -->
         <TextView
             android:id="@+id/section_about"
             style="@style/LabelCaps"

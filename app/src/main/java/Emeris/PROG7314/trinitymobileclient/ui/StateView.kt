@@ -11,23 +11,6 @@ import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
-/**
- * Reusable UI-state container for the four states the prototype brief requires:
- * loading, empty, error and success.
- *
- * Screens drop one of these into their layout where data will eventually be
- * rendered, then call the matching `show*` function. [showContent] hides the
- * component entirely so the screen's real content can take over — that is the
- * call the API/database work should make once data has actually arrived.
- *
- * Kept deliberately free of any business logic: this is UI only, so the
- * authentication, API and custom-feature work can drive it from the outside
- * without depending on anything in here.
- *
- * Reference: the compound-view pattern used below (inflate a `<merge>` layout
- * into a custom ViewGroup) follows the Android documentation for custom view
- * components — https://developer.android.com/develop/ui/views/layout/custom-views/custom-view-components
- */
 class StateView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
@@ -39,8 +22,6 @@ class StateView @JvmOverloads constructor(
     init {
         orientation = VERTICAL
         gravity = android.view.Gravity.CENTER_HORIZONTAL
-        //Card styling matches @style/TrinityCard so state blocks sit
-        //consistently alongside the rest of the screen's cards.
         setBackgroundResource(R.drawable.bg_card)
         val vertical = resources.getDimensionPixelSize(R.dimen.state_vertical_padding)
         val horizontal = resources.getDimensionPixelSize(R.dimen.state_horizontal_padding)
@@ -49,7 +30,6 @@ class StateView @JvmOverloads constructor(
         binding = ViewStateBinding.inflate(LayoutInflater.from(context), this)
     }
 
-    /** Spinner + caption. Use while a request is in flight. */
     fun showLoading(@StringRes title: Int = R.string.state_loading) {
         Log.d(TAG, "showLoading")
         reset()
@@ -58,7 +38,6 @@ class StateView @JvmOverloads constructor(
         visibility = View.VISIBLE
     }
 
-    /** Icon + title + message. Use when a request succeeded but returned nothing. */
     fun showEmpty(@DrawableRes icon: Int, @StringRes title: Int, @StringRes message: Int) {
         Log.d(TAG, "showEmpty")
         reset()
@@ -69,11 +48,6 @@ class StateView @JvmOverloads constructor(
         visibility = View.VISIBLE
     }
 
-    /**
-     * Error icon + message, with an optional retry button.
-     *
-     * @param onRetry when supplied, a Retry button is shown and this is invoked on tap.
-     */
     fun showError(
         @StringRes title: Int = R.string.state_error_title,
         @StringRes message: Int = R.string.state_error_message,
@@ -96,7 +70,6 @@ class StateView @JvmOverloads constructor(
         visibility = View.VISIBLE
     }
 
-    /** Tick + confirmation copy. Use after a write/generate action completes. */
     fun showSuccess(
         @StringRes title: Int = R.string.state_success_title,
         @StringRes message: Int = R.string.state_success_message
@@ -110,14 +83,12 @@ class StateView @JvmOverloads constructor(
         visibility = View.VISIBLE
     }
 
-    /** Hides the whole component so the screen's real content is visible. */
     fun showContent() {
         Log.d(TAG, "showContent")
         reset()
         visibility = View.GONE
     }
 
-    /** Tints and reveals the state icon. */
     private fun showIcon(@DrawableRes icon: Int, colourRes: Int) {
         binding.stateIcon.setImageResource(icon)
         binding.stateIcon.setColorFilter(
@@ -126,7 +97,6 @@ class StateView @JvmOverloads constructor(
         binding.stateIcon.visibility = View.VISIBLE
     }
 
-    /** Clears every state-specific row so the next show* call starts clean. */
     private fun reset() {
         binding.stateProgress.visibility = View.GONE
         binding.stateIcon.visibility = View.GONE

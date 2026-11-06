@@ -21,14 +21,12 @@ object SettingsDefaults {
         return  autoLockOptions[text] ?: DEFAULT_AUTO_LOCK_MINUTES
     }
 
-    //"af" -> "Afrikaans", unknown code -> "English"
     fun languageText(code: String): String {
         return languageOptions.entries.firstOrNull {
             it.value == code
         }?.key ?: "English"
     }
 
-    //"Afrikaans" -> "af", unknown label -> "en"
     fun languageCode(text: String): String {
         return languageOptions[text] ?: DEFAULT_LANGUAGE
     }

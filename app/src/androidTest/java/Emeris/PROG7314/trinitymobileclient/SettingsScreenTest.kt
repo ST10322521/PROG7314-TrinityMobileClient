@@ -13,8 +13,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
-//UI checks for the Settings screen. No Espresso (broken on API 37), so views are
-//clicked with performClick() on the UI thread, same as the other UI tests.
 @RunWith(AndroidJUnit4::class)
 class SettingsScreenTest {
 
@@ -79,7 +77,6 @@ class SettingsScreenTest {
             assertTrue(name.text.isNotBlank())
             assertTrue(initials.text.isNotBlank())
 
-            //sign out only makes sense when someone is signed in
             val signedIn = AuthProvider.repository().currentUserId() != null
             assertEquals(signedIn, signOut.visibility == View.VISIBLE)
         }
@@ -108,7 +105,6 @@ class SettingsScreenTest {
         }
     }
 
-    //Opens Settings and gives Room a moment to load before the checks run.
     private fun withLoadedSettings(block: (ActivityScenario<HomeActivity>) -> Unit) {
         ActivityScenario.launch(HomeActivity::class.java).use { scenario ->
             scenario.onActivity { activity ->
@@ -147,7 +143,6 @@ class SettingsScreenTest {
                 activity.findViewById<View>(R.id.nav_dashboard).performClick()
                 activity.supportFragmentManager.executePendingTransactions()
 
-                //discard prompt is showing, so the screen has not changed
                 assertTrue(
                     activity.supportFragmentManager.findFragmentById(R.id.content_container)
                         is SettingsFragment
@@ -182,7 +177,6 @@ class SettingsScreenTest {
                 biometricBefore = biometric.isChecked
             }
 
-            //same as a rotation or the system dark mode switching
             scenario.recreate()
             Thread.sleep(1500)
 

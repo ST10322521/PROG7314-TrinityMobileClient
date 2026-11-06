@@ -1,5 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Trinity uses a fixed dark theme to match the design. -->
     <style name="Base.Theme.TrinityMobileClient" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/brand_orange</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -14,7 +13,6 @@
 
     <style name="Theme.TrinityMobileClient" parent="Base.Theme.TrinityMobileClient" />
 
-    <!-- Reusable widget styles -->
     <style name="TrinityCard">
         <item name="android:background">@drawable/bg_card</item>
         <item name="android:padding">16dp</item>
@@ -37,7 +35,6 @@
         <item name="android:minHeight">48dp</item>
     </style>
 
-    <!-- Destructive action button (e.g. Kill Agent): red instead of orange. -->
     <style name="DangerButton" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/bg_btn_danger</item>
         <item name="android:textColor">@color/status_red</item>

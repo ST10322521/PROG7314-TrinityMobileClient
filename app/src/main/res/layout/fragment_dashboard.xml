@@ -17,7 +17,6 @@
             android:text="Live campaign &amp; agent overview" android:textColor="@color/text_secondary"
             android:textSize="13sp" android:layout_marginTop="2dp" />
 
-        <!-- Campaign status card -->
         <LinearLayout style="@style/TrinityCard"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:gravity="center_vertical"
@@ -45,7 +44,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Graph view card -->
         <LinearLayout style="@style/TrinityCard"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:layout_marginTop="12dp">
@@ -68,7 +66,6 @@
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Filter + status -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginTop="12dp">
             <TextView android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1"
@@ -83,7 +80,6 @@
                 android:textColor="@color/text_secondary" android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- Campaign tabs -->
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="horizontal" android:layout_marginTop="14dp">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -98,7 +94,6 @@
                 android:text="Campaign Z" android:textColor="@color/text_secondary" android:textSize="14sp" />
         </LinearLayout>
 
-        <!-- Agent rows -->
         <LinearLayout android:id="@+id/agent_list" style="@style/TrinityCard"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:layout_marginTop="12dp" android:padding="0dp">

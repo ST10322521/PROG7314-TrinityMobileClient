@@ -6,11 +6,8 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 
-//Logs screen. UI shell only, no data logic here.
-//Teammates: call showLoading/showError/showContent once the API is wired in.
 class LogsFragment : Fragment(R.layout.fragment_logs) {
 
-    //Cleared in onDestroyView. Getter, not eager init, that was the crash.
     private var _bindings: FragmentLogsBinding? = null
     private val bindings get() = _bindings!!
 
@@ -20,11 +17,9 @@ class LogsFragment : Fragment(R.layout.fragment_logs) {
 
         _bindings = FragmentLogsBinding.bind(view)
 
-        //No data source yet, so open on the empty state.
         showEmpty()
     }
 
-    //Request succeeded but there is nothing to show.
     fun showEmpty() {
         Log.d(TAG, "state -> empty")
         bindings.logsContent.visibility = View.GONE
@@ -35,21 +30,18 @@ class LogsFragment : Fragment(R.layout.fragment_logs) {
         )
     }
 
-    //A request is in flight.
     fun showLoading() {
         Log.d(TAG, "state -> loading")
         bindings.logsContent.visibility = View.GONE
         bindings.stateLogs.showLoading()
     }
 
-    //Request failed. Passing onRetry adds a Retry button.
     fun showError(onRetry: (() -> Unit)? = null) {
         Log.d(TAG, "state -> error")
         bindings.logsContent.visibility = View.GONE
         bindings.stateLogs.showError(onRetry = onRetry)
     }
 
-    //Data arrived, hide the state block and show the list.
     fun showContent() {
         Log.d(TAG, "state -> content")
         bindings.stateLogs.showContent()

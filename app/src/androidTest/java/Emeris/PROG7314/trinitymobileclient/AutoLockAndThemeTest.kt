@@ -9,9 +9,6 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
 
-//Checks that a saved auto-lock time takes effect straight away and that the
-//theme reset used on sign out goes back to following the system theme.
-//No Espresso (broken on API 37), same pattern as the other UI tests.
 @RunWith(AndroidJUnit4::class)
 class AutoLockAndThemeTest {
 
@@ -32,7 +29,6 @@ class AutoLockAndThemeTest {
     fun signOutThemeReset_returnsToFollowSystem() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
-        //the same reset call that SettingsFragment.signOut() ends with
         ThemeManager.applyTheme(Themes.Auto)
 
         assertEquals(

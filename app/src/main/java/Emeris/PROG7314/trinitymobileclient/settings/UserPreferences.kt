@@ -12,10 +12,7 @@ data class UserPreferences(
     val userId: String,
     val theme: String,
     val autoLockMinutes: Int,
-    //language code read by multi-language support (en / af / zu)
     val language: String = SettingsDefaults.DEFAULT_LANGUAGE,
-    //read by biometric login
     val biometricEnabled: Boolean = SettingsDefaults.DEFAULT_BIOMETRIC_ENABLED,
-    //read by push notifications
     val notificationsEnabled: Boolean = SettingsDefaults.DEFAULT_NOTIFICATIONS_ENABLED
 )
