@@ -6,6 +6,7 @@ object LanguageManager {
     val languageOptions = mapOf(
         "English" to "en",
         "Afrikaans" to "af",
-        "isiZulu" to "zu"
+        "isiZulu" to "zu",
+        "Sesotho" to "st"
     )
 }

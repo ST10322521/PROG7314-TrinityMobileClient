@@ -91,9 +91,15 @@ class SettingsDefaultsTest {
     }
 
     @Test
-    fun languageOptions_includeTwoSouthAfricanLanguages() {
+    fun languageOptions_includeThreeSouthAfricanLanguages() {
         val codes = SettingsDefaults.languageOptions.values
         assertEquals(true, codes.contains("af"))
         assertEquals(true, codes.contains("zu"))
+        assertEquals(true, codes.contains("st"))
+    }
+
+    @Test
+    fun languageText_returnsSesothoForSt() {
+        assertEquals("Sesotho", SettingsDefaults.languageText("st"))
     }
 }
