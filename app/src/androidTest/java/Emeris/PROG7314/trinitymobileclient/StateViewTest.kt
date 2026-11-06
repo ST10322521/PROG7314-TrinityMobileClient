@@ -45,15 +45,15 @@ class StateViewTest {
     private fun StateView.retry(): View = findViewById(R.id.state_retry)
 
     @Test
-    fun listeners_opensOnEmptyState() {
-        withScreen<ListenersFragment>(R.id.nav_listeners) { activity, _ ->
-            val state = activity.stateView(R.id.state_listeners)
+    fun logs_opensOnEmptyState() {
+        withScreen<LogsFragment>(R.id.nav_logs) { activity, _ ->
+            val state = activity.stateView(R.id.state_logs)
 
             assertEquals("State block should be visible", View.VISIBLE, state.visibility)
             assertEquals("Icon should show for empty", View.VISIBLE, state.icon().visibility)
             assertEquals("Spinner should be hidden", View.GONE, state.progress().visibility)
             assertEquals(
-                activity.getString(R.string.state_listeners_empty_title),
+                activity.getString(R.string.state_logs_empty_title),
                 state.title().text.toString()
             )
         }
@@ -76,11 +76,11 @@ class StateViewTest {
 
     @Test
     fun errorState_withRetry_showsRetryButton() {
-        withScreen<ListenersFragment>(R.id.nav_listeners) { activity, fragment ->
+        withScreen<LogsFragment>(R.id.nav_logs) { activity, fragment ->
             var retried = false
             fragment.showError { retried = true }
 
-            val state = activity.stateView(R.id.state_listeners)
+            val state = activity.stateView(R.id.state_logs)
             assertEquals("Retry should show", View.VISIBLE, state.retry().visibility)
             assertEquals(
                 activity.getString(R.string.state_error_title),
@@ -94,20 +94,20 @@ class StateViewTest {
 
     @Test
     fun errorState_withoutRetry_hidesRetryButton() {
-        withScreen<ListenersFragment>(R.id.nav_listeners) { activity, fragment ->
+        withScreen<LogsFragment>(R.id.nav_logs) { activity, fragment ->
             fragment.showError(onRetry = null)
 
-            val state = activity.stateView(R.id.state_listeners)
+            val state = activity.stateView(R.id.state_logs)
             assertEquals("Retry should stay hidden", View.GONE, state.retry().visibility)
         }
     }
 
     @Test
     fun successState_showsConfirmationCopy() {
-        withScreen<PayloadsFragment>(R.id.nav_payloads) { activity, fragment ->
-            fragment.showSuccess()
+        withScreen<LogsFragment>(R.id.nav_logs) { activity, _ ->
+            val state = activity.stateView(R.id.state_logs)
+            state.showSuccess()
 
-            val state = activity.stateView(R.id.state_payloads)
             assertEquals("Icon should show for success", View.VISIBLE, state.icon().visibility)
             assertEquals(
                 activity.getString(R.string.state_success_title),
@@ -132,8 +132,8 @@ class StateViewTest {
 
     @Test
     fun switchingStates_doesNotLeaveStaleViewsVisible() {
-        withScreen<ListenersFragment>(R.id.nav_listeners) { activity, fragment ->
-            val state = activity.stateView(R.id.state_listeners)
+        withScreen<LogsFragment>(R.id.nav_logs) { activity, fragment ->
+            val state = activity.stateView(R.id.state_logs)
 
             fragment.showError { }
             fragment.showLoading()
@@ -150,7 +150,7 @@ class StateViewTest {
 
     @Test
     fun rapidStateChanges_doNotCrash() {
-        withScreen<ListenersFragment>(R.id.nav_listeners) { activity, fragment ->
+        withScreen<LogsFragment>(R.id.nav_logs) { activity, fragment ->
             repeat(10) {
                 fragment.showLoading()
                 fragment.showError { }
@@ -159,7 +159,7 @@ class StateViewTest {
             }
 
             fragment.showEmpty()
-            val state = activity.stateView(R.id.state_listeners)
+            val state = activity.stateView(R.id.state_logs)
             assertEquals(View.VISIBLE, state.visibility)
         }
     }
