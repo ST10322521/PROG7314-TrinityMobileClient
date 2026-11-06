@@ -44,29 +44,29 @@
             style="@style/LabelCaps"
             android:text="@string/team_server" />
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_input_focused">
-            <ImageView android:layout_width="20dp" android:layout_height="20dp"
-                android:layout_gravity="center_vertical" android:layout_marginStart="14dp"
-                android:src="@drawable/ic_server" />
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:paddingStart="44dp"
-                android:paddingEnd="60dp"
-                android:background="@null"
-                android:hint="@string/ip_address_or_domain"
-                android:textColorHint="@color/text_muted"
-                android:textColor="@color/text_primary"
-                android:textSize="15sp"
-                android:inputType="text" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|end" android:layout_marginEnd="14dp"
-                android:text=":50050" android:textColor="@color/brand_orange" android:textSize="13sp" />
-        </FrameLayout>
+<!--        <FrameLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="8dp"-->
+<!--            android:background="@drawable/bg_input_focused">-->
+<!--            <ImageView android:layout_width="20dp" android:layout_height="20dp"-->
+<!--                android:layout_gravity="center_vertical" android:layout_marginStart="14dp"-->
+<!--                android:src="@drawable/ic_server" />-->
+<!--            <EditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="52dp"-->
+<!--                android:paddingStart="44dp"-->
+<!--                android:paddingEnd="60dp"-->
+<!--                android:background="@null"-->
+<!--                android:hint="@string/ip_address_or_domain"-->
+<!--                android:textColorHint="@color/text_muted"-->
+<!--                android:textColor="@color/text_primary"-->
+<!--                android:textSize="15sp"-->
+<!--                android:inputType="text" />-->
+<!--            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical|end" android:layout_marginEnd="14dp"-->
+<!--                android:text=":50050" android:textColor="@color/brand_orange" android:textSize="13sp" />-->
+<!--        </FrameLayout>-->
 
         <FrameLayout
             android:layout_width="match_parent"
