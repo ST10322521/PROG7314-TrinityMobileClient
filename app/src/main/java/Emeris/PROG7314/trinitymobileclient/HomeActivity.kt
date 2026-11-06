@@ -2,6 +2,7 @@ package Emeris.PROG7314.trinitymobileclient
 
 import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
+import Emeris.PROG7314.trinitymobileclient.auth.TeamServerSession
 import Emeris.PROG7314.trinitymobileclient.databinding.ActivityHomeBinding
 import Emeris.PROG7314.trinitymobileclient.model.NavList
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsDefaults
@@ -79,6 +80,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        TeamServerSession.init(this)
         Log.d(TAG, "onCreate")
 
         binding = ActivityHomeBinding.inflate(layoutInflater)

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import Emeris.PROG7314.trinitymobileclient.R
 import Emeris.PROG7314.trinitymobileclient.api.ApiClient
+import Emeris.PROG7314.trinitymobileclient.auth.TeamServerSession
 import Emeris.PROG7314.trinitymobileclient.api.model.LoginRequest
 import Emeris.PROG7314.trinitymobileclient.auth.AuthError
 import Emeris.PROG7314.trinitymobileclient.auth.AuthException
@@ -160,6 +161,7 @@ class LoginFragment : Fragment() {
                 val response = ApiClient.auth.login(LoginRequest(username, password))
                 if (response.isSuccessful) {
                     Log.d("teamServerAuth", "Login successful")
+                    TeamServerSession.start(requireContext(), username)
                     offerBiometricLogin()
                 } else {
                     Log.w("teamServerAuth", "Login failed: HTTP ${response.code()}")

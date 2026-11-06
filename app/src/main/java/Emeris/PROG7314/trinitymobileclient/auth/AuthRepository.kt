@@ -127,7 +127,7 @@ class AuthRepository(
     * @returns authenticated user uid [userId], or null if no user is authenticated
      */
     fun currentUserId(): String? {
-        val userId = auth.currentUser?.uid
+        val userId = auth.currentUser?.uid ?: TeamServerSession.userId()
 
         if (userId != null){
             Log.d("firebaseAuth", "Authenticated user: $userId")
@@ -145,6 +145,7 @@ class AuthRepository(
     fun currentUserUsername(): String? {
         val userEmail = auth.currentUser?.email
         val username = userEmail?.substringBefore("@")
+            ?: TeamServerSession.username?.substringBefore("@")
 
         if (username != null){
             Log.d("firebaseAuth", "Authenticated user: $username")
@@ -167,6 +168,7 @@ class AuthRepository(
         }
 
         auth.signOut()
+        TeamServerSession.clear()
     }
 
     fun currentUserEmail(): String? {

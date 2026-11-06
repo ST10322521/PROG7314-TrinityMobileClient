@@ -1,5 +1,6 @@
 package Emeris.PROG7314.trinitymobileclient
 
+import Emeris.PROG7314.trinitymobileclient.auth.TeamServerSession
 import Emeris.PROG7314.trinitymobileclient.ui.LoginFragment
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +12,7 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        TeamServerSession.init(this)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
 
