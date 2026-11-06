@@ -19,7 +19,7 @@
         <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="6dp">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Agent" android:textColor="@color/white"
+                android:text="@string/agent" android:textColor="@color/white"
                 android:textSize="17sp" android:textStyle="bold" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:text="Agent Interface" android:textColor="#EEFFFFFF" android:textSize="12sp" />
@@ -47,7 +47,7 @@
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                         android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Endpoint Agent" android:textColor="@color/text_primary" android:textSize="16sp" android:textStyle="bold" />
+                            android:text="@string/endpoint_agent" android:textColor="@color/text_primary" android:textSize="16sp" android:textStyle="bold" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="—" android:textColor="@color/text_muted" android:textSize="12sp" />
                     </LinearLayout>
@@ -59,7 +59,7 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:layout_marginTop="16dp">
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                        <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="IP Address" />
+                        <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/ip_address" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="—" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
                     </LinearLayout>
@@ -72,12 +72,12 @@
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:layout_marginTop="12dp">
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                        <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sleep / Jitter" />
+                        <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/sleep_jitter" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="—" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                        <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Last Check-in" />
+                        <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/last_check_in" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="—" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
                     </LinearLayout>
@@ -91,14 +91,14 @@
                     android:orientation="horizontal" android:gravity="center_vertical">
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                         android:drawableStart="@drawable/ic_terminal" android:drawablePadding="8dp"
-                        android:text="Command Console" android:textColor="@color/text_primary" android:textSize="15sp" android:textStyle="bold" />
+                        android:text="@string/command_console" android:textColor="@color/text_primary" android:textSize="15sp" android:textStyle="bold" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:background="@drawable/bg_page" android:paddingHorizontal="8dp" android:paddingVertical="3dp"
                         android:text="UTF-8" android:textColor="@color/text_secondary" android:textSize="11sp" />
                     <TextView android:id="@+id/btn_clear_console" android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_marginStart="6dp" android:background="@drawable/bg_page"
                         android:paddingHorizontal="8dp" android:paddingVertical="3dp"
-                        android:text="Clear" android:textColor="@color/text_secondary" android:textSize="11sp"
+                        android:text="@string/clear" android:textColor="@color/text_secondary" android:textSize="11sp"
                         android:clickable="true" android:focusable="true" />
                 </LinearLayout>
 
@@ -119,7 +119,7 @@
                     <EditText android:id="@+id/input_command"
                         android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
                         android:background="@drawable/bg_input" android:paddingStart="14dp"
-                        android:hint="Enter command…" android:textColorHint="@color/text_muted"
+                        android:hint="@string/enter_command" android:textColorHint="@color/text_muted"
                         android:textColor="@color/text_primary" android:textSize="14sp" android:inputType="text" />
                     <ImageButton android:id="@+id/btn_send_command"
                         android:layout_width="46dp" android:layout_height="46dp" android:layout_marginStart="8dp"
@@ -129,7 +129,7 @@
             </LinearLayout>
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Settings" android:textColor="@color/text_primary"
+                android:text="@string/settings" android:textColor="@color/text_primary"
                 android:textSize="16sp" android:textStyle="bold" android:layout_marginTop="16dp" />
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -137,23 +137,23 @@
                 <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_spawnto" style="@style/PrimaryButton"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:drawableStart="@drawable/ic_add" android:drawablePadding="6dp"
-                    android:text="Set SpawnTo" android:textSize="13sp" />
+                    android:text="@string/set_spawnto" android:textSize="13sp" />
                 <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_update_hosts" style="@style/PrimaryButton"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:layout_marginStart="10dp" android:drawableStart="@drawable/ic_server" android:drawablePadding="6dp"
-                    android:text="Update Hosts" android:textSize="13sp" />
+                    android:text="@string/update_hosts" android:textSize="13sp" />
             </LinearLayout>
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:orientation="horizontal" android:layout_marginTop="10dp">
                 <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_sleep" style="@style/PrimaryButton"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:drawableStart="@drawable/ic_bolt" android:drawablePadding="6dp"
-                    android:text="Set Sleep" android:textSize="13sp" />
+                    android:text="@string/set_sleep" android:textSize="13sp" />
                 <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_kill" style="@style/DangerButton"
                     android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                     android:layout_marginStart="10dp" android:drawableStart="@drawable/ic_close_agent" android:drawablePadding="6dp"
                     android:drawableTint="@color/status_red"
-                    android:text="Kill Agent" android:textSize="13sp" />
+                    android:text="@string/kill_agent" android:textSize="13sp" />
             </LinearLayout>
 
             <LinearLayout style="@style/TrinityCard"
@@ -167,7 +167,7 @@
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                         android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Agent Tasks" android:textColor="@color/text_primary" android:textSize="15sp" android:textStyle="bold" android:layout_marginBottom="4dp" />
+                            android:text="@string/agent_tasks" android:textColor="@color/text_primary" android:textSize="15sp" android:textStyle="bold" android:layout_marginBottom="4dp" />
                         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                             android:orientation="horizontal">
                             <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
@@ -193,24 +193,24 @@
                     android:orientation="horizontal" android:layout_marginTop="14dp">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:paddingBottom="6dp" android:background="@drawable/bg_tab_selected"
-                        android:text="All" android:textColor="@color/brand_orange" android:textSize="13sp" android:textStyle="bold" />
+                        android:text="@string/all" android:textColor="@color/brand_orange" android:textSize="13sp" android:textStyle="bold" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_marginStart="14dp" android:paddingBottom="6dp"
-                        android:text="Pending" android:textColor="@color/text_secondary" android:textSize="13sp" />
+                        android:text="@string/pending" android:textColor="@color/text_secondary" android:textSize="13sp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_marginStart="14dp" android:paddingBottom="6dp"
-                        android:text="Running" android:textColor="@color/text_secondary" android:textSize="13sp" />
+                        android:text="@string/running" android:textColor="@color/text_secondary" android:textSize="13sp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_marginStart="14dp" android:paddingBottom="6dp"
-                        android:text="Failed" android:textColor="@color/text_secondary" android:textSize="13sp" />
+                        android:text="@string/failed" android:textColor="@color/text_secondary" android:textSize="13sp" />
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:layout_marginStart="14dp" android:paddingBottom="6dp"
-                        android:text="Successful" android:textColor="@color/text_secondary" android:textSize="13sp" />
+                        android:text="@string/successful" android:textColor="@color/text_secondary" android:textSize="13sp" />
                 </LinearLayout>
 
                 <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:paddingVertical="16dp" android:gravity="center"
-                    android:text="No tasks yet" android:textColor="@color/text_muted" android:textSize="13sp" />
+                    android:text="@string/no_tasks_yet" android:textColor="@color/text_muted" android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
