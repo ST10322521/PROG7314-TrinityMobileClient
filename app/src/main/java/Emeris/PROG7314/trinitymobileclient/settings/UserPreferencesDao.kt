@@ -1,8 +1,8 @@
 package Emeris.PROG7314.trinitymobileclient.settings
 
-import androidx.room3.Dao
-import androidx.room3.Query
-import androidx.room3.Upsert
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Upsert
 
 /**
  * developer.android.com/training/data-storage/room

@@ -1,29 +1,121 @@
 package Emeris.PROG7314.trinitymobileclient
 
+import Emeris.PROG7314.trinitymobileclient.data.CommandRepository
+import Emeris.PROG7314.trinitymobileclient.data.command.CommandParserRegistry
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.ParseResult
+import Emeris.PROG7314.trinitymobileclient.data.sync.CommandSyncScheduler
 import Emeris.PROG7314.trinitymobileclient.databinding.FragmentAgentInterfaceBinding
+import Emeris.PROG7314.trinitymobileclient.signalr.SignalRManager
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
-
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 
 class AgentInterfaceFragment : Fragment(R.layout.fragment_agent_interface) {
-//    Enable the use of binding/view bindings
+
     private var _binding: FragmentAgentInterfaceBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var commandRepository: CommandRepository
+
+    /** Agent ID passed in via [newInstance] — used for SignalR and command queuing. */
+    private var agentId: String = ""
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         _binding = FragmentAgentInterfaceBinding.bind(view)
+
+        agentId = arguments?.getString(ARG_AGENT_ID) ?: ""
+        commandRepository = CommandRepository(requireContext())
 
         binding.btnBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
+
+        binding.btnClearConsole.setOnClickListener {
+            binding.consoleOutput.text = ""
+        }
+
+        wireSendButton()
+        subscribeToAgentHub()
+    }
+
+    private fun wireSendButton() {
+        binding.btnSendCommand.setOnClickListener {
+            val rawInput = binding.inputCommand.text?.toString()?.trim() ?: return@setOnClickListener
+            if (rawInput.isBlank()) return@setOnClickListener
+
+            binding.inputCommand.text?.clear()
+
+            when (val result = CommandParserRegistry.parse(rawInput)) {
+
+                is ParseResult.Success -> {
+                    appendToConsole("> $rawInput")
+                    lifecycleScope.launch {
+                        commandRepository.queueCommand(
+                            agentId     = agentId,
+                            commandType = result.commandType,
+                            dto         = result.dto
+                        )
+                        // Schedule sync
+                        CommandSyncScheduler.schedule(requireContext())
+                        Log.d(TAG, "Command queued and sync scheduled: ${result.commandType}")
+                    }
+                }
+
+                is ParseResult.UnknownCommand ->
+                    appendToConsole("[!] Unknown command '${result.keyword}'. Available: ${CommandParserRegistry.registeredKeywords()}")
+
+                is ParseResult.ParseError ->
+                    appendToConsole("[!] ${result.message}")
+            }
+        }
+    }
+    private fun appendToConsole(text: String) {
+        binding.consoleOutput.append("$text\n")
+        binding.scrollView.post { binding.scrollView.fullScroll(View.FOCUS_DOWN) }
+    }
+
+    private fun subscribeToAgentHub() {
+        if (agentId.isBlank()) {
+            Log.w(TAG, "No agentId — skipping hub subscription")
+            return
+        }
+
+        SignalRManager.getInstance().subscribeToAgent(
+            agentId      = agentId,
+            onSubscribed = { listenForTaskNotifications() },
+            onError      = { e -> Log.e(TAG, "Hub subscribe failed for agent '$agentId'", e) }
+        )
+    }
+
+    private fun listenForTaskNotifications() {
+        SignalRManager.getInstance().on(
+            "TaskNotification",
+            Emeris.PROG7314.trinitymobileclient.model.TaskNotification::class.java
+        ) { notification ->
+            requireActivity().runOnUiThread {
+                appendToConsole("[${notification.status}] ${notification.message}")
+            }
+        }
     }
 
     override fun onDestroyView() {
+        if (agentId.isNotBlank()) {
+            SignalRManager.getInstance().unsubscribeFromAgent(agentId)
+        }
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        private const val TAG           = "AgentInterfaceFragment"
+        private const val ARG_AGENT_ID  = "agentId"
+
+        fun newInstance(agentId: String) = AgentInterfaceFragment().apply {
+            arguments = Bundle().apply { putString(ARG_AGENT_ID, agentId) }
+        }
     }
 }

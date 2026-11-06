@@ -9,7 +9,9 @@ import Emeris.PROG7314.trinitymobileclient.settings.SettingsProvider
 import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
 import Emeris.PROG7314.trinitymobileclient.settings.Themes
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -21,6 +23,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -194,7 +197,6 @@ class HomeActivity : AppCompatActivity() {
             }
 
             authRepository.logout()
-
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
@@ -210,9 +212,9 @@ class HomeActivity : AppCompatActivity() {
             val row = when (id) {
                 R.id.nav_dashboard -> binding.navDrawer.navDashboard
                 R.id.nav_listeners -> binding.navDrawer.navListeners
-                R.id.nav_payloads -> binding.navDrawer.navPayloads
-                R.id.nav_logs -> binding.navDrawer.navLogs
-                R.id.nav_settings -> binding.navDrawer.navSettings
+                R.id.nav_payloads  -> binding.navDrawer.navPayloads
+                R.id.nav_logs      -> binding.navDrawer.navLogs
+                R.id.nav_settings  -> binding.navDrawer.navSettings
                 else -> continue
             }
 
@@ -231,11 +233,9 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    //Opens the agent detail screen from the Dashboard agent list.
-    //Pushed onto the back stack so back returns to the Dashboard.
-    fun openAgentInterface() {
-        Log.d(TAG, "nav -> AgentInterface")
-        showScreen(AgentInterfaceFragment(), sharedAppBar = false, addToBackStack = true)
+    fun openAgentInterface(agentId: String) {
+        Log.d(TAG, "nav -> AgentInterface ($agentId)")
+        showScreen(AgentInterfaceFragment.newInstance(agentId), sharedAppBar = false, addToBackStack = true)
     }
 
     //Single entry point for every screen change.
