@@ -264,7 +264,7 @@ class LoginFragment : Fragment() {
 
                 Toast.makeText(
                     requireContext(),
-                    "Login failed",
+                    getString(R.string.login_failed),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -297,7 +297,7 @@ class LoginFragment : Fragment() {
 
                 Toast.makeText(
                     requireContext(),
-                    "Login failed",
+                    getString(R.string.login_failed),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -310,7 +310,7 @@ class LoginFragment : Fragment() {
 
             Toast.makeText(
                 requireContext(),
-                "Login failed",
+                getString(R.string.login_failed),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -358,13 +358,13 @@ class LoginFragment : Fragment() {
     ): Boolean {
 
         if (email.isEmpty()) {
-            binding.etEmail.error = "Email is required"
+            binding.etEmail.error = getString(R.string.email_is_required)
             binding.etEmail.requestFocus()
             return false
         }
 
         if (password.isEmpty()) {
-            binding.etPassword.error = "Password is required"
+            binding.etPassword.error = getString(R.string.password_is_required)
             binding.etPassword.requestFocus()
             return false
         }
@@ -583,11 +583,9 @@ class LoginFragment : Fragment() {
         // Configure the biometric prompt displayed to the user
         biometricPromptInfo =
             BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Biometric Login")
-                .setSubtitle("Use your fingerprint to sign in")
-                .setNegativeButtonText(
-                    "Use another login method"
-                )
+                .setTitle(getString(R.string.biometric_login))
+                .setSubtitle(getString(R.string.use_your_fingerprint_to_sign_in))
+                .setNegativeButtonText(getString(R.string.use_another_login_method))
                 .setConfirmationRequired(false)
                 .build()
     }
@@ -648,10 +646,8 @@ class LoginFragment : Fragment() {
         }
 
         androidx.appcompat.app.AlertDialog.Builder(requireContext())
-            .setTitle("Enable fingerprint login?")
-            .setMessage(
-                "Use your fingerprint to quickly unlock the app the next time you sign in."
-            )
+            .setTitle(getString(R.string.enable_fingerprint_login))
+            .setMessage(getString(R.string.use_your_fingerprint_to_quickly_unlock_the_app_the_next_time_you_sign_in))
             .setPositiveButton("Enable") { _, _ ->
                 enableBiometricLogin()
             }

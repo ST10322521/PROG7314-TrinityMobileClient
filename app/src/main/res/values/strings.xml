@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Trinity</string>
-    <string name="brand_subtitle">C2 FRAMEWORK</string>
+    <string name="app_name" translatable="false">Trinity</string>
+    <string name="brand_subtitle" translatable="false">C2 FRAMEWORK</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hello</string>
     <string name="invalid_email_or_password">Invalid email or password</string>
     <string name="please_enter_a_valid_email_address">Please enter a valid email address</string>
     <string name="an_account_with_this_email_already_exists">An account with this email already exists</string>
@@ -26,5 +26,14 @@
 
     <!-- Drawer user footer. -->
     <string name="drawer_default_username">Signed in</string>
-    <string name="drawer_default_initials">TR</string>
+    <string name="drawer_default_initials" translatable="false">TR</string>
+    <string name="login_failed">Login failed</string>
+    <string name="email_is_required">Email is required</string>
+    <string name="password_is_required">Password is required</string>
+    <string name="biometric_login">Biometric Login</string>
+    <string name="use_your_fingerprint_to_sign_in">Use your fingerprint to sign in</string>
+    <string name="use_another_login_method">Use another login method</string>
+    <string name="enable_fingerprint_login">Enable fingerprint login?</string>
+    <string name="use_your_fingerprint_to_quickly_unlock_the_app_the_next_time_you_sign_in">Use your fingerprint to quickly unlock the app the next time you sign in.</string>
+
 </resources>
