@@ -6,12 +6,11 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 
-//Payloads screen. UI shell only, no data logic here.
-//Teammates: call showLoading/showError/showContent once the API is wired in.
+// payloads screen, UI only. call the show* functions once the API is wired in
 class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
 
-    //Cleared in onDestroyView. Getter, not eager init, that was the crash.
     private var _bindings: FragmentPayloadsBinding? = null
+    // getter not eager init, eager init crashed the app
     private val bindings get() = _bindings!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -20,11 +19,10 @@ class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
 
         _bindings = FragmentPayloadsBinding.bind(view)
 
-        //No data source yet, so open on the empty state.
+        // TODO(connect to backend): no payloads come from the server yet so it starts empty
         showEmpty()
     }
 
-    //Request succeeded but there is nothing to show.
     fun showEmpty() {
         Log.d(TAG, "state -> empty")
         bindings.payloadsContent.visibility = View.GONE
@@ -35,28 +33,25 @@ class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
         )
     }
 
-    //A request is in flight.
     fun showLoading() {
         Log.d(TAG, "state -> loading")
         bindings.payloadsContent.visibility = View.GONE
         bindings.statePayloads.showLoading()
     }
 
-    //Request failed. Passing onRetry adds a Retry button.
     fun showError(onRetry: (() -> Unit)? = null) {
         Log.d(TAG, "state -> error")
         bindings.payloadsContent.visibility = View.GONE
         bindings.statePayloads.showError(onRetry = onRetry)
     }
 
-    //For example a payload finished generating.
+    // for when a payload finishes generating
     fun showSuccess() {
         Log.d(TAG, "state -> success")
         bindings.payloadsContent.visibility = View.GONE
         bindings.statePayloads.showSuccess()
     }
 
-    //Data arrived, hide the state block and show the list.
     fun showContent() {
         Log.d(TAG, "state -> content")
         bindings.statePayloads.showContent()

@@ -6,12 +6,11 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 
-//Listeners screen. UI shell only, no data logic here.
-//Teammates: call showLoading/showError/showContent once the API is wired in.
+// listeners screen, UI only. call the show* functions once the API is wired in
 class ListenersFragment : Fragment(R.layout.fragment_listeners) {
 
-    //Cleared in onDestroyView. Getter, not eager init, that was the crash.
     private var _bindings: FragmentListenersBinding? = null
+    // getter not eager init, eager init crashed the app
     private val bindings get() = _bindings!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -20,11 +19,10 @@ class ListenersFragment : Fragment(R.layout.fragment_listeners) {
 
         _bindings = FragmentListenersBinding.bind(view)
 
-        //No data source yet, so open on the empty state.
+        // TODO(connect to backend): no listeners come from the server yet so it starts empty
         showEmpty()
     }
 
-    //Request succeeded but there is nothing to show.
     fun showEmpty() {
         Log.d(TAG, "state -> empty")
         bindings.listenersContent.visibility = View.GONE
@@ -35,21 +33,18 @@ class ListenersFragment : Fragment(R.layout.fragment_listeners) {
         )
     }
 
-    //A request is in flight.
     fun showLoading() {
         Log.d(TAG, "state -> loading")
         bindings.listenersContent.visibility = View.GONE
         bindings.stateListeners.showLoading()
     }
 
-    //Request failed. Passing onRetry adds a Retry button.
     fun showError(onRetry: (() -> Unit)? = null) {
         Log.d(TAG, "state -> error")
         bindings.listenersContent.visibility = View.GONE
         bindings.stateListeners.showError(onRetry = onRetry)
     }
 
-    //Data arrived, hide the state block and show the list.
     fun showContent() {
         Log.d(TAG, "state -> content")
         bindings.stateListeners.showContent()

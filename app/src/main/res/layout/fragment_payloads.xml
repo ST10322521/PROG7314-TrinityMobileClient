@@ -16,7 +16,6 @@
             android:text="Generate and manage payloads" android:textColor="@color/text_secondary"
             android:textSize="13sp" android:layout_marginTop="2dp" />
 
-        <!-- Generate card -->
         <LinearLayout style="@style/TrinityCard"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:layout_marginTop="16dp">
@@ -90,7 +89,6 @@
                 android:text="Generate Payload" />
         </LinearLayout>
 
-        <!-- Recent payloads -->
         <LinearLayout style="@style/TrinityCard"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:orientation="vertical" android:layout_marginTop="14dp">
@@ -98,7 +96,6 @@
                 android:text="Recent Payloads" android:textColor="@color/text_primary"
                 android:textSize="16sp" android:textStyle="bold" android:layout_marginBottom="8dp" />
 
-            <!-- Generated payload list goes here once the API layer supplies data. -->
             <LinearLayout
                 android:id="@+id/payloads_content"
                 android:layout_width="match_parent"
@@ -106,7 +103,6 @@
                 android:orientation="vertical"
                 android:visibility="gone" />
 
-            <!-- Shared loading / empty / error / success block. See ui/StateView.kt -->
             <Emeris.PROG7314.trinitymobileclient.ui.StateView
                 android:id="@+id/state_payloads"
                 android:layout_width="match_parent"

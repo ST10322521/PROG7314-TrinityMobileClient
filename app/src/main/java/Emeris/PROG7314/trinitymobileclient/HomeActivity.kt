@@ -8,6 +8,7 @@ import Emeris.PROG7314.trinitymobileclient.settings.SettingsDefaults
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsProvider
 import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
 import Emeris.PROG7314.trinitymobileclient.settings.Themes
+import Emeris.PROG7314.trinitymobileclient.ui.initialsOf
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Typeface
@@ -22,6 +23,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.addCallback
+import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -32,33 +34,33 @@ import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import androidx.core.content.edit
 
-// Shell activity: nav drawer + shared app bar. Swaps fragments into content_container.
-// Manual nav, no Nav Component. View binding renames drawer ids, so nav_logout is
-// binding.navDrawer.navLogout.
 /**
- * https://developer.android.com/guide/fragments/transactions
  * https://developer.android.com/reference/android/os/Looper
  * https://developer.android.com/reference/java/lang/Runnable
  * https://developer.android.com/identity/sign-in/biometric-auth
  * https://developer.android.com/reference/android/view/ViewGroup#dispatchTouchEvent(android.view.MotionEvent)
  */
+// main shell: the drawer and app bar live here, every screen is a fragment swapped into content_container
+// no Nav Component, all the navigation is done by hand in showScreen
 class HomeActivity : AppCompatActivity() {
 
-    //View bindings
     private lateinit var binding: ActivityHomeBinding
 
-    //auth repo for signing out
     private lateinit var authRepository: AuthRepository
 
     private val lockHandler = Handler(Looper.getMainLooper())
     private var autoLockMinutes = 0
 
+    // auto-lock just locks the app, you stay signed in and login asks for the fingerprint again
+    // clear the task so back cant go to Home behind the lock screen
     private val autoLockRunnable = Runnable {
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(
+            Intent(this, LoginActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        )
         finish()
     }
 
-    //Nav list IdsautoLockRunnable
     private val navItemIds = NavList.navItemIds
 
     // Biometric Auth
@@ -92,7 +94,7 @@ class HomeActivity : AppCompatActivity() {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        //App-bar settings gear: shortcut to the Settings screen.
+        // gear in the app bar is a shortcut to Settings
         binding.btnSettings.setOnClickListener {
             selectNavItem(R.id.nav_settings)
             showScreen(SettingsFragment(), sharedAppBar = true)
@@ -102,15 +104,14 @@ class HomeActivity : AppCompatActivity() {
         wireDrawer()
         handleBackNavigation()
 
-        //start on Dashboard
+        // only on first launch, a rebuild keeps what ever screen was open
         if (savedInstanceState == null) {
             selectNavItem(R.id.nav_dashboard)
             showScreen(DashboardFragment(), sharedAppBar = true)
         }
     }
 
-    //Fills the drawer footer and app-bar avatar with the signed-in user's name and initials.
-    //Name comes from AuthRepository; falls back to placeholders when no user.
+    // name and initials in the drawer footer and app bar avatar
     private fun showSignedInUser() {
         val username = authRepository.currentUserUsername()
         Log.d(TAG, "drawer user = ${username ?: "none"}")
@@ -123,21 +124,7 @@ class HomeActivity : AppCompatActivity() {
         binding.tvAppBarInitials.text = initials
     }
 
-    //Up to two uppercase initials from a name or email.
-    //"ada lovelace" -> "AL", "ada@trinity.io" -> "A", blank/null -> null.
-    private fun initialsOf(username: String?): String? {
-        val name = username?.substringBefore('@')?.trim().orEmpty()
-        if (name.isEmpty()) return null
-
-        return name.split(' ', '.', '_')
-            .filter { it.isNotBlank() }
-            .take(2)
-            .map { it.first().uppercaseChar() }
-            .joinToString("")
-            .ifEmpty { null }
-    }
-
-    //Back: close drawer, else pop detail screen, else leave the activity.
+    // back: close the drawer first, then pop the agent screen, then leave the app
     private fun handleBackNavigation() {
         onBackPressedDispatcher.addCallback(this) {
             when {
@@ -149,22 +136,28 @@ class HomeActivity : AppCompatActivity() {
                 supportFragmentManager.backStackEntryCount > 0 -> {
                     Log.d(TAG, "back -> pop detail screen")
                     supportFragmentManager.popBackStack()
-                    //restore shared app bar + drawer
                     binding.appBar.visibility = View.VISIBLE
                     binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 }
 
                 else -> {
-                    Log.d(TAG, "back -> leave HomeActivity")
-                    isEnabled = false
-                    onBackPressedDispatcher.onBackPressed()
+                    val leave = {
+                        Log.d(TAG, "back -> leave HomeActivity")
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                    }
+                    // dont lose unsaved settings by accident
+                    val settings = currentScreen() as? SettingsFragment
+                    if (settings?.hasUnsavedChanges() == true) {
+                        settings.confirmDiscard(onDiscard = leave)
+                    } else {
+                        leave()
+                    }
                 }
             }
         }
     }
 
-    //Every drawer route. Each row selects itself, swaps in its fragment and
-    //closes the drawer; logout also clears the session and returns to login.
     private fun wireDrawer() {
         binding.navDrawer.navDashboard.setOnClickListener {
             selectNavItem(R.id.nav_dashboard)
@@ -202,7 +195,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    //Highlight the selected drawer row, reset the rest.
+    // selected row goes orange and bold, the rest go back to normal
     private fun selectNavItem(selectedId: Int) {
         val rippleBg = TypedValue().also {
             theme.resolveAttribute(android.R.attr.selectableItemBackground, it, true)
@@ -233,18 +226,44 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    // agent screen has no app bar and goes on the back stack so back returns to the Dashboard
     fun openAgentInterface(agentId: String) {
         Log.d(TAG, "nav -> AgentInterface ($agentId)")
         showScreen(AgentInterfaceFragment.newInstance(agentId), sharedAppBar = false, addToBackStack = true)
     }
 
-    //Single entry point for every screen change.
-    //sharedAppBar = false hides the app bar and locks the drawer (detail screens).
-    //addToBackStack = true for pushed detail screens only.
     private fun showScreen(
         fragment: Fragment,
         sharedAppBar: Boolean,
         addToBackStack: Boolean = false
+    ) {
+        val current = currentScreen()
+
+        // allready on Settings, rebuilding it would throw away what you were editing
+        if (current is SettingsFragment && fragment is SettingsFragment) {
+            Log.d(TAG, "nav -> already on Settings")
+            return
+        }
+
+        // ask first, and put the Settings highlight back if they stay
+        if (current is SettingsFragment && current.hasUnsavedChanges()) {
+            current.confirmDiscard(
+                onDiscard = { replaceScreen(fragment, sharedAppBar, addToBackStack) },
+                onKeep = { selectNavItem(R.id.nav_settings) }
+            )
+            return
+        }
+
+        replaceScreen(fragment, sharedAppBar, addToBackStack)
+    }
+
+    private fun currentScreen(): Fragment? =
+        supportFragmentManager.findFragmentById(R.id.content_container)
+
+    private fun replaceScreen(
+        fragment: Fragment,
+        sharedAppBar: Boolean,
+        addToBackStack: Boolean
     ) {
         Log.d(TAG, "nav -> ${fragment::class.simpleName} (sharedAppBar=$sharedAppBar)")
 
@@ -283,6 +302,16 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    // Settings calls this after saving so the new time works straight away, not after a restart
+    fun applyAutoLock(minutes: Int) {
+        Log.d(TAG, "auto-lock -> $minutes min")
+        autoLockMinutes = minutes
+        resetAutoLockTimer()
+    }
+
+    @VisibleForTesting
+    fun autoLockMinutesForTest(): Int = autoLockMinutes
+
     private fun resetAutoLockTimer() {
         lockHandler.removeCallbacks(autoLockRunnable)
 
@@ -294,6 +323,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    // any touch counts as activity and restarts the timmer
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         resetAutoLockTimer()
         return super.dispatchTouchEvent(ev)

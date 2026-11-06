@@ -15,7 +15,7 @@ object DatabaseProvider {
             INSTANCE?: Room.databaseBuilder<AppDatabase>(
                 context.applicationContext,
                 "trinity_database"
-            ).build().also { INSTANCE = it }
+            ).addMigrations(MIGRATION_1_2).build().also { INSTANCE = it }
         }
     }
 }

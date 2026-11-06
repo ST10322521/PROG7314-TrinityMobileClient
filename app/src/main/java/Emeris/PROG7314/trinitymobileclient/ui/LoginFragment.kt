@@ -129,9 +129,9 @@ class LoginFragment : Fragment() {
         }
     }
 
-    // Reveal/mask the password; dim eye = hidden.
     private var passwordVisible = false
 
+    // show or hide the password, dim eye = hidden
     private fun togglePasswordVisibility() {
         passwordVisible = !passwordVisible
 

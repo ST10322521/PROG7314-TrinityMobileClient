@@ -12,19 +12,10 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/**
- * Tests for the shared loading / empty / error / success UI states.
- *
- * Each test launches HomeActivity, navigates to a real screen, then drives the
- * fragment's state functions and asserts what the StateView is actually
- * showing. Like NavigationTest, this avoids Espresso — its event-injection
- * layer is incompatible with the API 37 emulator — and instead asserts against
- * the view hierarchy directly on the UI thread.
- */
+// loading / empty / error / success on the real screens, no Espresso for the same reason as the others
 @RunWith(AndroidJUnit4::class)
 class StateViewTest {
 
-    //Navigates to a drawer screen and hands back its fragment.
     private inline fun <reified T : androidx.fragment.app.Fragment> withScreen(
         navItemId: Int,
         crossinline block: (HomeActivity, T) -> Unit
@@ -96,7 +87,6 @@ class StateViewTest {
                 state.title().text.toString()
             )
 
-            //The retry affordance must actually invoke the handler.
             state.retry().performClick()
             assertTrue("Retry handler was not invoked", retried)
         }
@@ -145,7 +135,6 @@ class StateViewTest {
         withScreen<ListenersFragment>(R.id.nav_listeners) { activity, fragment ->
             val state = activity.stateView(R.id.state_listeners)
 
-            //error -> loading must clear the retry button and the icon
             fragment.showError { }
             fragment.showLoading()
 
@@ -153,7 +142,6 @@ class StateViewTest {
             assertEquals("Icon left over from error", View.GONE, state.icon().visibility)
             assertEquals("Spinner should show", View.VISIBLE, state.progress().visibility)
 
-            //loading -> empty must clear the spinner again
             fragment.showEmpty()
             assertEquals("Spinner left over from loading", View.GONE, state.progress().visibility)
             assertEquals("Icon should show for empty", View.VISIBLE, state.icon().visibility)
@@ -170,7 +158,6 @@ class StateViewTest {
                 fragment.showContent()
             }
 
-            //Still responsive and in a known state afterwards.
             fragment.showEmpty()
             val state = activity.stateView(R.id.state_listeners)
             assertEquals(View.VISIBLE, state.visibility)
