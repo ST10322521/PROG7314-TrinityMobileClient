@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="14dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?attr/selectableItemBackground">
+
+    <View
+        android:id="@+id/listener_dot"
+        android:layout_width="8dp"
+        android:layout_height="8dp"
+        android:background="@drawable/dot_green" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="14dp">
+
+        <TextView
+            android:id="@+id/listener_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Listener"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/listener_meta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="http"
+            android:textColor="@color/text_muted"
+            android:textSize="12sp"
+            android:layout_marginTop="2dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/listener_type_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_input"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="4dp"
+        android:text="HTTP"
+        android:textColor="@color/status_blue"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_chevron_right"
+        app:tint="@color/text_muted"
+        android:contentDescription="@null"
+        xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+</LinearLayout>

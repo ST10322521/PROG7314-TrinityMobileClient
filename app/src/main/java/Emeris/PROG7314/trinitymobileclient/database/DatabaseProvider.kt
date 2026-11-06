@@ -1,7 +1,7 @@
 package Emeris.PROG7314.trinitymobileclient.database
 
 import android.content.Context
-import androidx.room3.Room
+import androidx.room.Room
 
 /**
  * developer.android.com/training/data-storage/room
@@ -15,7 +15,7 @@ object DatabaseProvider {
             INSTANCE?: Room.databaseBuilder<AppDatabase>(
                 context.applicationContext,
                 "trinity_database"
-            ).build().also { INSTANCE = it }
+            ).addMigrations(MIGRATION_1_2).build().also { INSTANCE = it }
         }
     }
 }

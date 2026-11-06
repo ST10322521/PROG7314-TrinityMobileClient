@@ -1,10 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_root">
 
     <LinearLayout
+        android:id="@+id/settings_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -13,7 +17,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings"
+            android:text="@string/settings_title"
             android:textColor="@color/text_primary"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -21,13 +25,98 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Configure and manage your preferences"
+            android:text="@string/settings_subtitle"
             android:textColor="@color/text_secondary"
             android:textSize="13sp"
             android:layout_marginTop="2dp" />
 
-        <!-- Team Server Health -->
+        <TextView
+            style="@style/LabelCaps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_account"
+            android:layout_marginTop="18dp" />
+
         <LinearLayout
+            android:id="@+id/card_account"
+            style="@style/TrinityCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_account_initials"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_avatar"
+                    android:gravity="center"
+                    android:text="@string/drawer_default_initials"
+                    android:textColor="@color/brand_orange"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_account_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_account_signed_out"
+                        android:textColor="@color/text_primary"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_account_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="@string/settings_account_no_email"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/account_actions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="14dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_reset_password"
+                    style="@style/SecondaryButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:text="@string/settings_reset_password" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_sign_out"
+                    style="@style/DangerButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/settings_sign_out" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/card_server_health"
             style="@style/TrinityCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,17 +133,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Team Server Health"
+                    android:text="@string/settings_server_health"
                     android:textColor="@color/text_primary"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_server_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/dot_red"
                     android:drawablePadding="6dp"
-                    android:text="Not connected"
+                    android:text="@string/settings_server_not_connected"
                     android:textColor="@color/status_red"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -68,14 +158,15 @@
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="IPv4"
+                    android:text="@string/settings_server_ipv4"
                     android:textColor="@color/text_muted"
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tv_server_ipv4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="—"
+                    android:text="@string/settings_value_none"
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -89,14 +180,15 @@
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="IPv6"
+                    android:text="@string/settings_server_ipv6"
                     android:textColor="@color/text_muted"
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tv_server_ipv6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="—"
+                    android:text="@string/settings_value_none"
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
             </LinearLayout>
@@ -110,25 +202,25 @@
                 <TextView
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="C2 Profiles"
+                    android:text="@string/settings_server_profiles"
                     android:textColor="@color/text_muted"
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tv_server_profiles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="@string/settings_value_zero"
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- Categories -->
         <TextView
             style="@style/LabelCaps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Settings Categories"
+            android:text="@string/settings_categories"
             android:layout_marginTop="18dp" />
 
         <LinearLayout
@@ -153,136 +245,428 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
+                    android:importantForAccessibility="no"
                     android:src="@drawable/ic_settings"
                     app:tint="@color/brand_orange" />
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                    android:layout_marginStart="14dp" android:text="General"
-                    android:textColor="@color/brand_orange" android:textSize="15sp" android:textStyle="bold" />
-                <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_chevron_right" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/settings_category_general"
+                    android:textColor="@color/brand_orange"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_chevron_right" />
             </LinearLayout>
 
-            <LinearLayout android:id="@+id/cat_server" android:layout_width="match_parent" android:layout_height="52dp"
-                android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="16dp"
-                android:clickable="true" android:focusable="true" android:background="?attr/selectableItemBackground">
-                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_server" />
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                    android:layout_marginStart="14dp" android:text="Team Server"
-                    android:textColor="@color/text_secondary" android:textSize="15sp" />
-                <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_chevron_right" />
+            <LinearLayout
+                android:id="@+id/cat_server"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_server"
+                    app:tint="@color/text_secondary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/settings"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_chevron_right" />
             </LinearLayout>
 
-            <LinearLayout android:id="@+id/cat_notifications" android:layout_width="match_parent" android:layout_height="52dp"
-                android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="16dp"
-                android:clickable="true" android:focusable="true" android:background="?attr/selectableItemBackground">
-                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_notifications" />
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                    android:layout_marginStart="14dp" android:text="Notifications"
-                    android:textColor="@color/text_secondary" android:textSize="15sp" />
-                <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_chevron_right" />
+            <LinearLayout
+                android:id="@+id/cat_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_notifications"
+                    app:tint="@color/text_secondary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/settings_category_notifications"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_chevron_right" />
             </LinearLayout>
 
-            <LinearLayout android:id="@+id/cat_integrations" android:layout_width="match_parent" android:layout_height="52dp"
-                android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="16dp"
-                android:clickable="true" android:focusable="true" android:background="?attr/selectableItemBackground">
-                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_integrations" />
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                    android:layout_marginStart="14dp" android:text="Integrations"
-                    android:textColor="@color/text_secondary" android:textSize="15sp" />
-                <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_chevron_right" />
+            <LinearLayout
+                android:id="@+id/cat_integrations"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_integrations"
+                    app:tint="@color/text_secondary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/settings_category_integrations"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_chevron_right" />
             </LinearLayout>
 
-            <LinearLayout android:id="@+id/cat_about" android:layout_width="match_parent" android:layout_height="52dp"
-                android:orientation="horizontal" android:gravity="center_vertical" android:paddingHorizontal="16dp"
-                android:clickable="true" android:focusable="true" android:background="?attr/selectableItemBackground">
-                <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_info" />
-                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
-                    android:layout_marginStart="14dp" android:text="About"
-                    android:textColor="@color/text_secondary" android:textSize="15sp" />
-                <ImageView android:layout_width="18dp" android:layout_height="18dp" android:src="@drawable/ic_chevron_right" />
+            <LinearLayout
+                android:id="@+id/cat_about"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_info"
+                    app:tint="@color/text_secondary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:text="@string/settings_category_about"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_chevron_right" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- General preferences -->
-        <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:text="General" android:layout_marginTop="18dp" />
+        <TextView
+            android:id="@+id/section_general"
+            style="@style/LabelCaps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_general"
+            android:layout_marginTop="18dp" />
 
-        <LinearLayout style="@style/TrinityCard"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:orientation="vertical" android:layout_marginTop="8dp">
+        <LinearLayout
+            style="@style/TrinityCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="8dp">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="App Language" android:textColor="@color/text_primary" android:textSize="14sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Interface language" android:textColor="@color/text_muted" android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="8dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_language"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_language_hint"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
                 </LinearLayout>
-                <TextView android:layout_width="wrap_content" android:layout_height="40dp"
-                    android:background="@drawable/bg_input" android:gravity="center" android:paddingHorizontal="14dp"
-                    android:drawableEnd="@drawable/ic_chevron_down" android:drawablePadding="6dp"
-                    android:text="English" android:textColor="@color/text_primary" android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_input"
+                    android:gravity="center"
+                    android:paddingHorizontal="14dp"
+                    android:drawableEnd="@drawable/ic_chevron_down"
+                    android:drawablePadding="6dp"
+                    tools:text="English"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp" />
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="8dp">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Theme" android:textColor="@color/text_primary" android:textSize="14sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Console appearance" android:textColor="@color/text_muted" android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="8dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_theme"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_theme_hint"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
                 </LinearLayout>
-                <TextView android:layout_width="wrap_content" android:layout_height="40dp"
+
+                <TextView
                     android:id="@+id/tvTheme"
-                    android:background="@drawable/bg_input" android:gravity="center" android:paddingHorizontal="14dp"
-                    android:drawableEnd="@drawable/ic_chevron_down" android:drawablePadding="6dp"
-                    android:text="Dark" android:textColor="@color/text_primary" android:textSize="13sp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_input"
+                    android:gravity="center"
+                    android:paddingHorizontal="14dp"
+                    android:drawableEnd="@drawable/ic_chevron_down"
+                    android:drawablePadding="6dp"
+                    tools:text="Auto"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp" />
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="8dp">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Biometric Authentication" android:textColor="@color/text_primary" android:textSize="14sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Fingerprint / face unlock" android:textColor="@color/text_muted" android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="8dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_biometric"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_biometric_hint"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
                 </LinearLayout>
+
                 <androidx.appcompat.widget.SwitchCompat
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:checked="true" android:thumbTint="@color/white" android:trackTint="@color/brand_orange" />
+                    android:id="@+id/switch_biometric"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/settings_biometric"
+                    app:thumbTint="@color/switch_thumb"
+                    app:trackTint="@color/switch_track" />
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="8dp">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Push Notifications" android:textColor="@color/text_primary" android:textSize="14sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Alerts on this device" android:textColor="@color/text_muted" android:textSize="12sp" />
+            <LinearLayout
+                android:id="@+id/section_notifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="8dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_notifications"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_notifications_hint"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
                 </LinearLayout>
+
                 <androidx.appcompat.widget.SwitchCompat
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:checked="true" android:thumbTint="@color/white" android:trackTint="@color/brand_orange" />
+                    android:id="@+id/switch_notifications"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:contentDescription="@string/settings_notifications"
+                    app:thumbTint="@color/switch_thumb"
+                    app:trackTint="@color/switch_track" />
             </LinearLayout>
 
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="8dp">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Auto-lock" android:textColor="@color/text_primary" android:textSize="14sp" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Lock after inactivity" android:textColor="@color/text_muted" android:textSize="12sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingVertical="8dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_auto_lock"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_auto_lock_hint"
+                        android:textColor="@color/text_muted"
+                        android:textSize="12sp" />
                 </LinearLayout>
-                <TextView android:layout_width="wrap_content" android:layout_height="40dp"
+
+                <TextView
                     android:id="@+id/tvAutoLock"
-                    android:background="@drawable/bg_input" android:gravity="center" android:paddingHorizontal="14dp"
-                    android:drawableEnd="@drawable/ic_chevron_down" android:drawablePadding="6dp"
-                    android:text="5 min" android:textColor="@color/text_primary" android:textSize="13sp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/bg_input"
+                    android:gravity="center"
+                    android:paddingHorizontal="14dp"
+                    android:drawableEnd="@drawable/ic_chevron_down"
+                    android:drawablePadding="6dp"
+                    tools:text="5 min"
+                    android:textColor="@color/text_primary"
+                    android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_save_settings" style="@style/PrimaryButton"
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            android:layout_marginTop="16dp" android:text="Save Changes" />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_save_settings"
+            style="@style/PrimaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/settings_save" />
+
+        <TextView
+            android:id="@+id/section_about"
+            style="@style/LabelCaps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_about"
+            android:layout_marginTop="18dp" />
+
+        <LinearLayout
+            style="@style/TrinityCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_about_app"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_app_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/brand_orange"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/settings_about_description"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -1,60 +1,132 @@
 package Emeris.PROG7314.trinitymobileclient
 
+import Emeris.PROG7314.trinitymobileclient.api.ApiClient
+import Emeris.PROG7314.trinitymobileclient.api.model.AgentDto
+import Emeris.PROG7314.trinitymobileclient.api.model.CampaignDto
 import Emeris.PROG7314.trinitymobileclient.databinding.FragmentDashboardBinding
 import Emeris.PROG7314.trinitymobileclient.databinding.ItemAgentRowBinding
 import Emeris.PROG7314.trinitymobileclient.databinding.ItemDividerBinding
-import Emeris.PROG7314.trinitymobileclient.model.Agent
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.forEachIndexed
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
-// Dashboard screen. Agent rows open the Agent Interface screen.
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
-    // View Binding setup
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
 
-    // No agents yet.
-    private val sampleAgents = emptyList<Agent>()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         _binding = FragmentDashboardBinding.bind(view)
 
-        binding.agentEmpty.visibility = if (sampleAgents.isEmpty()) View.VISIBLE else View.GONE
+        binding.graphView.onAgentTap = { agent ->
+            agent.id?.let { (activity as? HomeActivity)?.openAgentInterface(it) }
+        }
 
-        sampleAgents.forEachIndexed { index, agent ->
+        loadDashboard()
+    }
 
-            val rowBinding = ItemAgentRowBinding.inflate(
-                layoutInflater,
-                binding.agentList,
-                false
+    private fun loadDashboard() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val agentsDeferred    = async { runCatching { ApiClient.agents.getAgents() } }
+            val campaignsDeferred = async { runCatching { ApiClient.campaigns.getCampaigns() } }
+            val statusDeferred    = async { runCatching { ApiClient.server.getStatus() } }
+
+            val agentsResult    = agentsDeferred.await()
+            val campaignsResult = campaignsDeferred.await()
+            val statusResult    = statusDeferred.await()
+
+            val agents    = agentsResult.getOrNull()?.body() ?: emptyList()
+            val campaigns = campaignsResult.getOrNull()?.body() ?: emptyList()
+
+            agentsResult.onFailure    { Log.e("Dashboard", "agents error", it) }
+            campaignsResult.onFailure { Log.e("Dashboard", "campaigns error", it) }
+            statusResult.onFailure    { Log.e("Dashboard", "server status error", it) }
+
+            updateStats(agents, campaigns)
+            updateServerStatus(statusResult.isSuccess && statusResult.getOrNull()?.isSuccessful == true)
+            updateGraph(agents)
+            updateCampaignChips(campaigns)
+            updateAgentList(agents)
+        }
+    }
+
+    private fun updateStats(agents: List<AgentDto>, campaigns: List<CampaignDto>) {
+        binding.tvStatTotal.text     = agents.size.toString()
+        binding.tvStatActive.text    = agents.count { it.isActive == true }.toString()
+        binding.tvStatCampaigns.text = campaigns.size.toString()
+    }
+
+    private fun updateServerStatus(online: Boolean) {
+        binding.tvServerStatus.text = if (online) "● Server Online" else "● Server Offline"
+        binding.tvServerStatus.setTextColor(
+            ContextCompat.getColor(
+                requireContext(),
+                if (online) R.color.status_green else R.color.status_yellow
             )
+        )
+    }
 
-            rowBinding.agentName.text = agent.name
-            rowBinding.agentMeta.text = agent.meta
-            rowBinding.agentTime.text = agent.time
+    private fun updateGraph(agents: List<AgentDto>) {
+        binding.graphView.setAgents(agents)
+    }
 
-            rowBinding.dot.setBackgroundResource((if (agent.online) R.drawable.dot_green else R.drawable.dot_yellow))
+    private fun updateCampaignChips(campaigns: List<CampaignDto>) {
+        binding.campaignChips.removeAllViews()
+        if (campaigns.isEmpty()) {
+            binding.campaignEmpty.visibility = View.VISIBLE
+            return
+        }
+        binding.campaignEmpty.visibility = View.GONE
+        val dp = resources.displayMetrics.density
+        campaigns.forEach { campaign ->
+            val chip = TextView(requireContext()).apply {
+                text = campaign.name.ifBlank { "Campaign ${campaign.id}" }
+                textSize = 13f
+                setTextColor(ContextCompat.getColor(context, R.color.text_secondary))
+                setBackgroundResource(R.drawable.bg_input)
+                setPadding((12 * dp).toInt(), (6 * dp).toInt(), (12 * dp).toInt(), (6 * dp).toInt())
+            }
+            val params = android.widget.LinearLayout.LayoutParams(
+                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT,
+                android.widget.LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply { marginEnd = (8 * dp).toInt() }
+            binding.campaignChips.addView(chip, params)
+        }
+    }
 
+    private fun updateAgentList(agents: List<AgentDto>) {
+        val empty = binding.agentEmpty
+        binding.agentList.removeAllViews()
+        binding.agentList.addView(empty)
+        empty.visibility = if (agents.isEmpty()) View.VISIBLE else View.GONE
+
+        agents.forEachIndexed { index, agent ->
+            val rowBinding = ItemAgentRowBinding.inflate(layoutInflater, binding.agentList, false)
+
+            rowBinding.agentName.text = agent.hostname ?: agent.id ?: "Unknown"
+            rowBinding.agentMeta.text = buildString {
+                agent.username?.let { append(it) }
+                agent.os?.let { if (isNotEmpty()) append(" · "); append(it) }
+                agent.internalIp?.let { if (isNotEmpty()) append(" · "); append(it) }
+            }
+            rowBinding.agentTime.text = agent.lastSeen ?: ""
+            rowBinding.dot.setBackgroundResource(
+                if (agent.isActive == true) R.drawable.dot_green else R.drawable.dot_yellow
+            )
             rowBinding.root.setOnClickListener {
-                (activity as? HomeActivity)?.openAgentInterface()
+                agent.id?.let { id -> (activity as? HomeActivity)?.openAgentInterface(id) }
             }
 
-            // divider between rows
-            if (index < sampleAgents.lastIndex) {
-                val dividerBinding = ItemDividerBinding.inflate(
-                    layoutInflater,
-                    binding.agentList,
-                    false
-                )
+            binding.agentList.addView(rowBinding.root)
 
+            if (index < agents.lastIndex) {
+                val dividerBinding = ItemDividerBinding.inflate(layoutInflater, binding.agentList, false)
                 binding.agentList.addView(dividerBinding.root)
             }
         }
