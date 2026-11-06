@@ -2,6 +2,7 @@ package Emeris.PROG7314.trinitymobileclient.auth
 
 import android.util.Log
 import com.google.firebase.FirebaseNetworkException
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
@@ -166,5 +167,33 @@ class AuthRepository(
         }
 
         auth.signOut()
+    }
+
+    fun currentUserEmail(): String? {
+        return auth.currentUser?.email
+    }
+
+    // google only accounts have no password to reset
+    fun hasPasswordSignIn(): Boolean {
+        return auth.currentUser?.providerData?.any {
+            it.providerId == EmailAuthProvider.PROVIDER_ID
+        } ?: false
+    }
+
+    // https://firebase.google.com/docs/auth/android/manage-users#send_a_password_reset_email
+    fun sendPasswordReset(
+        email: String,
+        onResult: (Result<Unit>) -> Unit
+    ){
+        auth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d("firebaseAuth", "Password reset email sent")
+                onResult(Result.success(Unit))
+            } else {
+                val exception = task.exception ?: Exception("Password reset failed")
+                Log.e("firebaseAuth", "Password reset failed", exception)
+                onResult(Result.failure(AuthException(mapAuthError(exception), exception)))
+            }
+        }
     }
 }

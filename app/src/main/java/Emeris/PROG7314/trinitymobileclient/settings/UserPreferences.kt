@@ -11,5 +11,9 @@ data class UserPreferences(
     @PrimaryKey
     val userId: String,
     val theme: String,
-    val autoLockMinutes: Int
+    val autoLockMinutes: Int,
+    // language, biometric and notifications came in with database version 2
+    val language: String = SettingsDefaults.DEFAULT_LANGUAGE,
+    val biometricEnabled: Boolean = SettingsDefaults.DEFAULT_BIOMETRIC_ENABLED,
+    val notificationsEnabled: Boolean = SettingsDefaults.DEFAULT_NOTIFICATIONS_ENABLED
 )

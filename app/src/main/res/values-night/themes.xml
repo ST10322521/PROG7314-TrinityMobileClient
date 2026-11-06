@@ -6,6 +6,7 @@
         <item name="android:colorBackground">@color/bg_root</item>
         <item name="android:statusBarColor">@color/bg_root</item>
         <item name="android:navigationBarColor">@color/bg_root</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
         <item name="colorSurface">@color/bg_surface</item>
         <item name="colorOnSurface">@color/text_primary</item>
     </style>

@@ -8,14 +8,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/**
- * Tests for the drawer's user footer.
- *
- * The username itself is supplied by the authentication work; this only checks
- * the UI side — that the footer is always populated with something sensible and
- * never shows the raw layout placeholder, including when no user is signed in
- * (which is the case when a test launches HomeActivity directly).
- */
+// drawer footer always shows something, never the "User Name" layout placeholder
 @RunWith(AndroidJUnit4::class)
 class DrawerUserTest {
 
@@ -44,7 +37,6 @@ class DrawerUserTest {
             scenario.onActivity { activity ->
                 val username = activity.findViewById<TextView>(R.id.tvUsername)
 
-                //"User Name" is the design-time placeholder in nav_drawer.xml.
                 assertFalse(
                     "Drawer is still showing the layout placeholder text",
                     username.text.toString() == "User Name"

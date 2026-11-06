@@ -15,18 +15,26 @@ class SettingsRepository(
         return userPreferencesDao.getPreferences(userId)
     }
 
+    // false when nobody is signed in so the screen can say why nothing saved
     suspend fun savePreferences(
         theme: String,
-        autoLockMinutes: Int
-    ){
-        val userId = authRepository.currentUserId()?: return
+        autoLockMinutes: Int,
+        language: String = SettingsDefaults.DEFAULT_LANGUAGE,
+        biometricEnabled: Boolean = SettingsDefaults.DEFAULT_BIOMETRIC_ENABLED,
+        notificationsEnabled: Boolean = SettingsDefaults.DEFAULT_NOTIFICATIONS_ENABLED
+    ): Boolean {
+        val userId = authRepository.currentUserId()?: return false
 
         val preferences = UserPreferences(
             userId = userId,
             theme = theme,
-            autoLockMinutes = autoLockMinutes
+            autoLockMinutes = autoLockMinutes,
+            language = language,
+            biometricEnabled = biometricEnabled,
+            notificationsEnabled = notificationsEnabled
         )
 
         userPreferencesDao.savePreferences(preferences)
+        return true
     }
 }
