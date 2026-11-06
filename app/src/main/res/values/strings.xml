@@ -83,6 +83,9 @@
     <string name="settings_save_signed_out">Sign in to save your settings</string>
     <string name="settings_save_failed">Could not save settings. Please try again.</string>
 
+    <string name="settings_integrations">Integrations</string>
+    <string name="settings_integrations_empty_title">No integrations connected</string>
+    <string name="settings_integrations_empty_message">Connected services will show up here</string>
     <string name="settings_about">About</string>
     <string name="settings_about_app">Trinity Mobile Client</string>
     <string name="settings_about_description">Companion app for the Trinity C2 framework. Monitor agents, listeners and payloads from your phone.</string>

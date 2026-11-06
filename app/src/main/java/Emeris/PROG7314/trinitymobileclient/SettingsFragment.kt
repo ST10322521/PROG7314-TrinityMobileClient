@@ -190,6 +190,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.catNotifications.setOnClickListener {
             openCategory(bindings.catNotifications, bindings.sectionNotifications)
         }
+        bindings.catIntegrations.setOnClickListener {
+            openCategory(bindings.catIntegrations, bindings.sectionIntegrations)
+        }
         bindings.catAbout.setOnClickListener {
             openCategory(bindings.catAbout, bindings.sectionAbout)
         }
