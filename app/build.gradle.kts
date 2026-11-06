@@ -8,6 +8,11 @@ plugins {
     alias(libs.plugins.ksp)
 }
 
+val localProps = Properties().also { props ->
+    rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { props.load(it) }
+}
+val hubUrl: String = localProps.getProperty("HUB_URL") ?: System.getenv("HUB_URL") ?: ""
+
 android {
     namespace = "Emeris.PROG7314.trinitymobileclient"
     compileSdk {
@@ -22,7 +27,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "HUB_URL", "\"${localProps.getProperty("HUB_URL", "")}\"")
+        buildConfigField("String", "HUB_URL", "\"$hubUrl\"")
     }
 
     buildTypes {
@@ -69,7 +74,17 @@ dependencies {
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
 
-    // Room setup
+    // Room
     implementation(libs.androidx.room3.runtime)
+    implementation(libs.androidx.room3.ktx)
     ksp(libs.androidx.room3.compiler)
+
+    // Gson
+    implementation(libs.gson)
+
+    // SignalR
+    implementation(libs.signalr)
+
+    // WorkManager
+    implementation(libs.work.runtime.ktx)
 }

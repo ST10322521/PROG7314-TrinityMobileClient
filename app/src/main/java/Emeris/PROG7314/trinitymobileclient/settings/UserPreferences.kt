@@ -1,7 +1,7 @@
 package Emeris.PROG7314.trinitymobileclient.settings
 
-import androidx.room3.Entity
-import androidx.room3.PrimaryKey
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 /**
  * developer.android.com/training/data-storage/room

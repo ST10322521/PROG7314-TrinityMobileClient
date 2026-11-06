@@ -1,7 +1,7 @@
 package Emeris.PROG7314.trinitymobileclient.database
 
 import android.content.Context
-import androidx.room3.Room
+import androidx.room.Room
 
 /**
  * developer.android.com/training/data-storage/room

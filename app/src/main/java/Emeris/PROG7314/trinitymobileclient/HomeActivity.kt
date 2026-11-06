@@ -211,11 +211,9 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    //Opens the agent detail screen from the Dashboard agent list.
-    //Pushed onto the back stack so back returns to the Dashboard.
-    fun openAgentInterface() {
-        Log.d(TAG, "nav -> AgentInterface")
-        showScreen(AgentInterfaceFragment(), sharedAppBar = false, addToBackStack = true)
+    fun openAgentInterface(agentId: String) {
+        Log.d(TAG, "nav -> AgentInterface ($agentId)")
+        showScreen(AgentInterfaceFragment.newInstance(agentId), sharedAppBar = false, addToBackStack = true)
     }
 
     //Single entry point for every screen change.
