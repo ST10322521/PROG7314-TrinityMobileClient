@@ -15,6 +15,18 @@ The application is being designed to provide a mobile interface for interacting 
 
 ---
 
+## User login (non-SSO)
+
+### Username:
+```
+testOperator
+```
+### Password:
+```
+testOperator123
+```
+
+
 ## Purpose and Scope
 
 The purpose of the Trinity Mobile Client is to create a mobile client for the Trinity System that is currently in development.
