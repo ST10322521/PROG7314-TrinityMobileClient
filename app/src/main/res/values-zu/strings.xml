@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello_blank_fragment">Sawubona</string>
+    <string name="invalid_email_or_password">I-imeyili noma iphasiwedi ayivumelekile</string>
+    <string name="please_enter_a_valid_email_address">Sicela ufake ikheli le-imeyili elivumelekile</string>
+    <string name="an_account_with_this_email_already_exists">I-akhawunti enale imeyili isivele ikhona</string>
+    <string name="unable_to_connect_please_try_again">Ayikwazi ukuxhuma. Sicela uzame futhi.</string>
+    <string name="authentication_failed_please_try_again">Ukuqinisekisa kuhlulekile. Sicela uzame futhi</string>
+    <string name="state_loading">Iyalayisha…</string>
+    <string name="state_retry">Zama futhi</string>
+    <string name="state_error_title">Kukhona okungahambanga kahle</string>
+    <string name="state_error_message">Ayikwazanga ukulayisha lesi sikrini. Sicela uzame futhi.</string>
+    <string name="state_success_title">Kwenziwe</string>
+    <string name="state_success_message">Isenzo siqedwe ngempumelelo.</string>
+    <string name="state_listeners_empty_title">Azikho izilaleli okwamanje</string>
+    <string name="state_listeners_empty_message">Cindezela okuthi Okusha ukuze wengeze isilaleli semiyalo nokulawula</string>
+    <string name="state_payloads_empty_title">Awekho ama-payload okwamanje</string>
+    <string name="state_payloads_empty_message">Ama-payload akhiqiziwe azovela lapha</string>
+    <string name="state_logs_empty_title">Awekho amalogi okwamanje</string>
+    <string name="state_logs_empty_message">Umsebenzi wesistimu nowomsebenzisi uzovela lapha</string>
+    <string name="drawer_default_username">Kungeniwe</string>
+    <string name="login_failed">Ukungena kuhlulekile</string>
+    <string name="email_is_required">I-imeyili iyadingeka</string>
+    <string name="password_is_required">Iphasiwedi iyadingeka</string>
+    <string name="biometric_login">Ukungena nge-biometric</string>
+    <string name="use_your_fingerprint_to_sign_in">Sebenzisa izigxivizo zeminwe yakho ukuze ungene</string>
+    <string name="use_another_login_method">Sebenzisa enye indlela yokungena</string>
+    <string name="enable_fingerprint_login">Vumela ukungena ngezigxivizo zeminwe?</string>
+    <string name="use_your_fingerprint_to_quickly_unlock_the_app_the_next_time_you_sign_in">Sebenzisa izigxivizo zeminwe yakho ukuze uvule uhlelo lokusebenza ngokushesha lapho ungena futhi ngokuzayo.</string>
+</resources>
