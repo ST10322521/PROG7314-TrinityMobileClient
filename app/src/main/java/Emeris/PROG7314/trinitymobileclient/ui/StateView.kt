@@ -102,7 +102,7 @@ class StateView @JvmOverloads constructor(
         binding.stateIcon.visibility = View.VISIBLE
     }
 
-    // clear everything so the next state starts clean
+    // clear everything so the next state start's clean
     private fun reset() {
         binding.stateProgress.visibility = View.GONE
         binding.stateIcon.visibility = View.GONE

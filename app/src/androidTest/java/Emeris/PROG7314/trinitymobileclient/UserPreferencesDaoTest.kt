@@ -14,7 +14,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-// saves and reloads every setting through Room with an in-memory database
+// saves and reloads every settings through Room with an in-memory database
 // https://developer.android.com/training/data-storage/room/testing-db
 @RunWith(AndroidJUnit4::class)
 class UserPreferencesDaoTest {

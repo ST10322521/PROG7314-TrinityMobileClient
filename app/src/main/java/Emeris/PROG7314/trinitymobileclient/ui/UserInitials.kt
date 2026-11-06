@@ -1,7 +1,7 @@
 package Emeris.PROG7314.trinitymobileclient.ui
 
 // up to 2 initials, "ada lovelace" -> "AL", an email uses the part before the @
-// used by the drawer, app bar and the Settings account card
+// used by the drawer, app bar and the Settings acount card
 fun initialsOf(username: String?): String? {
     val name = username?.substringBefore('@')?.trim().orEmpty()
     if (name.isEmpty()) return null

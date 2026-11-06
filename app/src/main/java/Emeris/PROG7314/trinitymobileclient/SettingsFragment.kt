@@ -156,7 +156,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.btnResetPassword.isEnabled = false
 
         authRepository.sendPasswordReset(email) { result ->
-            // screen might be closed by the time firebase answers
+            // screen might be closed by the time firebase answer's
             val b = _bindings ?: return@sendPasswordReset
             b.btnResetPassword.isEnabled = true
 
@@ -203,7 +203,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.settingsScroll.smoothScrollTo(0, topInContent(section))
     }
 
-    // sections sit inside cards, so add up the offsets until the scroll content
+    // sections sit inside cards, so add up the offset's until the scroll content
     private fun topInContent(view: View): Int {
         var top = 0
         var current: View? = view
@@ -353,7 +353,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         val biometricEnabled = bindings.switchBiometric.isChecked
         val notificationsEnabled = bindings.switchNotifications.isChecked
 
-        // no double saves while Room is writing
+        // no double saves while Room is writting
         bindings.btnSaveSettings.isEnabled = false
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -390,7 +390,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             // app context so the toast stays up when the theme rebuilds the activity
             Toast.makeText(b.root.context.applicationContext, message, Toast.LENGTH_SHORT).show()
 
-            // theme last, it can recreate the activity
+            // theme last, its can recreate the activity
             if (message == R.string.settings_saved) ThemeManager.applyTheme(theme)
         }
     }

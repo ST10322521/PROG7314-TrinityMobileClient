@@ -104,7 +104,7 @@ class HomeActivity : AppCompatActivity() {
         wireDrawer()
         handleBackNavigation()
 
-        // only on first launch, a rebuild keeps whatever screen was open
+        // only on first launch, a rebuild keeps what ever screen was open
         if (savedInstanceState == null) {
             selectNavItem(R.id.nav_dashboard)
             showScreen(DashboardFragment(), sharedAppBar = true)
@@ -239,7 +239,7 @@ class HomeActivity : AppCompatActivity() {
     ) {
         val current = currentScreen()
 
-        // already on Settings, rebuilding it would throw away what you were editing
+        // allready on Settings, rebuilding it would throw away what you were editing
         if (current is SettingsFragment && fragment is SettingsFragment) {
             Log.d(TAG, "nav -> already on Settings")
             return
@@ -323,7 +323,7 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    // any touch counts as activity and restarts the timer
+    // any touch counts as activity and restarts the timmer
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         resetAutoLockTimer()
         return super.dispatchTouchEvent(ev)
