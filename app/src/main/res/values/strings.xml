@@ -73,6 +73,11 @@
     <string name="settings_notifications_hint">Alerts on this device</string>
     <string name="settings_auto_lock">Auto-lock</string>
     <string name="settings_auto_lock_hint">Lock after inactivity</string>
+    <string name="settings_theme_auto">Auto</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_auto_lock_minutes">%1$d min</string>
+    <string name="settings_auto_lock_never">Never</string>
     <string name="settings_save">Save Changes</string>
     <string name="settings_saved">Settings saved</string>
     <string name="settings_save_signed_out">Sign in to save your settings</string>

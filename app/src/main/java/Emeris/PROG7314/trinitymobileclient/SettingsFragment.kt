@@ -341,8 +341,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun showPreferenceLabels() {
-        bindings.tvTheme.text = selectedTheme.name
-        bindings.tvAutoLock.text = SettingsDefaults.autoLockText(selectedAutoLockMinutes)
+        bindings.tvTheme.text = themeLabel(selectedTheme)
+        bindings.tvAutoLock.text = autoLockLabel(selectedAutoLockMinutes)
         bindings.tvLanguage.text = SettingsDefaults.languageText(selectedLanguage)
     }
 
@@ -410,12 +410,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     }
 
     private fun showAutoLockDialog() {
-        val labels = SettingsDefaults.autoLockOptions.keys.toTypedArray()
+        val minutes = SettingsDefaults.autoLockOptions.values.toList()
+        val labels = minutes.map { autoLockLabel(it) }.toTypedArray()
 
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.settings_auto_lock)
             .setItems(labels) { _, which ->
-                selectedAutoLockMinutes = SettingsDefaults.autoLockMinutes(labels[which])
+                selectedAutoLockMinutes = minutes[which]
                 Log.d(TAG, "auto-lock picked -> $selectedAutoLockMinutes min")
                 showPreferenceLabels()
             }.show()
@@ -426,12 +427,24 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         AlertDialog.Builder(requireContext())
             .setTitle(R.string.settings_theme)
-            .setItems(themes.map { it.name }.toTypedArray()) { _, which ->
+            .setItems(themes.map { themeLabel(it) }.toTypedArray()) { _, which ->
                 selectedTheme = themes[which]
                 Log.d(TAG, "theme picked -> $selectedTheme")
                 showPreferenceLabels()
             }.show()
     }
+
+    private fun themeLabel(theme: Themes): String = getString(
+        when (theme) {
+            Themes.Auto -> R.string.settings_theme_auto
+            Themes.Dark -> R.string.settings_theme_dark
+            Themes.Light -> R.string.settings_theme_light
+        }
+    )
+
+    private fun autoLockLabel(minutes: Int): String =
+        if (minutes == 0) getString(R.string.settings_auto_lock_never)
+        else getString(R.string.settings_auto_lock_minutes, minutes)
 
     override fun onDestroyView() {
         super.onDestroyView()
