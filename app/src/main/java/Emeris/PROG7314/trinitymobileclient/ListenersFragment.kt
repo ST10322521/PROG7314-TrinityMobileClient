@@ -48,14 +48,27 @@ class ListenersFragment : Fragment(R.layout.fragment_listeners) {
                 .onFailure { Log.e(TAG, "listeners error", it) }
                 .getOrNull()?.body() ?: emptyList()
 
-            bindings.tvStatTotal.text = listeners.size.toString()
-            bindings.tvStatHttp.text  = listeners.count { it.type == "HTTP" }.toString()
-            bindings.tvStatHttps.text = listeners.count { it.type == "HTTPS" }.toString()
-            bindings.tvStatTcp.text   = listeners.count { it.type == "TCP" }.toString()
-            bindings.tvStatSmb.text   = listeners.count { it.type == "SMB" }.toString()
-
+            updateStats(listeners)
             populateList(listeners)
         }
+    }
+
+    private fun updateStats(listeners: List<ListenerDto>) {
+        var http = 0; var https = 0; var tcp = 0; var smb = 0; var tor = 0
+        for (l in listeners) {
+            when (l.protocol) {
+                "HTTP"  -> http++
+                "HTTPS" -> https++
+                "TCP"   -> tcp++
+                "SMB"   -> smb++
+                "TOR"   -> tor++
+            }
+        }
+        bindings.tvStatTotal.text = listeners.size.toString()
+        bindings.tvStatHttp.text  = http.toString()
+        bindings.tvStatHttps.text = https.toString()
+        bindings.tvStatTcp.text   = tcp.toString()
+        bindings.tvStatSmb.text   = smb.toString()
     }
 
     private fun populateList(listeners: List<ListenerDto>) {
@@ -81,15 +94,15 @@ class ListenersFragment : Fragment(R.layout.fragment_listeners) {
                 if (active) R.drawable.dot_green else R.drawable.dot_yellow
             )
             row.listenerName.text = listener.name ?: "Listener #${listener.id}"
-            row.listenerMeta.text = listener.type ?: "unknown"
+            row.listenerMeta.text = listener.protocol ?: "unknown"
 
-            val (badgeLabel, badgeColor) = when (listener.type) {
+            val (badgeLabel, badgeColor) = when (listener.protocol) {
                 "HTTP"  -> "HTTP"  to R.color.status_blue
                 "HTTPS" -> "HTTPS" to R.color.status_green
                 "TCP"   -> "TCP"   to R.color.status_purple
                 "SMB"   -> "SMB"   to R.color.status_yellow
                 "TOR"   -> "TOR"   to R.color.status_red
-                else    -> (listener.type ?: "?") to R.color.text_muted
+                else    -> (listener.protocol ?: "?") to R.color.text_muted
             }
             row.listenerTypeBadge.text = badgeLabel
             row.listenerTypeBadge.setTextColor(ContextCompat.getColor(requireContext(), badgeColor))
@@ -106,7 +119,7 @@ class ListenersFragment : Fragment(R.layout.fragment_listeners) {
     }
 
     private fun showListenerActions(listener: ListenerDto) {
-        val isHttp = listener.type?.lowercase() == "http"
+        val isHttp = listener.protocol?.uppercase() == "HTTP"
         val options = buildList {
             if (isHttp) add("Restart")
             add("Delete")

@@ -6,6 +6,9 @@ import Emeris.PROG7314.trinitymobileclient.api.model.CampaignDto
 import Emeris.PROG7314.trinitymobileclient.databinding.FragmentDashboardBinding
 import Emeris.PROG7314.trinitymobileclient.databinding.ItemAgentRowBinding
 import Emeris.PROG7314.trinitymobileclient.databinding.ItemDividerBinding
+import Emeris.PROG7314.trinitymobileclient.model.EventLog
+import Emeris.PROG7314.trinitymobileclient.notifications.NotificationHelper
+import Emeris.PROG7314.trinitymobileclient.signalr.SignalRManager
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,6 +23,11 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
 
+    private companion object {
+        const val HUB_URL   = "https://urchin-app-uisgp.ondigitalocean.app/hub/events"
+        const val CAMPAIGN_ID = "1"
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentDashboardBinding.bind(view)
@@ -29,6 +37,31 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         }
 
         loadDashboard()
+        connectHub()
+    }
+
+    private fun connectHub() {
+        val signalR = SignalRManager.getInstance()
+        signalR.connect(
+            hubUrl        = HUB_URL,
+            tokenProvider = { ApiClient.token ?: "" },
+            onConnected   = {
+                signalR.on("EventLogNotification", EventLog::class.java) { event ->
+                    val ctx = context ?: return@on
+                    NotificationHelper.showEvent(
+                        context = ctx,
+                        title   = event.type.ifBlank { "Event" },
+                        message = event.message
+                    )
+                }
+                signalR.subscribeToEventLog(
+                    campaignId   = CAMPAIGN_ID,
+                    onSubscribed = { Log.d("Dashboard", "Subscribed to event log campaign $CAMPAIGN_ID") },
+                    onError      = { e -> Log.e("Dashboard", "Event log subscribe failed", e) }
+                )
+            },
+            onError = { e -> Log.e("Dashboard", "Hub connect failed", e) }
+        )
     }
 
     private fun loadDashboard() {
@@ -133,6 +166,11 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     }
 
     override fun onDestroyView() {
+        val signalR = SignalRManager.getInstance()
+        if (signalR.isConnected) {
+            signalR.unsubscribeFromEventLog(CAMPAIGN_ID)
+            signalR.disconnect()
+        }
         super.onDestroyView()
         _binding = null
     }
