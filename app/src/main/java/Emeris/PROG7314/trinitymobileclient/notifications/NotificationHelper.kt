@@ -17,19 +17,14 @@ import Emeris.PROG7314.trinitymobileclient.R
 object NotificationHelper {
 
     private const val TAG = "NotificationHelper"
-
     const val CHANNEL_ID_ALERTS   = "trinity_alerts"
     const val CHANNEL_ID_EVENTS   = "trinity_events"
-
     private const val CHANNEL_NAME_ALERTS = "Agent Alerts"
     private const val CHANNEL_NAME_EVENTS = "Agent Events"
-
     private const val CHANNEL_DESC_ALERTS = "Critical agent alert notifications"
     private const val CHANNEL_DESC_EVENTS = "General agent event notifications"
-
     @Volatile
     private var nextId = 1000
-
     private fun nextNotificationId(): Int = synchronized(this) { nextId++ }
 
     /**
@@ -64,8 +59,6 @@ object NotificationHelper {
             Log.d(TAG, "Notification channels created")
         }
     }
-
-    // ── Public API ────────────────────────────────────────────────────────────
 
     /**
      * Show alert notification (critical agent events).
@@ -130,8 +123,7 @@ object NotificationHelper {
         Log.d(TAG, "Cancelled all notifications")
     }
 
-    // ── Internal ──────────────────────────────────────────────────────────────
-
+    // Internal
     @Suppress("MissingPermission")
     private fun post(
         context: Context,

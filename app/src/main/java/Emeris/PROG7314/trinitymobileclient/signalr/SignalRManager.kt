@@ -9,39 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /**
- * Modular singleton for managing a SignalR hub connection.
- *
- * Typical usage:
- * ```kotlin
- * val manager = SignalRManager.getInstance()
- *
- * // Connect (optionally with a bearer token provider, e.g. Firebase ID token)
- * manager.connect(
- *     hubUrl = "",
- *     tokenProvider = { firebaseUser.getIdToken(false).result?.token ?: "" },
- *     onConnected = {  },
- *     onError    = { e -> Log.e("TAG", "Connection failed", e) }
- * )
- *
- * // Subscribe to a typed hub method
- * manager.on("AgentStatusChanged", AgentStatusDto::class.java) { dto ->
- *     NotificationHelper.showAlert(context, "Agent Update", dto.message)
- * }
- *
- * // Fire-and-forget invoke
- * manager.invoke("SendCommand", "agent-id", "execute")
- *
- * // Observe connection state
- * manager.connectionState.collect { state -> ... }
- *
- * // Disconnect when done
- * manager.disconnect()
- * ```
+ * Singleton for managing a SignalR hub connection.
  */
 class SignalRManager private constructor() {
-
-    // ── Connection state ──────────────────────────────────────────────────────
-
     enum class ConnectionState {
         DISCONNECTED,
         CONNECTING,
@@ -51,18 +21,12 @@ class SignalRManager private constructor() {
 
     private val _connectionState = MutableStateFlow(ConnectionState.DISCONNECTED)
 
-    /** Observe the hub connection state reactively (e.g. in a ViewModel). */
+    /** Observe the hub connection state reactively  */
     val connectionState: StateFlow<ConnectionState> = _connectionState.asStateFlow()
 
     val isConnected: Boolean
         get() = _connectionState.value == ConnectionState.CONNECTED
-
-    // ── Internal hub ──────────────────────────────────────────────────────────
-
     private var hubConnection: HubConnection? = null
-
-    // ── Singleton ─────────────────────────────────────────────────────────────
-
     companion object {
         private const val TAG = "SignalRManager"
 
@@ -74,8 +38,6 @@ class SignalRManager private constructor() {
                 instance ?: SignalRManager().also { instance = it }
             }
     }
-
-    // ── Lifecycle ─────────────────────────────────────────────────────────────
 
     /**
      * Connect to a SignalR hub endpoint.
@@ -138,7 +100,7 @@ class SignalRManager private constructor() {
     }
 
     /**
-     * Gracefully stop the hub connection.
+     * Stop the hub connection.
      *
      * @param onDisconnected Called when the disconnect completes.
      */
@@ -283,17 +245,9 @@ class SignalRManager private constructor() {
         invoke("UnsubscribeFromEventLog", campaignId, onUnsubscribed, onError)
     }
 
-    // ── Receiving messages ────────────────────────────────────────────────────
-
     /**
      * Register a handler for a hub push method with **one typed argument**.
      *
-     * Example:
-     * ```kotlin
-     * manager.on("AgentOutput", String::class.java) { output ->
-     *     NotificationHelper.showEvent(context, "Agent", output)
-     * }
-     * ```
      *
      * @param methodName Hub method name the server calls (must match the C# hub method / client proxy name)
      * @param type       Runtime class of the expected argument (use `MyDto::class.java` for objects)
@@ -306,14 +260,7 @@ class SignalRManager private constructor() {
     }
 
     /**
-     * Register a handler for a hub push method with **no arguments**.
-     *
-     * Example:
-     * ```kotlin
-     * manager.onEmpty("SessionExpired") {
-     *     // navigate back to login
-     * }
-     * ```
+     * Register a handler for a hub push method with no arguments.
      */
     fun onEmpty(methodName: String, handler: () -> Unit) {
         ensureConnected(methodName) ?: return
@@ -324,7 +271,7 @@ class SignalRManager private constructor() {
     // ── Sending messages ──────────────────────────────────────────────────────
 
     /**
-     * Fire-and-forget invoke of a hub method with **no arguments**.
+     * Fire-and-forget invoke of a hub method with no arguments
      */
     fun invoke(
         methodName: String,
@@ -343,7 +290,7 @@ class SignalRManager private constructor() {
     }
 
     /**
-     * Fire-and-forget invoke with **one argument**.
+     * Fire-and-forget invoke with one argument.
      */
     fun invoke(
         methodName: String,
@@ -363,7 +310,7 @@ class SignalRManager private constructor() {
     }
 
     /**
-     * Fire-and-forget invoke with **two arguments**.
+     * Fire-and-forget invoke with two arguments.
      */
     fun invoke(
         methodName: String,
@@ -384,18 +331,7 @@ class SignalRManager private constructor() {
     }
 
     /**
-     * Invoke a hub method and **expect a return value** of type [R].
-     *
-     * Example:
-     * ```kotlin
-     * manager.invokeWithReturn(
-     *     returnType  = AgentStatusDto::class.java,
-     *     methodName  = "GetAgentStatus",
-     *     arg1        = agentId,
-     *     onResult    = { dto -> updateUi(dto) },
-     *     onError     = { e -> showError(e.message) }
-     * )
-     * ```
+     * Invoke a hub method and expect a return value of type [R].
      */
     fun <R : Any> invokeWithReturn(
         returnType: Class<R>,
@@ -415,9 +351,6 @@ class SignalRManager private constructor() {
             { e -> Log.e(TAG, "invokeWithReturn '$methodName' failed", e); onError?.invoke(e) }
         )
     }
-
-    // ── Helpers ───────────────────────────────────────────────────────────────
-
     private fun ensureConnected(context: String): Unit? =
         if (!isConnected) {
             Log.e(TAG, "Not connected — cannot register handler for '$context'")

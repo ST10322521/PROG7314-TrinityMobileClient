@@ -35,14 +35,12 @@ class AgentInterfaceFragment : Fragment(R.layout.fragment_agent_interface) {
         }
 
         binding.btnClearConsole.setOnClickListener {
-            // TODO: clear the console output view
+            binding.consoleOutput.text = ""
         }
 
         wireSendButton()
         subscribeToAgentHub()
     }
-
-    // ── Command input ─────────────────────────────────────────────────────────
 
     private fun wireSendButton() {
         binding.btnSendCommand.setOnClickListener {
@@ -61,7 +59,7 @@ class AgentInterfaceFragment : Fragment(R.layout.fragment_agent_interface) {
                             commandType = result.commandType,
                             dto         = result.dto
                         )
-                        // Schedule sync — WorkManager will fire once internet is available
+                        // Schedule sync
                         CommandSyncScheduler.schedule(requireContext())
                         Log.d(TAG, "Command queued and sync scheduled: ${result.commandType}")
                     }
@@ -75,15 +73,10 @@ class AgentInterfaceFragment : Fragment(R.layout.fragment_agent_interface) {
             }
         }
     }
-
-    // ── Console output ────────────────────────────────────────────────────────
-
     private fun appendToConsole(text: String) {
-        // TODO: replace with your actual console TextView append logic
-        Log.d(TAG, "Console: $text")
+        binding.consoleOutput.append("$text\n")
+        binding.scrollView.post { binding.scrollView.fullScroll(View.FOCUS_DOWN) }
     }
-
-    // ── SignalR ───────────────────────────────────────────────────────────────
 
     private fun subscribeToAgentHub() {
         if (agentId.isBlank()) {
@@ -104,7 +97,7 @@ class AgentInterfaceFragment : Fragment(R.layout.fragment_agent_interface) {
             Emeris.PROG7314.trinitymobileclient.model.TaskNotification::class.java
         ) { notification ->
             requireActivity().runOnUiThread {
-                appendToConsole("[${notification.status}] ${notification.output}")
+                appendToConsole("[${notification.status}] ${notification.message}")
             }
         }
     }
@@ -116,8 +109,6 @@ class AgentInterfaceFragment : Fragment(R.layout.fragment_agent_interface) {
         super.onDestroyView()
         _binding = null
     }
-
-    // ── Factory ───────────────────────────────────────────────────────────────
 
     companion object {
         private const val TAG           = "AgentInterfaceFragment"

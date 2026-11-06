@@ -1,31 +1,43 @@
 package Emeris.PROG7314.trinitymobileclient.data.command
 
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.CmdParser
 import Emeris.PROG7314.trinitymobileclient.data.command.parser.CommandParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.DownloadParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.EscalateParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.GetUIDParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.InlineExecuteParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.KillParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.KillProcessParser
 import Emeris.PROG7314.trinitymobileclient.data.command.parser.ParseResult
-import Emeris.PROG7314.trinitymobileclient.data.command.parser.ShellCommandParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.PersistParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.PowerShellParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.RunAsParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.RunParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.RunUParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.SleepParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.SpawnToParser
+import Emeris.PROG7314.trinitymobileclient.data.command.parser.UpdateHostsParser
 
-/**
- * Static registry that maps console input to the correct [CommandParser] strategy.
- */
 object CommandParserRegistry {
 
-    /**
-     * All registered parsers keyed by command keyword.
-     */
     private val parsers: Map<String, CommandParser> = buildMap {
-        register(ShellCommandParser)
+        register(PowerShellParser)
+        register(CmdParser)
+        register(DownloadParser)
+        register(KillProcessParser)
+        register(RunAsParser)
+        register(RunParser)
+        register(RunUParser)
+        register(EscalateParser)
+        register(PersistParser)
+        register(InlineExecuteParser)
+        register(SpawnToParser)
+        register(UpdateHostsParser)
+        register(SleepParser)
+        register(KillParser)
+        register(GetUIDParser)
     }
 
-    // ── Public API ────────────────────────────────────────────────────────────
-
-    /**
-     * Parse a raw console input string into a [ParseResult].
-     *
-     * The first whitespace-delimited token is treated as the keyword. The
-     * remaining tokens are passed to the matching [CommandParser] as args.
-     *
-     * @param rawInput The exact string the user typed in the terminal
-     */
     fun parse(rawInput: String): ParseResult {
         if (rawInput.isBlank()) {
             return ParseResult.ParseError("Input is empty")
@@ -48,11 +60,8 @@ object CommandParserRegistry {
         }
     }
 
-    /**
-     * Returns all registered keywords.
-     * Command help list.
-     */
     fun registeredKeywords(): Set<String> = parsers.keys
+
     private fun MutableMap<String, CommandParser>.register(parser: CommandParser) {
         put(parser.keyword, parser)
     }

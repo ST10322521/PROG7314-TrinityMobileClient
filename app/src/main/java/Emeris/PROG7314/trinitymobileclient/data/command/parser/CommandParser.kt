@@ -1,11 +1,11 @@
 package Emeris.PROG7314.trinitymobileclient.data.command.parser
 
 /**
- * Strategy interface — one implementation per supported command keyword.
+ * Strategy interface
  */
 interface CommandParser {
 
-    /** The keyword this parser handles, e.g. "shell". Must be lowercase. */
+    /** The keyword this parser handles */
     val keyword: String
 
     /**

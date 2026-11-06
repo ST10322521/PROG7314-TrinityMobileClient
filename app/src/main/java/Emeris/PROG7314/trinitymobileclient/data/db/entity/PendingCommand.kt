@@ -47,8 +47,22 @@ enum class CommandStatus {
 }
 
 /**
- * Constant command type strings
+ * Constant command types
  */
 object CommandType {
-    const val SHELL = "shell"
+    const val POWERSHELL       = "powershell"
+    const val SHELL            = "shell"
+    const val DOWNLOAD         = "download"
+    const val KILL_PROCESS     = "kill-process"
+    const val RUNAS            = "runas"
+    const val RUN              = "run"
+    const val RUNU             = "runu"
+    const val ESCALATE         = "escalate"
+    const val PERSIST          = "persist"
+    const val EXECUTE_ASSEMBLY = "execute-assembly"
+    const val SPAWNTO          = "spawnto"
+    const val UPDATE_HOSTS     = "updatehosts"
+    const val SLEEP            = "sleep"
+    const val KILL             = "kill"
+    const val GETUID           = "getuid"
 }

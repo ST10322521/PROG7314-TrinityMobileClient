@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import Emeris.PROG7314.trinitymobileclient.data.CommandRepository
-import Emeris.PROG7314.trinitymobileclient.data.command.dto.ShellCommandDto
+import Emeris.PROG7314.trinitymobileclient.data.command.dto.CmdDto
 import Emeris.PROG7314.trinitymobileclient.data.db.entity.CommandType
 
 /**
@@ -42,8 +42,8 @@ class CommandSyncWorker(
                 when (command.commandType) {
 
                     CommandType.SHELL -> {
-                        val dto = repository.deserialize(command.payload, ShellCommandDto::class.java)
-                        Log.d(TAG, "Dispatching shell to agent '${command.agentId}': ${dto.commandlet}")
+                        val dto = repository.deserialize(command.payload, CmdDto::class.java)
+                        Log.d(TAG, "Dispatching cmd to agent '${command.agentId}': ${dto.command}")
                         // TODO: ADD API CALL
                     }
                     else -> {
