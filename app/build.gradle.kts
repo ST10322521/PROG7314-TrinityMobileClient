@@ -4,11 +4,8 @@ plugins {
     alias(libs.plugins.android.application)
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
+    // Room setup
     alias(libs.plugins.ksp)
-}
-
-val localProps = Properties().also { props ->
-    rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { props.load(it) }
 }
 
 android {
@@ -72,15 +69,7 @@ dependencies {
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
 
-    // SignalR hub client (ASP.NET Core SignalR for Android)
-    implementation(libs.signalr)
-    // Gson — JSON serialization for hub message models
-    implementation(libs.gson)
-    // Room — offline command queue
-    implementation(libs.room.runtime)
-    implementation(libs.room.ktx)
-    ksp(libs.room.compiler)
-    // WorkManager — background sync on connectivity restore
-    implementation(libs.work.runtime.ktx)
-
+    // Room setup
+    implementation(libs.androidx.room3.runtime)
+    ksp(libs.androidx.room3.compiler)
 }

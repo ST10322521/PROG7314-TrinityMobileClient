@@ -8,4 +8,23 @@
     <string name="an_account_with_this_email_already_exists">An account with this email already exists</string>
     <string name="unable_to_connect_please_try_again">Unable to connect. Please try again.</string>
     <string name="authentication_failed_please_try_again">Authentication failed. Please try again</string>
+    <!-- Shared UI-state copy (StateView): loading / empty / error / success. -->
+    <string name="state_loading">Loading…</string>
+    <string name="state_retry">Retry</string>
+    <string name="state_error_title">Something went wrong</string>
+    <string name="state_error_message">Could not load this screen. Please try again.</string>
+    <string name="state_success_title">Done</string>
+    <string name="state_success_message">The action completed successfully.</string>
+
+    <!-- Per-screen empty states. -->
+    <string name="state_listeners_empty_title">No listeners yet</string>
+    <string name="state_listeners_empty_message">Tap New to add a command &amp; control listener</string>
+    <string name="state_payloads_empty_title">No payloads yet</string>
+    <string name="state_payloads_empty_message">Generated payloads will appear here</string>
+    <string name="state_logs_empty_title">No logs yet</string>
+    <string name="state_logs_empty_message">System and user activity will appear here</string>
+
+    <!-- Drawer user footer. -->
+    <string name="drawer_default_username">Signed in</string>
+    <string name="drawer_default_initials">TR</string>
 </resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Padding applied by StateView so every state block is the same size. -->
+    <dimen name="state_vertical_padding">44dp</dimen>
+    <dimen name="state_horizontal_padding">16dp</dimen>
+</resources>
