@@ -19,15 +19,16 @@ The application is being designed to provide a mobile interface for interacting 
 
 The purpose of the Trinity Mobile Client is to create a mobile client for the Trinity System that is currently in development.
 
-Part 2 of this project is a prototype focusing on some core features such as:
-
 - User registration and authentication
   - Email and Password
   - Single Sign-On (SSO)
+  - Biometric Authentication for already logged in users
 
 - Persistent application settings
   - Theme selection
   - Automatic application lockout during absence
+  - Real-time notifications
+  - Language Options (English, Afrikaans, Zulu, Sotho)
 
 - Communication with the Trinity REST API currently in development
   - Server status
@@ -36,6 +37,7 @@ Part 2 of this project is a prototype focusing on some core features such as:
   - Task management
   - Agent command functionality
   - Remote payload configuration and build
+  - Command delivery
 
 - Logging and error handling
 
