@@ -169,4 +169,9 @@
     <string name="log_out">Log out</string>
     <string name="settings_title">Settings</string>
 
+    <string name="app_locked">Trinity is locked</string>
+    <string name="app_locked_subtitle">Unlock to carry on where you left off</string>
+    <string name="app_locked_tap_to_unlock">App locked. Tap the screen to unlock.</string>
+    <string name="app_locked_sign_in_again">App locked. Please sign in again.</string>
+    <string name="settings_biometric_unavailable">Set up a fingerprint in your phone settings first</string>
 </resources>

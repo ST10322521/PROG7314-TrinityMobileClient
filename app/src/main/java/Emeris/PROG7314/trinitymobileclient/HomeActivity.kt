@@ -7,6 +7,7 @@ import Emeris.PROG7314.trinitymobileclient.databinding.ActivityHomeBinding
 import Emeris.PROG7314.trinitymobileclient.model.NavList
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsDefaults
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsProvider
+import Emeris.PROG7314.trinitymobileclient.settings.LanguageManager
 import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
 import Emeris.PROG7314.trinitymobileclient.settings.Themes
 import Emeris.PROG7314.trinitymobileclient.ui.initialsOf
@@ -57,6 +58,7 @@ class HomeActivity : AppCompatActivity() {
     private val autoLockRunnable = Runnable {
         startActivity(
             Intent(this, LoginActivity::class.java)
+                .putExtra(LoginActivity.EXTRA_LOCKED, true)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         )
         finish()
@@ -195,6 +197,7 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
             ThemeManager.applyTheme(Themes.Auto)
+            LanguageManager.resetLanguage()
         }
     }
 
@@ -289,6 +292,7 @@ class HomeActivity : AppCompatActivity() {
 
             preferences?.let {
                 ThemeManager.applyTheme(Themes.valueOf(it.theme))
+                LanguageManager.applyLanguage(it.language)
             }
         }
     }

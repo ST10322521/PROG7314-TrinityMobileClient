@@ -3,6 +3,7 @@ package Emeris.PROG7314.trinitymobileclient
 import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
 import Emeris.PROG7314.trinitymobileclient.databinding.FragmentSettingsBinding
+import Emeris.PROG7314.trinitymobileclient.settings.LanguageManager
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsDefaults
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsProvider
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsRepository
@@ -21,6 +22,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.biometric.BiometricManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.fragment.app.Fragment
@@ -78,9 +80,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.tvTheme.setOnClickListener { showThemeDialog() }
         bindings.tvAutoLock.setOnClickListener { showAutoLockDialog() }
 
-        // TODO(KAN-108): login reads its own biometric_preferences, not this switch
-        bindings.switchBiometric.setOnCheckedChangeListener { _, checked ->
+        bindings.switchBiometric.setOnCheckedChangeListener { button, checked ->
             Log.d(TAG, "biometric toggled -> $checked")
+            if (checked && button.isPressed && !fingerprintReady()) {
+                button.isChecked = false
+                Toast.makeText(requireContext(), R.string.settings_biometric_unavailable, Toast.LENGTH_LONG).show()
+            }
         }
         bindings.switchNotifications.setOnCheckedChangeListener { _, checked ->
             Log.d(TAG, "notifications toggled -> $checked")
@@ -137,7 +142,32 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         startActivity(intent)
         requireActivity().finish()
         ThemeManager.applyTheme(Themes.Auto)
+        LanguageManager.resetLanguage()
     }
+
+    private fun biometricPrefs() =
+        requireContext().getSharedPreferences("biometric_preferences", Context.MODE_PRIVATE)
+
+    private fun biometricLoginOn(): Boolean {
+        val prefs = biometricPrefs()
+        return prefs.getBoolean("biometric_login_enabled", false) &&
+            prefs.getString("biometric_user_id", null) == authRepository.currentUserId()
+    }
+
+    private fun saveBiometricLogin(enabled: Boolean) {
+        biometricPrefs().edit {
+            if (enabled) {
+                putBoolean("biometric_login_enabled", true)
+                putString("biometric_user_id", authRepository.currentUserId())
+            } else {
+                remove("biometric_login_enabled")
+                remove("biometric_user_id")
+            }
+        }
+    }
+
+    private fun fingerprintReady() = BiometricManager.from(requireContext())
+        .canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
 
     private fun confirmPasswordReset() {
         val email = authRepository.currentUserEmail() ?: return
@@ -259,11 +289,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                     ?: SettingsDefaults.DEFAULT_THEME
                 selectedAutoLockMinutes = preferences.autoLockMinutes
                 selectedLanguage = preferences.language
-                b.switchBiometric.isChecked = preferences.biometricEnabled
+                b.switchBiometric.isChecked = biometricLoginOn()
                 b.switchNotifications.isChecked = preferences.notificationsEnabled
             } else {
                 Log.d(TAG, "no saved preferences, showing defaults")
-                b.switchBiometric.isChecked = SettingsDefaults.DEFAULT_BIOMETRIC_ENABLED
+                b.switchBiometric.isChecked = biometricLoginOn()
                 b.switchNotifications.isChecked = SettingsDefaults.DEFAULT_NOTIFICATIONS_ENABLED
             }
             savedValues = currentValues()
@@ -378,6 +408,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                         theme, autoLockMinutes, language, biometricEnabled, notificationsEnabled
                     )
                     (activity as? HomeActivity)?.applyAutoLock(autoLockMinutes)
+                    saveBiometricLogin(biometricEnabled)
                     R.string.settings_saved
                 } else {
                     Log.w(TAG, "save skipped, no signed-in user")
@@ -393,13 +424,15 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             // app context so the toast stays up when the theme rebuilds the activity
             Toast.makeText(b.root.context.applicationContext, message, Toast.LENGTH_SHORT).show()
 
-            // theme last, its can recreate the activity
-            if (message == R.string.settings_saved) ThemeManager.applyTheme(theme)
+            // theme and languge last. both can recreate the activty
+            if (message == R.string.settings_saved) {
+                ThemeManager.applyTheme(theme)
+                LanguageManager.applyLanguage(language)
+            }
         }
     }
 
     // pickers only change the selection, Save is what writes it
-    // TODO(KAN-104): the language is saved but nothing switches the app to it yet
     private fun showLanguageDialog() {
         val labels = SettingsDefaults.languageOptions.keys.toTypedArray()
 

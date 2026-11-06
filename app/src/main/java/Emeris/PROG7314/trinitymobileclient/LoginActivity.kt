@@ -10,6 +10,10 @@ import androidx.core.view.WindowInsetsCompat
 
 class LoginActivity : AppCompatActivity() {
 
+    companion object {
+        const val EXTRA_LOCKED = "locked"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         TeamServerSession.init(this)
