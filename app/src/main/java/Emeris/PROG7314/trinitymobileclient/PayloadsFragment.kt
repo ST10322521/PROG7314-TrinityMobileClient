@@ -1,6 +1,7 @@
 package Emeris.PROG7314.trinitymobileclient
 
 import Emeris.PROG7314.trinitymobileclient.api.ApiClient
+import Emeris.PROG7314.trinitymobileclient.notifications.NotificationHelper
 import Emeris.PROG7314.trinitymobileclient.api.model.CampaignDto
 import Emeris.PROG7314.trinitymobileclient.api.model.ListenerDto
 import Emeris.PROG7314.trinitymobileclient.api.model.OperatorDto
@@ -160,6 +161,11 @@ class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
             try {
                 val response = ApiClient.payloads.generatePayload(request)
                 if (response.isSuccessful) {
+                    NotificationHelper.showEvent(
+                        context = requireContext(),
+                        title   = "Payload Generated",
+                        message = "New payload created successfully"
+                    )
                     Toast.makeText(requireContext(), "Payload generated", Toast.LENGTH_SHORT).show()
                     loadData()
                 } else {

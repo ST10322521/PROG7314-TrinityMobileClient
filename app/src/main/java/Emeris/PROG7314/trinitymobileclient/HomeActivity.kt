@@ -1,13 +1,16 @@
 package Emeris.PROG7314.trinitymobileclient
 
+import Emeris.PROG7314.trinitymobileclient.api.ApiClient
 import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
 import Emeris.PROG7314.trinitymobileclient.databinding.ActivityHomeBinding
 import Emeris.PROG7314.trinitymobileclient.model.NavList
+import Emeris.PROG7314.trinitymobileclient.notifications.NotificationHelper
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsDefaults
 import Emeris.PROG7314.trinitymobileclient.settings.SettingsProvider
 import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
 import Emeris.PROG7314.trinitymobileclient.settings.Themes
+import Emeris.PROG7314.trinitymobileclient.signalr.SignalRManager
 import Emeris.PROG7314.trinitymobileclient.ui.initialsOf
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -75,6 +78,7 @@ class HomeActivity : AppCompatActivity() {
         const val TAG = "HomeActivity"
         const val BIOMETRIC_LOGIN_ENABLED = "biometric_login_enabled"
         const val BIOMETRIC_USER_ID = "biometric_user_id"
+        const val HUB_URL = "https://urchin-app-uisgp.ondigitalocean.app/hub/events"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,11 +108,39 @@ class HomeActivity : AppCompatActivity() {
         wireDrawer()
         handleBackNavigation()
 
+        NotificationHelper.initialize(this)
+        requestNotificationPermission()
+        connectEventHub()
+
         // only on first launch, a rebuild keeps what ever screen was open
         if (savedInstanceState == null) {
             selectNavItem(R.id.nav_dashboard)
             showScreen(DashboardFragment(), sharedAppBar = true)
         }
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    this, android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
+                    0
+                )
+            }
+        }
+    }
+
+    private fun connectEventHub() {
+        SignalRManager.getInstance().connect(
+            hubUrl        = HUB_URL,
+            tokenProvider = { ApiClient.token ?: "" },
+            onConnected   = { Log.d(TAG, "Event hub connected") },
+            onError       = { e -> Log.e(TAG, "Hub connect failed", e) }
+        )
     }
 
     // name and initials in the drawer footer and app bar avatar
@@ -331,6 +363,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         lockHandler.removeCallbacks(autoLockRunnable)
+        SignalRManager.getInstance().disconnect()
         super.onDestroy()
     }
     private fun closeDrawer() = binding.drawerLayout.closeDrawer(GravityCompat.START)

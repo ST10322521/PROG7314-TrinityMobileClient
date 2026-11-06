@@ -14,6 +14,7 @@ import Emeris.PROG7314.trinitymobileclient.auth.AuthException
 import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
 import Emeris.PROG7314.trinitymobileclient.auth.AuthRepository
 import Emeris.PROG7314.trinitymobileclient.databinding.FragmentLoginBinding
+import Emeris.PROG7314.trinitymobileclient.notifications.NotificationHelper
 import android.content.Intent
 import android.text.method.PasswordTransformationMethod
 import androidx.credentials.CredentialManager
@@ -371,6 +372,12 @@ class LoginFragment : Fragment() {
 
     // Open the main application screen
     private fun openHome() {
+        NotificationHelper.initialize(requireContext())
+        NotificationHelper.showEvent(
+            context = requireContext(),
+            title   = "Signed In",
+            message = "Connected to Trinity C2"
+        )
         startActivity(
             Intent(
                 requireContext(),
