@@ -192,9 +192,17 @@ class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
         payloads.forEachIndexed { index, payload ->
             val row = ItemPayloadRowBinding.inflate(layoutInflater, bindings.payloadsContent, false)
 
+            // PayloadType enum name from server
             val typeName = when (payload.type) {
-                1 -> "EXE"; 2 -> "DLL"; 3 -> "SHC"; 4 -> "PS1"; else -> "???"
+                "POWERSHELL"      -> "PS1"
+                "RAW"             -> "RAW"
+                "WINDOWS_EXE"     -> "EXE"
+                "WINDOWS_SERVICE" -> "SVC"
+                "WINDOWS_DLL"     -> "DLL"
+                else              -> payload.type ?: "???"
             }
+            // Arch enum name from server
+            val archName = payload.architecture ?: ""
             row.payloadTypeBadge.text = typeName
             row.payloadName.text = payload.name ?: "Payload #${payload.id}"
 
@@ -202,7 +210,12 @@ class PayloadsFragment : Fragment(R.layout.fragment_payloads) {
                 ?: payload.listenerId?.let { "Listener $it" } ?: "—"
             val campaignName = campaigns.find { it.id == payload.campaignId }?.name
                 ?: payload.campaignId?.let { "Campaign $it" } ?: "—"
-            row.payloadMeta.text = "$listenerName · $campaignName"
+            row.payloadMeta.text = buildString {
+                append(listenerName)
+                append(" · ")
+                append(campaignName)
+                if (archName.isNotEmpty()) append(" · $archName")
+            }
             row.payloadDate.text = payload.createdAt?.take(10) ?: ""
 
             bindings.payloadsContent.addView(row.root)
