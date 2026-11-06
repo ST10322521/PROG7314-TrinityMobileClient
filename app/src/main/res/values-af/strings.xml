@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="hello_blank_fragment">Hallo</string>
+    <string name="invalid_email_or_password">Ongeldige e-posadres of wagwoord</string>
+    <string name="please_enter_a_valid_email_address">Voer asseblief ’n geldige e-posadres in</string>
+    <string name="an_account_with_this_email_already_exists">’n Rekening met hierdie e-posadres bestaan reeds</string>
+    <string name="unable_to_connect_please_try_again">Kan nie koppel nie. Probeer asseblief weer.</string>
+    <string name="authentication_failed_please_try_again">Verifikasie het misluk. Probeer asseblief weer</string>
+    <string name="state_loading">Laai…</string>
+    <string name="state_retry">Probeer weer</string>
+    <string name="state_error_title">Iets het verkeerd geloop</string>
+    <string name="state_error_message">Kon nie hierdie skerm laai nie. Probeer asseblief weer.</string>
+    <string name="state_success_title">Klaar</string>
+    <string name="state_success_message">Die aksie is suksesvol voltooi.</string>
+    <string name="state_listeners_empty_title">Nog geen luisteraars nie</string>
+    <string name="state_listeners_empty_message">Tik op Nuwe om ’n opdrag- en beheerluisternaar by te voeg</string>
+    <string name="state_payloads_empty_title">Nog geen loonvragte nie</string>
+    <string name="state_payloads_empty_message">Gegenereerde loonvragte sal hier verskyn</string>
+    <string name="state_logs_empty_title">Nog geen logboeke nie</string>
+    <string name="state_logs_empty_message">Stelsel- en gebruikersaktiwiteit sal hier verskyn</string>
+    <string name="drawer_default_username">Aangemeld</string>
+    <string name="login_failed">Aanmelding het misluk</string>
+    <string name="email_is_required">E-posadres is verpligtend</string>
+    <string name="password_is_required">Wagwoord is verpligtend</string>
+    <string name="biometric_login">Biometriese aanmelding</string>
+    <string name="use_your_fingerprint_to_sign_in">Gebruik jou vingerafdruk om aan te meld</string>
+    <string name="use_another_login_method">Gebruik ’n ander aanmeldmetode</string>
+    <string name="enable_fingerprint_login">Aktiveer vingerafdrukaanmelding?</string>
+    <string name="use_your_fingerprint_to_quickly_unlock_the_app_the_next_time_you_sign_in">Gebruik jou vingerafdruk om die toepassing vinnig te ontsluit wanneer jy die volgende keer aanmeld.</string>
+</resources>

@@ -10,7 +10,9 @@ import Emeris.PROG7314.trinitymobileclient.settings.ThemeManager
 import Emeris.PROG7314.trinitymobileclient.settings.Themes
 import Emeris.PROG7314.trinitymobileclient.ui.initialsOf
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -23,12 +25,14 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
+import androidx.core.content.edit
 
 // Shell activity: nav drawer + shared app bar. Swaps fragments into content_container.
 // Manual nav, no Nav Component. View binding renames drawer ids, so nav_logout is
@@ -37,6 +41,7 @@ import kotlinx.coroutines.launch
  * https://developer.android.com/guide/fragments/transactions
  * https://developer.android.com/reference/android/os/Looper
  * https://developer.android.com/reference/java/lang/Runnable
+ * https://developer.android.com/identity/sign-in/biometric-auth
  * https://developer.android.com/reference/android/view/ViewGroup#dispatchTouchEvent(android.view.MotionEvent)
  */
 class HomeActivity : AppCompatActivity() {
@@ -50,19 +55,32 @@ class HomeActivity : AppCompatActivity() {
     private val lockHandler = Handler(Looper.getMainLooper())
     private var autoLockMinutes = 0
 
+    //Auto-lock is an app lock now (Lyle's biometrics): the session stays, login asks for the
+    //fingerprint again. Task is cleared so back can't reopen Home behind the lock screen.
     private val autoLockRunnable = Runnable {
-        authRepository.logout()
-
         startActivity(
             Intent(this, LoginActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         )
         finish()
-        ThemeManager.applyTheme(Themes.Auto)
     }
 
     //Nav list Ids
     private val navItemIds = NavList.navItemIds
+
+    // Biometric Auth
+    private val biometricPreferences by lazy {
+        getSharedPreferences(
+            "biometric_preferences",
+            MODE_PRIVATE
+        )
+    }
+
+    private companion object {
+        const val TAG = "HomeActivity"
+        const val BIOMETRIC_LOGIN_ENABLED = "biometric_login_enabled"
+        const val BIOMETRIC_USER_ID = "biometric_user_id"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -174,8 +192,13 @@ class HomeActivity : AppCompatActivity() {
             closeDrawer()
 
             Log.d("firebaseAuth", "Logout Selected")
-            authRepository.logout()
 
+            biometricPreferences.edit {
+                remove(BIOMETRIC_LOGIN_ENABLED)
+                remove(BIOMETRIC_USER_ID)
+            }
+
+            authRepository.logout()
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
@@ -191,9 +214,9 @@ class HomeActivity : AppCompatActivity() {
             val row = when (id) {
                 R.id.nav_dashboard -> binding.navDrawer.navDashboard
                 R.id.nav_listeners -> binding.navDrawer.navListeners
-                R.id.nav_payloads -> binding.navDrawer.navPayloads
-                R.id.nav_logs -> binding.navDrawer.navLogs
-                R.id.nav_settings -> binding.navDrawer.navSettings
+                R.id.nav_payloads  -> binding.navDrawer.navPayloads
+                R.id.nav_logs      -> binding.navDrawer.navLogs
+                R.id.nav_settings  -> binding.navDrawer.navSettings
                 else -> continue
             }
 
@@ -212,11 +235,9 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    //Opens the agent detail screen from the Dashboard agent list.
-    //Pushed onto the back stack so back returns to the Dashboard.
-    fun openAgentInterface() {
-        Log.d(TAG, "nav -> AgentInterface")
-        showScreen(AgentInterfaceFragment(), sharedAppBar = false, addToBackStack = true)
+    fun openAgentInterface(agentId: String) {
+        Log.d(TAG, "nav -> AgentInterface ($agentId)")
+        showScreen(AgentInterfaceFragment.newInstance(agentId), sharedAppBar = false, addToBackStack = true)
     }
 
     //Single entry point for every screen change.
@@ -324,8 +345,4 @@ class HomeActivity : AppCompatActivity() {
         super.onDestroy()
     }
     private fun closeDrawer() = binding.drawerLayout.closeDrawer(GravityCompat.START)
-
-    private companion object {
-        const val TAG = "HomeActivity"
-    }
 }

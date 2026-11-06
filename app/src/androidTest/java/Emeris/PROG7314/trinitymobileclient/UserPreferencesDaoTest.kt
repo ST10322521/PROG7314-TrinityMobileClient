@@ -3,7 +3,7 @@ package Emeris.PROG7314.trinitymobileclient
 import Emeris.PROG7314.trinitymobileclient.database.AppDatabase
 import Emeris.PROG7314.trinitymobileclient.settings.UserPreferences
 import android.content.Context
-import androidx.room3.Room
+import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.coroutines.runBlocking

@@ -1,6 +1,6 @@
 package Emeris.PROG7314.trinitymobileclient.database
 
-import androidx.room3.migration.Migration
+import androidx.room.migration.Migration
 import androidx.sqlite.execSQL
 
 //https://developer.android.com/training/data-storage/room/migrating-db-versions

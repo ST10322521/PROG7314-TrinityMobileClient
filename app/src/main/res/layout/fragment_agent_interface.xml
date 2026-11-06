@@ -31,6 +31,7 @@
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -105,15 +106,22 @@
                         android:clickable="true" android:focusable="true" />
                 </LinearLayout>
 
-                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" android:background="@drawable/bg_console"
-                    android:padding="12dp" android:fontFamily="monospace" android:textSize="11sp"
+                <TextView
+                    android:id="@+id/console_output"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_console"
+                    android:padding="12dp"
+                    android:fontFamily="monospace"
+                    android:textSize="11sp"
                     android:textColor="@color/status_green"
-                    android:text="Microsoft Windows [Version 10.0.18363.1082]\n\nC:\\Users\\ALKA_DAS&gt; whoami\ndesktop-alka\\operator\n\nC:\\Users\\ALKA_DAS&gt; sysinfo\nOS: Windows 10   Arch: x64   PID: 4821\n\nC:\\Users\\ALKA_DAS&gt; _" />
+                    android:text="" />
 
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="10dp">
-                    <EditText android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
+                    <EditText android:id="@+id/input_command"
+                        android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
                         android:background="@drawable/bg_input" android:paddingStart="14dp"
                         android:hint="Enter command for AGENT-001…" android:textColorHint="@color/text_muted"
                         android:textColor="@color/text_primary" android:textSize="14sp" android:inputType="text" />
