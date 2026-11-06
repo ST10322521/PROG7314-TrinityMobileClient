@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/LabelCaps"
-            android:text="Team Server" />
+            android:text="@string/team_server" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -58,7 +58,7 @@
                 android:paddingStart="44dp"
                 android:paddingEnd="60dp"
                 android:background="@null"
-                android:hint="IP address or domain"
+                android:hint="@string/ip_address_or_domain"
                 android:textColorHint="@color/text_muted"
                 android:textColor="@color/text_primary"
                 android:textSize="15sp"
@@ -82,7 +82,7 @@
                 android:layout_height="52dp"
                 android:paddingStart="44dp"
                 android:background="@null"
-                android:hint="Operator email"
+                android:hint="@string/operator_email"
                 android:textColorHint="@color/text_muted"
                 android:textColor="@color/text_primary"
                 android:textSize="15sp"
@@ -104,7 +104,7 @@
                 android:paddingStart="44dp"
                 android:paddingEnd="48dp"
                 android:background="@null"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:textColorHint="@color/text_muted"
                 android:textColor="@color/text_primary"
                 android:textSize="15sp"
@@ -125,7 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Connect &amp; Sign In" />
+            android:text="@string/connect_amp_sign_in" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_sso"
@@ -139,13 +139,13 @@
             android:fontFamily="@font/google_sans"
             android:textStyle="bold"
             android:layout_marginTop="5dp"
-            android:text="Sign in with Google" />
+            android:text="@string/sign_in_with_google" />
 
         <TextView
             android:id="@+id/btnRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Register with email and password"
+            android:text="@string/register_with_email_and_password"
             android:textSize="16sp"
             android:textStyle="bold"
             android:clickable="true"

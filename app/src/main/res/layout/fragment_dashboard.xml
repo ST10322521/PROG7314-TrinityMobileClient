@@ -2,6 +2,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_root">
 
     <LinearLayout
@@ -16,26 +17,31 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical">
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Dashboard"
+                    android:text="@string/dashboard"
                     android:textColor="@color/text_primary"
                     android:textSize="24sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Live agent overview"
+                    android:text="@string/live_campaign_amp_agent_overview"
                     android:textColor="@color/text_secondary"
                     android:textSize="13sp"
                     android:layout_marginTop="2dp" />
+
             </LinearLayout>
+
             <!-- Server status chip -->
             <TextView
                 android:id="@+id/tv_server_status"
@@ -47,6 +53,7 @@
                 android:text="Checking…"
                 android:textColor="@color/text_muted"
                 android:textSize="12sp" />
+
         </LinearLayout>
 
         <!-- Overview stats card -->
@@ -78,6 +85,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center_horizontal">
+
                     <TextView
                         android:id="@+id/tv_stat_total"
                         android:layout_width="wrap_content"
@@ -86,6 +94,7 @@
                         android:textColor="@color/text_primary"
                         android:textSize="28sp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -93,6 +102,7 @@
                         android:textColor="@color/text_muted"
                         android:textSize="11sp"
                         android:layout_marginTop="2dp" />
+
                 </LinearLayout>
 
                 <!-- Vertical divider -->
@@ -109,6 +119,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center_horizontal">
+
                     <TextView
                         android:id="@+id/tv_stat_active"
                         android:layout_width="wrap_content"
@@ -117,6 +128,7 @@
                         android:textColor="@color/status_green"
                         android:textSize="28sp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -124,6 +136,7 @@
                         android:textColor="@color/text_muted"
                         android:textSize="11sp"
                         android:layout_marginTop="2dp" />
+
                 </LinearLayout>
 
                 <!-- Vertical divider -->
@@ -140,6 +153,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:gravity="center_horizontal">
+
                     <TextView
                         android:id="@+id/tv_stat_campaigns"
                         android:layout_width="wrap_content"
@@ -148,6 +162,7 @@
                         android:textColor="@color/brand_orange"
                         android:textSize="28sp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -155,6 +170,7 @@
                         android:textColor="@color/text_muted"
                         android:textSize="11sp"
                         android:layout_marginTop="2dp" />
+
                 </LinearLayout>
 
             </LinearLayout>
@@ -173,14 +189,16 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Graph View"
+                    android:text="@string/graph_view"
                     android:textColor="@color/text_primary"
                     android:textSize="15sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/tv_graph_subtitle"
                     android:layout_width="wrap_content"
@@ -188,6 +206,7 @@
                     android:text="Star topology"
                     android:textColor="@color/text_muted"
                     android:textSize="12sp" />
+
             </LinearLayout>
 
             <Emeris.PROG7314.trinitymobileclient.ui.AgentGraphView
@@ -201,6 +220,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -209,6 +229,7 @@
                     android:text="Active"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -218,6 +239,7 @@
                     android:text="Inactive"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -227,6 +249,7 @@
                     android:text="Server"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -251,11 +274,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none">
+
                 <LinearLayout
                     android:id="@+id/campaign_chips"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal" />
+
             </HorizontalScrollView>
 
             <TextView
@@ -266,6 +291,7 @@
                 android:textColor="@color/text_muted"
                 android:textSize="13sp"
                 android:visibility="gone" />
+
         </LinearLayout>
 
         <!-- Agent rows -->
@@ -285,28 +311,32 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:paddingVertical="44dp">
+
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_server"
                     android:tint="@color/text_muted"
                     android:alpha="0.6" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
-                    android:text="No agents yet"
+                    android:text="@string/no_agents_yet"
                     android:textColor="@color/text_secondary"
                     android:textSize="15sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:gravity="center"
-                    android:text="Agents will appear here once they check in"
+                    android:text="@string/agents_will_appear_here_once_they_check_in"
                     android:textColor="@color/text_muted"
                     android:textSize="13sp" />
+
             </LinearLayout>
         </LinearLayout>
 

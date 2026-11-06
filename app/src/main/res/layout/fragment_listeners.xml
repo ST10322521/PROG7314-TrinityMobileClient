@@ -13,14 +13,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Listeners"
+            android:text="@string/listeners"
             android:textColor="@color/text_primary"
             android:textSize="24sp"
             android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Manage command &amp; control listeners"
+            android:text="@string/manage_command_amp_control_listeners"
             android:textColor="@color/text_secondary"
             android:textSize="13sp"
             android:layout_marginTop="2dp" />
@@ -33,16 +34,19 @@
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_marginTop="16dp">
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
                     style="@style/LabelCaps"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total Listeners" />
+                    android:text="@string/total" />
+
                 <TextView
                     android:id="@+id/tv_stat_total"
                     android:layout_width="wrap_content"
@@ -52,6 +56,7 @@
                     android:textSize="28sp"
                     android:textStyle="bold"
                     android:layout_marginTop="2dp" />
+
             </LinearLayout>
         </LinearLayout>
 
@@ -69,11 +74,13 @@
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:gravity="center_horizontal">
+
                 <TextView
                     style="@style/LabelCaps"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="HTTP" />
+
                 <TextView
                     android:id="@+id/tv_stat_http"
                     android:layout_width="wrap_content"
@@ -83,6 +90,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginTop="4dp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -93,11 +101,13 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_marginStart="8dp">
+
                 <TextView
                     style="@style/LabelCaps"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="HTTPS" />
+
                 <TextView
                     android:id="@+id/tv_stat_https"
                     android:layout_width="wrap_content"
@@ -107,6 +117,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginTop="4dp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -117,11 +128,13 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_marginStart="8dp">
+
                 <TextView
                     style="@style/LabelCaps"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="TCP" />
+
                 <TextView
                     android:id="@+id/tv_stat_tcp"
                     android:layout_width="wrap_content"
@@ -131,6 +144,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginTop="4dp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -141,11 +155,13 @@
                 android:orientation="vertical"
                 android:gravity="center_horizontal"
                 android:layout_marginStart="8dp">
+
                 <TextView
                     style="@style/LabelCaps"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SMB" />
+
                 <TextView
                     android:id="@+id/tv_stat_smb"
                     android:layout_width="wrap_content"
@@ -155,7 +171,9 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:layout_marginTop="4dp" />
+
             </LinearLayout>
+
         </LinearLayout>
 
         <!-- Filter + New -->
@@ -164,6 +182,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="14dp">
+
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="46dp"
@@ -173,9 +192,10 @@
                 android:paddingStart="14dp"
                 android:drawableStart="@drawable/ic_search"
                 android:drawablePadding="10dp"
-                android:text="Filter listeners…"
+                android:text="@string/filter_listeners"
                 android:textColor="@color/text_muted"
                 android:textSize="14sp" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_new_listener"
                 style="@style/PrimaryButton"
@@ -185,8 +205,9 @@
                 android:paddingHorizontal="18dp"
                 android:drawableStart="@drawable/ic_add"
                 android:drawablePadding="6dp"
-                android:text="New"
+                android:text="@string/new_"
                 android:minHeight="0dp" />
+
         </LinearLayout>
 
         <!-- Listener rows card -->
@@ -209,6 +230,7 @@
                 android:id="@+id/state_listeners"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </LinearLayout>
 
     </LinearLayout>

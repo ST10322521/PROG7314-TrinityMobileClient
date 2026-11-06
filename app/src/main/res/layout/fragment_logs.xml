@@ -10,10 +10,10 @@
         android:padding="16dp">
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Logs" android:textColor="@color/text_primary"
+            android:text="@string/logs" android:textColor="@color/text_primary"
             android:textSize="24sp" android:textStyle="bold" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="View and analyse all system and user activity logs" android:textColor="@color/text_secondary"
+            android:text="@string/view_and_analyse_all_system_and_user_activity_logs" android:textColor="@color/text_secondary"
             android:textSize="13sp" android:layout_marginTop="2dp" />
 
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -21,7 +21,7 @@
             <LinearLayout style="@style/TrinityCard" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                 <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="Total Logs" />
+                    android:layout_height="wrap_content" android:text="@string/total_logs" />
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="0" android:textColor="@color/text_primary" android:textSize="22sp"
                     android:textStyle="bold" android:layout_marginTop="4dp" />
@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical"
                 android:layout_marginStart="10dp">
                 <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="Informational" />
+                    android:layout_height="wrap_content" android:text="@string/informational" />
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="0" android:textColor="@color/status_blue" android:textSize="22sp"
                     android:textStyle="bold" android:layout_marginTop="4dp" />
@@ -41,7 +41,7 @@
             <LinearLayout style="@style/TrinityCard" android:layout_width="0dp"
                 android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                 <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="Warnings" />
+                    android:layout_height="wrap_content" android:text="@string/warnings" />
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="0" android:textColor="@color/status_yellow" android:textSize="22sp"
                     android:textStyle="bold" android:layout_marginTop="4dp" />
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical"
                 android:layout_marginStart="10dp">
                 <TextView style="@style/LabelCaps" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:text="Critical" />
+                    android:layout_height="wrap_content" android:text="@string/critical" />
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                     android:text="0" android:textColor="@color/status_purple" android:textSize="22sp"
                     android:textStyle="bold" android:layout_marginTop="4dp" />
@@ -62,12 +62,12 @@
             <TextView android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
                 android:background="@drawable/bg_input" android:gravity="center_vertical"
                 android:paddingStart="14dp" android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="10dp" android:text="Filter logs…"
+                android:drawablePadding="10dp" android:text="@string/filter_logs"
                 android:textColor="@color/text_muted" android:textSize="14sp" />
             <TextView android:layout_width="wrap_content" android:layout_height="46dp" android:layout_marginStart="10dp"
                 android:background="@drawable/bg_input" android:gravity="center"
                 android:paddingHorizontal="16dp" android:drawableStart="@drawable/ic_filter"
-                android:drawablePadding="8dp" android:text="Source"
+                android:drawablePadding="8dp" android:text="@string/source"
                 android:textColor="@color/text_secondary" android:textSize="14sp" />
         </LinearLayout>
 
@@ -75,19 +75,19 @@
             android:orientation="horizontal" android:layout_marginTop="14dp">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:paddingBottom="8dp" android:background="@drawable/bg_tab_selected"
-                android:text="All" android:textColor="@color/brand_orange" android:textSize="14sp" android:textStyle="bold" />
+                android:text="@string/all" android:textColor="@color/brand_orange" android:textSize="14sp" android:textStyle="bold" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginStart="18dp" android:paddingBottom="8dp"
-                android:text="Critical" android:textColor="@color/text_secondary" android:textSize="14sp" />
+                android:text="@string/critical" android:textColor="@color/text_secondary" android:textSize="14sp" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginStart="18dp" android:paddingBottom="8dp"
-                android:text="Error" android:textColor="@color/text_secondary" android:textSize="14sp" />
+                android:text="@string/error" android:textColor="@color/text_secondary" android:textSize="14sp" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginStart="18dp" android:paddingBottom="8dp"
-                android:text="Warning" android:textColor="@color/text_secondary" android:textSize="14sp" />
+                android:text="@string/warning" android:textColor="@color/text_secondary" android:textSize="14sp" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:layout_marginStart="18dp" android:paddingBottom="8dp"
-                android:text="Info" android:textColor="@color/text_secondary" android:textSize="14sp" />
+                android:text="@string/info" android:textColor="@color/text_secondary" android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -105,23 +105,23 @@
             android:layout_marginTop="12dp" />
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="Quick Actions" android:textColor="@color/text_primary"
+            android:text="@string/quick_actions" android:textColor="@color/text_primary"
             android:textSize="16sp" android:textStyle="bold" android:layout_marginTop="18dp" />
 
         <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_search_logs" style="@style/PrimaryButton"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="10dp" android:gravity="center_vertical"
             android:drawableStart="@drawable/ic_search" android:drawablePadding="12dp"
-            android:paddingStart="20dp" android:text="Search Logs" />
+            android:paddingStart="20dp" android:text="@string/search_logs" />
         <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_create_alert" style="@style/PrimaryButton"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="10dp" android:gravity="center_vertical"
             android:drawableStart="@drawable/ic_bell" android:drawablePadding="12dp"
-            android:paddingStart="20dp" android:text="Create Log Alert" />
+            android:paddingStart="20dp" android:text="@string/create_log_alert" />
         <androidx.appcompat.widget.AppCompatButton android:id="@+id/btn_export_logs" style="@style/PrimaryButton"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:layout_marginTop="10dp" android:gravity="center_vertical"
             android:drawableStart="@drawable/ic_download" android:drawablePadding="12dp"
-            android:paddingStart="20dp" android:text="Export Logs" />
+            android:paddingStart="20dp" android:text="@string/export_logs" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

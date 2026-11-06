@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Dashboard"
+                android:text="@string/dashboard"
                 android:textColor="@color/brand_orange"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Listeners"
+                android:text="@string/listeners"
                 android:textColor="@color/text_secondary"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -126,7 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Payloads"
+                android:text="@string/payloads"
                 android:textColor="@color/text_secondary"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -152,7 +152,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Logs"
+                android:text="@string/logs"
                 android:textColor="@color/text_secondary"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -178,7 +178,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="Settings"
+                android:text="@string/settings"
                 android:textColor="@color/text_secondary"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -226,7 +226,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Operator"
+                android:text="@string/operator"
                 android:textColor="@color/text_muted"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -250,7 +250,7 @@
             android:src="@drawable/ic_logout"
             app:tint="@color/status_red" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:layout_marginStart="16dp" android:text="Log out"
+            android:layout_marginStart="16dp" android:text="@string/log_out"
             android:textColor="@color/status_red" android:textSize="15sp" android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>
