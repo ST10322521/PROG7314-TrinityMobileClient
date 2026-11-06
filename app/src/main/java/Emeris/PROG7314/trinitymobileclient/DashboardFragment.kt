@@ -18,16 +18,16 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
 
-    private val sampleAgents = emptyList<Agent>()
+    private val agents = emptyList<Agent>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentDashboardBinding.bind(view)
 
-        binding.agentEmpty.visibility = if (sampleAgents.isEmpty()) View.VISIBLE else View.GONE
+        binding.agentEmpty.visibility = if (agents.isEmpty()) View.VISIBLE else View.GONE
 
-        sampleAgents.forEachIndexed { index, agent ->
+        agents.forEachIndexed { index, agent ->
 
             val rowBinding = ItemAgentRowBinding.inflate(
                 layoutInflater,
@@ -45,7 +45,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                 (activity as? HomeActivity)?.openAgentInterface(agent.id)
             }
 
-            if (index < sampleAgents.lastIndex) {
+            if (index < agents.lastIndex) {
                 val dividerBinding = ItemDividerBinding.inflate(
                     layoutInflater,
                     binding.agentList,

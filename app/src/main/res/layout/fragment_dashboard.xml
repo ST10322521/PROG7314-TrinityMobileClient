@@ -84,14 +84,8 @@
             android:orientation="horizontal" android:layout_marginTop="14dp">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:paddingBottom="8dp" android:background="@drawable/bg_tab_selected"
-                android:text="Campaign X" android:textColor="@color/brand_orange"
+                android:text="All campaigns" android:textColor="@color/brand_orange"
                 android:textSize="14sp" android:textStyle="bold" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginStart="20dp" android:paddingBottom="8dp"
-                android:text="Campaign Y" android:textColor="@color/text_secondary" android:textSize="14sp" />
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:layout_marginStart="20dp" android:paddingBottom="8dp"
-                android:text="Campaign Z" android:textColor="@color/text_secondary" android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout android:id="@+id/agent_list" style="@style/TrinityCard"

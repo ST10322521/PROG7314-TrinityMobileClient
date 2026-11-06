@@ -19,10 +19,10 @@
         <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
             android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="6dp">
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="AGENT-001" android:textColor="@color/white"
+                android:text="Agent" android:textColor="@color/white"
                 android:textSize="17sp" android:textStyle="bold" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Campaign X · Agent Interface" android:textColor="#EEFFFFFF" android:textSize="12sp" />
+                android:text="Agent Interface" android:textColor="#EEFFFFFF" android:textSize="12sp" />
         </LinearLayout>
         <ImageButton android:layout_width="42dp" android:layout_height="42dp"
             android:background="?attr/selectableItemBackgroundBorderless"
@@ -49,12 +49,11 @@
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:text="Endpoint Agent" android:textColor="@color/text_primary" android:textSize="16sp" android:textStyle="bold" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="EGRESS beacon · Campaign X" android:textColor="@color/text_muted" android:textSize="12sp" />
+                            android:text="—" android:textColor="@color/text_muted" android:textSize="12sp" />
                     </LinearLayout>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:background="@drawable/bg_badge_green" android:paddingHorizontal="10dp" android:paddingVertical="3dp"
-                        android:drawableStart="@drawable/dot_green" android:drawablePadding="6dp"
-                        android:text="Active" android:textColor="@color/status_green" android:textSize="11sp" android:textStyle="bold" />
+                        android:paddingHorizontal="10dp" android:paddingVertical="3dp"
+                        android:text="—" android:textColor="@color/text_muted" android:textSize="11sp" android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -62,12 +61,12 @@
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                         <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="IP Address" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="192.168.1.10" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
+                            android:text="—" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                         <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="OS" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Windows 10" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
+                            android:text="—" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
@@ -75,12 +74,12 @@
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                         <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sleep / Jitter" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="60s / 15%" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
+                            android:text="—" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
                     </LinearLayout>
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                         <TextView style="@style/LabelCaps" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Last Check-in" />
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="2m ago" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
+                            android:text="—" android:textColor="@color/text_primary" android:textSize="14sp" android:layout_marginTop="2dp" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
@@ -120,7 +119,7 @@
                     <EditText android:id="@+id/input_command"
                         android:layout_width="0dp" android:layout_height="46dp" android:layout_weight="1"
                         android:background="@drawable/bg_input" android:paddingStart="14dp"
-                        android:hint="Enter command for AGENT-001…" android:textColorHint="@color/text_muted"
+                        android:hint="Enter command…" android:textColorHint="@color/text_muted"
                         android:textColor="@color/text_primary" android:textSize="14sp" android:inputType="text" />
                     <ImageButton android:id="@+id/btn_send_command"
                         android:layout_width="46dp" android:layout_height="46dp" android:layout_marginStart="8dp"
@@ -164,7 +163,7 @@
                     android:orientation="horizontal" android:gravity="center_vertical">
                     <TextView android:layout_width="60dp" android:layout_height="60dp"
                         android:background="@drawable/bg_avatar" android:gravity="center"
-                        android:text="23" android:textColor="@color/text_primary" android:textSize="22sp" android:textStyle="bold" />
+                        android:text="0" android:textColor="@color/text_primary" android:textSize="22sp" android:textStyle="bold" />
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
                         android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="16dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -173,19 +172,19 @@
                             android:orientation="horizontal">
                             <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                                 android:drawableStart="@drawable/dot_green" android:drawablePadding="6dp"
-                                android:text="Successful · 12" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                                android:text="Successful · 0" android:textColor="@color/text_secondary" android:textSize="12sp" />
                             <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                                 android:drawableStart="@drawable/dot_blue" android:drawablePadding="6dp"
-                                android:text="Running · 5" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                                android:text="Running · 0" android:textColor="@color/text_secondary" android:textSize="12sp" />
                         </LinearLayout>
                         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
                             android:orientation="horizontal" android:layout_marginTop="2dp">
                             <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                                 android:drawableStart="@drawable/dot_yellow" android:drawablePadding="6dp"
-                                android:text="Pending · 4" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                                android:text="Pending · 0" android:textColor="@color/text_secondary" android:textSize="12sp" />
                             <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
                                 android:drawableStart="@drawable/dot_red" android:drawablePadding="6dp"
-                                android:text="Failed · 2" android:textColor="@color/text_secondary" android:textSize="12sp" />
+                                android:text="Failed · 0" android:textColor="@color/text_secondary" android:textSize="12sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -209,62 +208,9 @@
                         android:text="Successful" android:textColor="@color/text_secondary" android:textSize="13sp" />
                 </LinearLayout>
 
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="12dp">
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Create Security Report" android:textColor="@color/text_primary" android:textSize="14sp" android:textStyle="bold" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="04/01/26 · 14:20" android:textColor="@color/text_muted" android:textSize="12sp" />
-                    </LinearLayout>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:background="@drawable/bg_badge_green" android:paddingHorizontal="8dp" android:paddingVertical="2dp"
-                        android:text="Successful" android:textColor="@color/status_green" android:textSize="10sp" android:textStyle="bold" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" />
-
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="12dp">
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Malware Analysis" android:textColor="@color/text_primary" android:textSize="14sp" android:textStyle="bold" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="04/01/26 · 14:05" android:textColor="@color/text_muted" android:textSize="12sp" />
-                    </LinearLayout>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:background="@drawable/bg_badge_blue" android:paddingHorizontal="8dp" android:paddingVertical="2dp"
-                        android:text="Running" android:textColor="@color/status_blue" android:textSize="10sp" android:textStyle="bold" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" />
-
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="12dp">
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Vulnerability Scan" android:textColor="@color/text_primary" android:textSize="14sp" android:textStyle="bold" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="04/01/26 · 13:50" android:textColor="@color/text_muted" android:textSize="12sp" />
-                    </LinearLayout>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:background="@drawable/bg_badge_yellow" android:paddingHorizontal="8dp" android:paddingVertical="2dp"
-                        android:text="Pending" android:textColor="@color/status_yellow" android:textSize="10sp" android:textStyle="bold" />
-                </LinearLayout>
-                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/divider" />
-
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="horizontal" android:gravity="center_vertical" android:paddingVertical="12dp">
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="Policy Review" android:textColor="@color/text_primary" android:textSize="14sp" android:textStyle="bold" />
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:text="04/01/26 · 13:02" android:textColor="@color/text_muted" android:textSize="12sp" />
-                    </LinearLayout>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:background="@drawable/bg_badge_red" android:paddingHorizontal="8dp" android:paddingVertical="2dp"
-                        android:text="Failed" android:textColor="@color/status_red" android:textSize="10sp" android:textStyle="bold" />
-                </LinearLayout>
-
-                <include layout="@layout/include_pagination" />
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:paddingVertical="16dp" android:gravity="center"
+                    android:text="No tasks yet" android:textColor="@color/text_muted" android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
