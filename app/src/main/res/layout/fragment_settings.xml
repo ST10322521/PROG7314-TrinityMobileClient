@@ -289,7 +289,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginStart="14dp"
-                    android:text="@string/settings_category_server"
+                    android:text="@string/settings"
                     android:textColor="@color/text_secondary"
                     android:textSize="15sp" />
 
