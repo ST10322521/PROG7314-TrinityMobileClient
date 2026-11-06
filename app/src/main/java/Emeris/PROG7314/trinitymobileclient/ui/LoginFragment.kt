@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import Emeris.PROG7314.trinitymobileclient.R
+import Emeris.PROG7314.trinitymobileclient.api.ApiClient
+import Emeris.PROG7314.trinitymobileclient.api.model.LoginRequest
 import Emeris.PROG7314.trinitymobileclient.auth.AuthError
 import Emeris.PROG7314.trinitymobileclient.auth.AuthException
 import Emeris.PROG7314.trinitymobileclient.auth.AuthProvider
@@ -148,34 +150,30 @@ class LoginFragment : Fragment() {
 
     // Login with email and password
     private fun loginUser() {
-        Log.d("firebaseAuth", "Email/Password login selected")
-
-        val email = binding.etEmail.text.toString().trim()
+        val username = binding.etEmail.text.toString().trim()
         val password = binding.etPassword.text.toString().trim()
 
-        // Validate the login fields before attempting authentication
-        if (!inputVal(email, password)) {
-            return
-        }
+        if (!inputVal(username, password)) return
 
-        Log.d("firebaseAuth", "Attempting email/password login")
-
-        // Attempt to authenticate the user with Firebase
-        authRepository.loginUser(email, password) { result ->
-
-            result.onSuccess { user ->
-                Log.d("firebaseAuth", "Login successful. User: ${user.uid}")
-
-                // Offer biometric login after successful authentication
-                offerBiometricLogin()
-            }
-
-            result.onFailure { exception ->
-                Log.e("firebaseAuth", "login failed", exception)
-
+        lifecycleScope.launch {
+            try {
+                val response = ApiClient.auth.login(LoginRequest(username, password))
+                if (response.isSuccessful) {
+                    Log.d("teamServerAuth", "Login successful")
+                    offerBiometricLogin()
+                } else {
+                    Log.w("teamServerAuth", "Login failed: HTTP ${response.code()}")
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.invalid_email_or_password),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Log.e("teamServerAuth", "Login error", e)
                 Toast.makeText(
                     requireContext(),
-                    getAuthErrorMessage(exception),
+                    getString(R.string.unable_to_connect_please_try_again),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -203,7 +201,6 @@ class LoginFragment : Fragment() {
                     "Registration successful, User: ${user.uid}"
                 )
 
-                // Offer biometric login after successful registration
                 offerBiometricLogin()
             }
 
