@@ -175,7 +175,7 @@ class AuthRepository(
         return auth.currentUser?.email
     }
 
-    // google only accounts have no password to reset
+    // google only acounts have no password to reset
     fun hasPasswordSignIn(): Boolean {
         return auth.currentUser?.providerData?.any {
             it.providerId == EmailAuthProvider.PROVIDER_ID

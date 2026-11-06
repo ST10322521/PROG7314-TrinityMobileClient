@@ -6,11 +6,11 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 
-// logs screen, UI only. call the show* functions once the API is wired in
+// logs screen, UI only. call the show* functions once the API is in
 class LogsFragment : Fragment(R.layout.fragment_logs) {
 
     private var _bindings: FragmentLogsBinding? = null
-    // getter not eager init, eager init crashed the app
+    // getter not eager init. eager init crashed the app
     private val bindings get() = _bindings!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -19,7 +19,7 @@ class LogsFragment : Fragment(R.layout.fragment_logs) {
 
         _bindings = FragmentLogsBinding.bind(view)
 
-        // TODO(connect to backend): no logs come from the server yet so it starts empty
+        // TODO(connect to backend): no logs from the server yet. starts empty
         showEmpty()
     }
 

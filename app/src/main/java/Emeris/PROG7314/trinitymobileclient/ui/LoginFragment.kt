@@ -140,7 +140,7 @@ class LoginFragment : Fragment() {
 
     private var passwordVisible = false
 
-    // show or hide the password, dim eye = hidden
+    // show or hide the password. dim eye = hidden
     private fun togglePasswordVisibility() {
         passwordVisible = !passwordVisible
 

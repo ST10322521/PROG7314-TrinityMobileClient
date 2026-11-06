@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.LocaleListCompat
 
 // picker label -> language code that gets saved
-// labels are in there own language so they stay the same when translated
+// labels are in there own language. they stay the same when translated
 object LanguageManager {
     val languageOptions = mapOf(
         "English" to "en",

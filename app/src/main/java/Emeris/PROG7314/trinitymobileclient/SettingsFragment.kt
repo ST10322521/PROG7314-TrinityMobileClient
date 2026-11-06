@@ -29,7 +29,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
-// settings screen: account card, the 5 preferences (saved per user in Room) and the category rows
+// settings screen. account card, 5 preferences and the category rows. saved per user in Room
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private var _bindings: FragmentSettingsBinding? = null
     private val bindings get() = _bindings!!
@@ -37,15 +37,15 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var authRepository: AuthRepository
 
-    // what is picked right now, kept as values so saving still works once the labels are translated
+    // what is picked right now. kept as values so saving works when translated
     private var selectedTheme = SettingsDefaults.DEFAULT_THEME
     private var selectedAutoLockMinutes = SettingsDefaults.DEFAULT_AUTO_LOCK_MINUTES
     private var selectedLanguage = SettingsDefaults.DEFAULT_LANGUAGE
 
-    // what is in Room, null until it loads
+    // what is in Room. null untill it loads
     private var savedValues: SettingsValues? = null
 
-    // unsaved picks from before a rotation or theme switch
+    // unsaved picks from before a rotaion or theme switch
     private var restoredValues: SettingsValues? = null
 
     private var selectedCategoryId = R.id.cat_general
@@ -96,7 +96,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.btnResetPassword.setOnClickListener { confirmPasswordReset() }
     }
 
-    // reset password only for email accounts, google accounts dont have a password
+    // reset password only for email accounts. google ones dont have a password
     private fun showAccount() {
         val username = authRepository.currentUserUsername()
         val email = authRepository.currentUserEmail()
@@ -127,7 +127,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             .show()
     }
 
-    // same as the drawer logout, forget the fingerprint login too
+    // same as the drawer logout. forget the fingerprint login too
     private fun signOut() {
         Log.d(TAG, "sign out confirmed")
         requireContext().getSharedPreferences("biometric_preferences", Context.MODE_PRIVATE).edit {
@@ -136,7 +136,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
         authRepository.logout()
 
-        // clear the task so back cant reopen the app signed out
+        // clear the task so back cant reopen the app
         val intent = Intent(requireContext(), LoginActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
@@ -182,7 +182,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
     private fun sendPasswordReset(email: String) {
         Log.d(TAG, "password reset requested")
-        // disabled until firebase answers so it cant be spammed
+        // disabled untill firebase answers. stops spamming
         bindings.btnResetPassword.isEnabled = false
 
         authRepository.sendPasswordReset(email) { result ->
@@ -236,7 +236,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.settingsScroll.smoothScrollTo(0, topInContent(section))
     }
 
-    // sections sit inside cards, so add up the offset's until the scroll content
+    // sections sit inside cards. add up the offset's to the scroll content
     private fun topInContent(view: View): Int {
         var top = 0
         var current: View? = view
@@ -324,7 +324,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         bindings.switchNotifications.isChecked = values.notificationsEnabled
     }
 
-    // HomeActivity asks this before leaving the screen
+    // HomeActivity asks this before leaving
     fun hasUnsavedChanges(): Boolean {
         if (_bindings == null) return false
         val saved = savedValues ?: return false
@@ -421,7 +421,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
             val b = _bindings ?: return@launch
             b.btnSaveSettings.isEnabled = true
-            // app context so the toast stays up when the theme rebuilds the activity
+            // app context so the toast stays when the theme rebuilds
             Toast.makeText(b.root.context.applicationContext, message, Toast.LENGTH_SHORT).show()
 
             // theme and languge last. both can recreate the activty
@@ -432,7 +432,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
     }
 
-    // pickers only change the selection, Save is what writes it
+    // pickers only change the selection. Save writes it
     private fun showLanguageDialog() {
         val labels = SettingsDefaults.languageOptions.keys.toTypedArray()
 

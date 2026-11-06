@@ -12,7 +12,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 
-// loading / empty / error / success on the real screens, no Espresso for the same reason as the others
+// loading / empty / error / success on the real screen. no Espresso here either
 @RunWith(AndroidJUnit4::class)
 class StateViewTest {
 
