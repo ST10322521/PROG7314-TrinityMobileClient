@@ -175,10 +175,6 @@ class HomeActivity : AppCompatActivity() {
             selectNavItem(R.id.nav_payloads)
             showScreen(PayloadsFragment(), sharedAppBar = true); closeDrawer()
         }
-        binding.navDrawer.navLogs.setOnClickListener {
-            selectNavItem(R.id.nav_logs)
-            showScreen(LogsFragment(), sharedAppBar = true); closeDrawer()
-        }
         binding.navDrawer.navSettings.setOnClickListener {
             selectNavItem(R.id.nav_settings)
             showScreen(SettingsFragment(), sharedAppBar = true); closeDrawer()
